@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
 {
-    public class ProviderImportRepository
+    public class ProviderImportRepository : IProviderImportRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
 
