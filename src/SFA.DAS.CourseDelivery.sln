@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.CourseDelivery.Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.CourseDelivery.Domain", "SFA.DAS.CourseDelivery.Domain\SFA.DAS.CourseDelivery.Domain.csproj", "{8052DA12-25D6-4AAC-9A9D-35DBABD6358D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.CourseDelivery.Data", "SFA.DAS.CourseDelivery.Data\SFA.DAS.CourseDelivery.Data.csproj", "{0C2832BF-18CE-413E-BE5C-CA0A76C4B3B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{8052DA12-25D6-4AAC-9A9D-35DBABD6358D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8052DA12-25D6-4AAC-9A9D-35DBABD6358D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8052DA12-25D6-4AAC-9A9D-35DBABD6358D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2832BF-18CE-413E-BE5C-CA0A76C4B3B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2832BF-18CE-413E-BE5C-CA0A76C4B3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2832BF-18CE-413E-BE5C-CA0A76C4B3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2832BF-18CE-413E-BE5C-CA0A76C4B3B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{18C1C9BE-7061-4203-91E4-3FD0CE4420C3} = {6857CC53-8EA1-43AB-B5D2-3E847A9D3FD5}
