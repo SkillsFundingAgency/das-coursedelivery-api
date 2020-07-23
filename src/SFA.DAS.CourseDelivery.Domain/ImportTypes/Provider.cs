@@ -8,7 +8,7 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         [JsonProperty("id")]
         public long Id { get; set; }
         [JsonProperty("ukprn")]
-        public long Ukprn { get; set; }
+        public int Ukprn { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("nationalProvider")]
@@ -17,6 +17,14 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public decimal LearnerSatisfaction { get; set; }
         [JsonProperty("employerSatisfaction")]
         public decimal EmployerSatisfaction { get; set; }
+        [JsonProperty("tradingName")]
+        public string TradingName { get; set; }
+        [JsonProperty("email")]
+        public string Email { get; set; }
+        [JsonProperty("website")]
+        public string Website { get; set; }
+        [JsonProperty("phone")]
+        public string Phone { get; set; }
         [JsonProperty("standards")]
         public List<CourseStandard> Standards { get; set; }
         [JsonProperty("locations")]

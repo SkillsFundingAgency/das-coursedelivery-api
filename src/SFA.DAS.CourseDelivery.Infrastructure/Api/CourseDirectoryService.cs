@@ -6,10 +6,11 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
 using SFA.DAS.CourseDelivery.Domain.ImportTypes;
+using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Infrastructure.Api
 {
-    public class CourseDirectoryService
+    public class CourseDirectoryService : ICourseDirectoryService
     {
         private readonly HttpClient _client;
         private readonly CourseDirectoryConfiguration _configuration;
