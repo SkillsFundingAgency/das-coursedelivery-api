@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
 using SFA.DAS.CourseDelivery.Domain.ImportTypes;
