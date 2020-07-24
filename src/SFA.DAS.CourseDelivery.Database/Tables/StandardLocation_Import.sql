@@ -1,11 +1,11 @@
 ﻿CREATE TABLE [dbo].[StandardLocation_Import]
 (
 	[LocationId] INT PRIMARY KEY,
-	[Name] VARCHAR(250) NOT NULL,
+	[Name] VARCHAR(250) NULL,
 	[Email] VARCHAR(256) NULL,
 	[Website] VARCHAR(256) NULL,
 	[Phone] VARCHAR(50) NULL,
-	[Address1] VARCHAR(250) NOT NULL,
+	[Address1] VARCHAR(250) NULL,
 	[Address2] VARCHAR(250) NULL,
 	[Town] VARCHAR(250) NULL,
 	[Postcode] VARCHAR(25) NULL,

@@ -12,10 +12,10 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
 
             builder.Property(c => c.StandardId).HasColumnName("StandardId").HasColumnType("int").IsRequired();
             builder.Property(c => c.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();
-            builder.Property(c => c.StandardInfoUrl).HasColumnName("StandardInfoUrl").HasColumnType("varchar").IsRequired(false);
-            builder.Property(c => c.Email).HasColumnName("Email").HasColumnType("varchar").IsRequired(false);
-            builder.Property(c => c.Phone).HasColumnName("Phone").HasColumnType("varchar").IsRequired(false);
-            builder.Property(c => c.ContactUrl).HasColumnName("ContactUrl").HasColumnType("varchar").IsRequired(false);
+            builder.Property(c => c.StandardInfoUrl).HasColumnName("StandardInfoUrl").HasMaxLength(1000).HasColumnType("varchar").IsRequired(false);
+            builder.Property(c => c.Email).HasColumnName("Email").HasColumnType("varchar").HasMaxLength(256).IsRequired(false);
+            builder.Property(c => c.Phone).HasColumnName("Phone").HasColumnType("varchar").HasMaxLength(50).IsRequired(false);
+            builder.Property(c => c.ContactUrl).HasColumnName("ContactUrl").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
             
             builder.HasIndex(x => new { x.Ukprn , x.StandardId }).IsUnique();
         }
