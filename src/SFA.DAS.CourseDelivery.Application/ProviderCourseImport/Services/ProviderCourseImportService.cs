@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
@@ -36,35 +37,12 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 return;
             }
             
-            _providerImportRepository.DeleteAll();
-            _providerStandardImportRepository.DeleteAll();
-            _providerStandardLocationImportRepository.DeleteAll();
-            _standardLocationImportRepository.DeleteAll();
+            ClearImportTables();
 
-            var providers = providerCourseInformation.Select(c => (ProviderImport) c).ToList();
-            
-            var standardLocationImports = new List<StandardLocationImport>();
-            foreach (var location in providerCourseInformation.Select(c => c.Locations))
-            {
-                foreach (var courseLocation in location
-                    .Where(courseLocation => !standardLocationImports
-                        .Exists(c => c.LocationId.Equals(courseLocation.Id))))
-                {
-                    standardLocationImports.Add(courseLocation);
-                }
-            }
-            
-            var providerStandardLocationImport = new List<ProviderStandardLocationImport>();
-            var providerStandardImport = new List<ProviderStandardImport>();
-            foreach (var provider in providerCourseInformation)
-            {
-                foreach (var courseStandard in provider.Standards)
-                {
-                    providerStandardImport.Add(new ProviderStandardImport().Map(courseStandard,provider.Ukprn));
-                    providerStandardLocationImport.AddRange(courseStandard.Locations.Select(standardLocation => 
-                        new ProviderStandardLocationImport().Map(standardLocation, provider.Ukprn, courseStandard.StandardCode)));
-                }
-            }
+            var providers = GetProviderImports(providerCourseInformation).ToList();
+            var standardLocationImports = GetStandardLocationImports(providerCourseInformation).ToList();
+            var providerStandardLocationImport = GetProviderStandardLocationImport(providerCourseInformation).ToList();
+            var providerStandardImport = GetProviderStandardImport(providerCourseInformation).ToList();
             
             var providerImportTask = _providerImportRepository.InsertMany(providers);
             var standardLocationImportTask = _standardLocationImportRepository.InsertMany(standardLocationImports);
@@ -72,6 +50,65 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             var providerStandardLocationImportTask = _providerStandardLocationImportRepository.InsertMany(providerStandardLocationImport);
 
             await Task.WhenAll(providerImportTask, standardLocationImportTask, providerStandardImportTask, providerStandardLocationImportTask);
+        }
+
+        private static IEnumerable<ProviderImport> GetProviderImports(IEnumerable<Provider> providerCourseInformation)
+        {
+            return providerCourseInformation.Select(c => (ProviderImport) c);
+        }
+
+        private static IEnumerable<StandardLocationImport> GetStandardLocationImports(IEnumerable<Provider> providerCourseInformation)
+        {
+            var standardLocationImports = new List<StandardLocationImport>();
+            
+            foreach (var location in providerCourseInformation.Select(c => c.Locations))
+            {
+                standardLocationImports.AddRange(location.Select(courseLocation => (StandardLocationImport) courseLocation));
+            }
+
+            return standardLocationImports
+                .GroupBy(c => c.LocationId)
+                .Select(item => item.First());
+        }
+
+        private static IEnumerable<ProviderStandardImport> GetProviderStandardImport(IEnumerable<Provider> providerCourseInformation)
+        {
+            var providerStandardImport = new List<ProviderStandardImport>();
+            foreach (var provider in providerCourseInformation)
+            {
+                providerStandardImport.AddRange(provider.Standards.Select(courseStandard => new ProviderStandardImport().Map(courseStandard, provider.Ukprn)));
+            }
+            return providerStandardImport
+                .GroupBy(c => new {c.Ukprn, c.StandardId})
+                .Select(item => item.First());
+        }
+
+        private static IEnumerable<ProviderStandardLocationImport> GetProviderStandardLocationImport(IEnumerable<Provider> providerCourseInformation)
+        {
+            var providerStandardLocationImport = new List<ProviderStandardLocationImport>();
+            foreach (var provider in providerCourseInformation)
+            {
+                foreach (var courseStandard in provider.Standards)
+                {
+                
+                    providerStandardLocationImport.AddRange(courseStandard
+                        .Locations
+                        .Select(standardLocation => 
+                            new ProviderStandardLocationImport().Map(standardLocation, provider.Ukprn, courseStandard.StandardCode)));
+                }
+            }
+
+            return providerStandardLocationImport
+                .GroupBy(c => new {c.Ukprn, c.LocationId, c.StandardId})
+                .Select(item => item.First());
+        }
+
+        private void ClearImportTables()
+        {
+            _providerImportRepository.DeleteAll();
+            _providerStandardImportRepository.DeleteAll();
+            _providerStandardLocationImportRepository.DeleteAll();
+            _standardLocationImportRepository.DeleteAll();
         }
     }
 }

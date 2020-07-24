@@ -14,9 +14,9 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         [JsonProperty("nationalProvider")]
         public bool NationalProvider { get; set; }
         [JsonProperty("learnerSatisfaction")]
-        public decimal LearnerSatisfaction { get; set; }
+        public decimal? LearnerSatisfaction { get; set; }
         [JsonProperty("employerSatisfaction")]
-        public decimal EmployerSatisfaction { get; set; }
+        public decimal? EmployerSatisfaction { get; set; }
         [JsonProperty("tradingName")]
         public string TradingName { get; set; }
         [JsonProperty("email")]

@@ -92,6 +92,60 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
                 x.InsertMany(It.Is<List<StandardLocationImport>>(c=>
                     c.Count.Equals(providerImport.Sum(d=>d.Locations.Count)-1))), Times.Once);
         }
+        
+        
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_The_Distinct_ProviderStandards_Are_Loaded_Into_The_Import_Table(
+            [Frozen] Mock<IProviderStandardImportRepository> providerStandardImportRepository,
+            [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderStandardLocationImportRepository> providerStandardLocationImportRepository,
+            [Frozen] Mock<IStandardLocationImportRepository> standardLocationImportRepository,
+            [Frozen] Mock<ICourseDirectoryService> service,
+            List<Provider> providerImport,
+            CourseStandard courseStandard,
+            ProviderCourseImportService providerCourseImportService
+        )
+        {
+            //Arrange 
+            providerImport.FirstOrDefault().Standards.Add(courseStandard);
+            providerImport.FirstOrDefault().Standards.Add(courseStandard);
+            service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(providerImport);
+            var locations = providerImport.Select(x=>x.Locations).Distinct().ToList();
+            
+            //Act
+            await providerCourseImportService.ImportProviderCourses();
+            
+            //Assert
+            providerStandardImportRepository.Verify(x=>
+                x.InsertMany(It.Is<List<ProviderStandardImport>>(c=>
+                    c.Count.Equals(providerImport.Sum(d=>d.Standards.Count)-1))), Times.Once);
+        }
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_The_Distinct_ProviderStandardLocations_Are_Loaded_Into_The_Import_Table(
+            [Frozen] Mock<IProviderStandardImportRepository> providerStandardImportRepository,
+            [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderStandardLocationImportRepository> providerStandardLocationImportRepository,
+            [Frozen] Mock<IStandardLocationImportRepository> standardLocationImportRepository,
+            [Frozen] Mock<ICourseDirectoryService> service,
+            List<Provider> providerImport,
+            StandardLocation standardLocation,
+            ProviderCourseImportService providerCourseImportService
+        )
+        {
+            //Arrange 
+            providerImport.FirstOrDefault().Standards.FirstOrDefault().Locations.Add(standardLocation);
+            providerImport.FirstOrDefault().Standards.FirstOrDefault().Locations.Add(standardLocation);
+            service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(providerImport);
+            var locations = providerImport.Select(x=>x.Locations).Distinct().ToList();
+            
+            //Act
+            await providerCourseImportService.ImportProviderCourses();
+            
+            //Assert
+            providerStandardLocationImportRepository.Verify(x=>
+                x.InsertMany(It.Is<List<ProviderStandardLocationImport>>(c=>
+                    c.Count.Equals(providerImport.SelectMany(d=>d.Standards).Sum(e=>e.Locations.Count)-1))), Times.Once);
+        }
 
         [Test, RecursiveMoqAutoData]
         public async Task Then_The_Data_Is_Loaded_Into_The_Staging_Table_From_The_Api(
