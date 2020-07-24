@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
-using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 {
-    public class ProviderCourseImportService
+    public class ProviderCourseImportService : IProviderCourseImportService
     {
         private readonly ICourseDirectoryService _courseDirectoryService;
         private readonly IProviderImportRepository _providerImportRepository;

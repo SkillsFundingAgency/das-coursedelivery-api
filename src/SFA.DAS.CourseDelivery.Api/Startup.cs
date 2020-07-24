@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.CourseDelivery.Api.AppStart;
 using SFA.DAS.CourseDelivery.Api.Infrastructure;
+using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.ImportProviderStandards;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
 
 namespace SFA.DAS.CourseDelivery.Api
@@ -75,7 +76,7 @@ namespace SFA.DAS.CourseDelivery.Api
                 services.AddHealthChecks();
             }
 
-            //services.AddMediatR(typeof(ImportDataCommand).Assembly);
+            services.AddMediatR(typeof(ImportDataCommand).Assembly);
 
             services.AddServiceRegistration();
 
