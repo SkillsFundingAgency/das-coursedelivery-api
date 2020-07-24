@@ -38,7 +38,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
             var apprenticeshipService = new CourseDirectoryService(client, configuration.Object);
             
             //Act
-            var providers = await apprenticeshipService.GetProviders();
+            var providers = await apprenticeshipService.GetProviderCourseInformation();
             
             //Assert
             providers.Should().BeEquivalentTo(importProviders);
@@ -64,7 +64,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
             var apprenticeshipService = new CourseDirectoryService(client, configuration.Object);
             
             //Act Assert
-            Assert.ThrowsAsync<HttpRequestException>(() => apprenticeshipService.GetProviders());
+            Assert.ThrowsAsync<HttpRequestException>(() => apprenticeshipService.GetProviderCourseInformation());
             
         }
     }

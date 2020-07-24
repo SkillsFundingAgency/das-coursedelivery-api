@@ -21,7 +21,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
             _configuration = configuration.Value;
         }
 
-        public async Task<IEnumerable<Provider>> GetProviders()
+        public async Task<IEnumerable<Provider>> GetProviderCourseInformation()
         {
             AddHeaders();
             
