@@ -58,9 +58,13 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tables\Provider.sql" />
+    <Content Include="Tables\ProviderStandard.sql" />
+    <Content Include="Tables\ProviderStandardLocation.sql" />
     <Content Include="Tables\ProviderStandardLocation_Import.sql" />
     <Content Include="Tables\ProviderStandard_Import.sql" />
     <Content Include="Tables\Provider_Import.sql" />
+    <Content Include="Tables\StandardLocation.sql" />
     <Content Include="Tables\StandardLocation_Import.sql" />
   </ItemGroup>
 </Project>
