@@ -37,6 +37,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
             var model = controllerResult.Value as GetCourseProvidersListResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
             model.Providers.Count().Should().Be(queryResult.Providers.Count());
+            model.TotalResults.Should().Be(queryResult.Providers.Count());
         }
 
         [Test, RecursiveMoqAutoData]

@@ -26,10 +26,16 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
             try
             {
                 var queryResult = await _mediator.Send(new GetCourseProvidersQuery {StandardId = id});
+
+                var getCourseProviderResponses = queryResult
+                    .Providers
+                    .Select(c=>(GetCourseProviderResponse)c)
+                    .ToList();
                 
                 var response = new GetCourseProvidersListResponse
                 {
-                    Providers = queryResult.Providers.Select(c=>(GetCourseProviderResponse)c).ToList()
+                    Providers = getCourseProviderResponses,
+                    TotalResults = getCourseProviderResponses.Count 
                         
                 };
                 return Ok(response);
