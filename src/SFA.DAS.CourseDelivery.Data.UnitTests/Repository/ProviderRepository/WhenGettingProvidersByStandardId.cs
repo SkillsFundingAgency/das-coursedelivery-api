@@ -13,7 +13,6 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
         private Data.Repository.ProviderRepository _providerStandardImportRepository;
-        private List<Provider> _providers;
         private List<ProviderStandard> _providerStandards;
         private const int ExpectedStandardId = 2;
 

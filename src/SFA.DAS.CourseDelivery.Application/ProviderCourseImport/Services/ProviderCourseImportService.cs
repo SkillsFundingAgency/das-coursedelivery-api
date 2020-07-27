@@ -134,16 +134,16 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
             var insertProviderTask = 
                 _providerRepository.InsertMany(
-                    providerDataTask.Result.Select(c=>(Domain.Entities.Provider)c));
+                    providerDataTask.Result.Select(c=>(Domain.Entities.Provider)c).ToList());
             var insertProviderStandardTask =
                 _providerStandardRepository.InsertMany(
-                    providerStandardDataTask.Result.Select(c => (ProviderStandard) c));
+                    providerStandardDataTask.Result.Select(c => (ProviderStandard) c).ToList());
             var insertProviderStandardLocationTask =
                 _providerStandardLocationRepository.InsertMany(
-                    providerStandardLocationDataTask.Result.Select(c => (ProviderStandardLocation) c));
+                    providerStandardLocationDataTask.Result.Select(c => (ProviderStandardLocation) c).ToList());
             var insertStandardLocationTask =
                 _standardLocationRepository.InsertMany(
-                    standardLocationDataTask.Result.Select(c => (StandardLocation) c));
+                    standardLocationDataTask.Result.Select(c => (StandardLocation) c).ToList());
             
             await Task.WhenAll(
                 insertProviderTask, 
