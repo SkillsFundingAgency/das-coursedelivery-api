@@ -4,7 +4,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
 {
     public class ProviderImport : ProviderBase
     {
-        public static implicit operator ProviderImport(Provider provider)
+        public static implicit operator ProviderImport(ImportTypes.Provider provider)
         {
             return new ProviderImport
             {
