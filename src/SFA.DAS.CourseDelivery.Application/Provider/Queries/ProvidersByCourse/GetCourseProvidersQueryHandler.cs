@@ -5,7 +5,7 @@ using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
 {
-    public class GetCourseProvidersQueryHandler :IRequestHandler<GetCourseProvidersQuery, GetProvidersResponse>
+    public class GetCourseProvidersQueryHandler :IRequestHandler<GetCourseProvidersQuery, GetCourseProvidersResponse>
     {
         private readonly IProviderService _providerService;
 
@@ -13,11 +13,11 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
         {
             _providerService = providerService;
         }
-        public async Task<GetProvidersResponse> Handle(GetCourseProvidersQuery request, CancellationToken cancellationToken)
+        public async Task<GetCourseProvidersResponse> Handle(GetCourseProvidersQuery request, CancellationToken cancellationToken)
         {
             var providers = await _providerService.GetProvidersByStandardId(request.StandardId);
             
-            return new GetProvidersResponse
+            return new GetCourseProvidersResponse
             {
                 Providers = providers
             };
