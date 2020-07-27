@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using SFA.DAS.CourseDelivery.Application.Provider.Services;
 using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
@@ -13,6 +14,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>();
 
             services.AddTransient<IProviderCourseImportService, ProviderCourseImportService>();
+            services.AddTransient<IProviderService, ProviderService>();
             
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();

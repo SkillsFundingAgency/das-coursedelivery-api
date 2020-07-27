@@ -68,12 +68,12 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             await LoadDataFromImportTables();
         }
 
-        private static IEnumerable<ProviderImport> GetProviderImports(IEnumerable<Provider> providerCourseInformation)
+        private static IEnumerable<ProviderImport> GetProviderImports(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
         {
             return providerCourseInformation.Select(c => (ProviderImport) c);
         }
 
-        private static IEnumerable<StandardLocationImport> GetStandardLocationImports(IEnumerable<Provider> providerCourseInformation)
+        private static IEnumerable<StandardLocationImport> GetStandardLocationImports(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
         {
             var standardLocationImports = new List<StandardLocationImport>();
             
@@ -87,7 +87,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 .Select(item => item.First());
         }
 
-        private static IEnumerable<ProviderStandardImport> GetProviderStandardImport(IEnumerable<Provider> providerCourseInformation)
+        private static IEnumerable<ProviderStandardImport> GetProviderStandardImport(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
         {
             var providerStandardImport = new List<ProviderStandardImport>();
             foreach (var provider in providerCourseInformation)
@@ -99,7 +99,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 .Select(item => item.First());
         }
 
-        private static IEnumerable<ProviderStandardLocationImport> GetProviderStandardLocationImport(IEnumerable<Provider> providerCourseInformation)
+        private static IEnumerable<ProviderStandardLocationImport> GetProviderStandardLocationImport(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
         {
             var providerStandardLocationImport = new List<ProviderStandardLocationImport>();
             foreach (var provider in providerCourseInformation)
