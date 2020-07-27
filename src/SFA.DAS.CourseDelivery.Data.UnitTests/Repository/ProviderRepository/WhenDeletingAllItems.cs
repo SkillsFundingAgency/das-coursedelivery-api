@@ -35,7 +35,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
         }
 
         [Test]
-        public void Then_The_ProviderImports_Are_Removed()
+        public void Then_The_Providers_Are_Removed()
         {
             //Act
             _providerImportRepository.DeleteAll();
