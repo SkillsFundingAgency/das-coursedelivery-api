@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Entities
     public class WhenCastingFromLocationsApiTypeToProviderStandardLocationImport
     {
         [Test, AutoData]
-        public void Then_Maps_The_Fields(Provider provider)
+        public void Then_Maps_The_Fields(ImportTypes.Provider provider)
         {
             //Arrange
             var courseStandard = provider.Standards.FirstOrDefault();

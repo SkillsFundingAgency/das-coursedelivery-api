@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
 using ProviderImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderImport;
 using StandardLocationImport = SFA.DAS.CourseDelivery.Data.Configuration.StandardLocationImport;
@@ -16,6 +17,10 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
         DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
         DbSet<Domain.Entities.StandardLocationImport> StandardLocationImports { get; set; }
+        DbSet<Domain.Entities.Provider> Providers { get; set; }
+        DbSet<Domain.Entities.ProviderStandard> ProviderStandards { get; set; }
+        DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
+        DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
         int SaveChanges();
     }
 
@@ -25,7 +30,11 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
         public DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
         public DbSet<Domain.Entities.StandardLocationImport> StandardLocationImports { get; set; }
-        
+        public DbSet<Domain.Entities.Provider> Providers { get; set; }
+        public DbSet<Domain.Entities.ProviderStandard> ProviderStandards { get; set; }
+        public DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
+        public DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
+
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
         private readonly AzureServiceTokenProvider _azureServiceTokenProvider;
@@ -70,7 +79,10 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new StandardLocationImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardLocationImport());
-            
+            modelBuilder.ApplyConfiguration(new Provider());
+            modelBuilder.ApplyConfiguration(new StandardLocation());
+            modelBuilder.ApplyConfiguration(new ProviderStandard());
+            modelBuilder.ApplyConfiguration(new ProviderStandardLocation());
             base.OnModelCreating(modelBuilder);
         }
     }
