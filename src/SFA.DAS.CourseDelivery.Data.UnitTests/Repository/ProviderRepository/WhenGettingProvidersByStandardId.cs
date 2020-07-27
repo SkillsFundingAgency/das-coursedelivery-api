@@ -33,11 +33,22 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
                 },
                 new ProviderStandard
                 {
+                    Ukprn = 12335,
+                    StandardId = ExpectedStandardId,
+                    Provider = new Provider
+                    {
+                        Ukprn = 12335,
+                        Name="Second"
+                    } 
+                }  ,
+                new ProviderStandard
+                {
                     Ukprn = 1233,
                     StandardId = ExpectedStandardId,
                     Provider = new Provider
                     {
-                        Ukprn = 1233
+                        Ukprn = 1233,
+                        Name="First"
                     } 
                 }  
             };
@@ -50,14 +61,15 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
         }
 
         [Test]
-        public async Task Then_The_Providers_Items_Are_Returned_By_StandardId()
+        public async Task Then_The_Providers_Items_Are_Returned_By_StandardId_Ordered_By_Name()
         {
             //Act
             var actual = await _providerStandardImportRepository.GetByStandardId(ExpectedStandardId);
             
             //Assert
             Assert.IsNotNull(actual);
-            actual.Count().Should().Be(1);
+            actual.Count().Should().Be(2);
+            actual.Should().BeInAscendingOrder(c=>c.Name);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
-using Provider = SFA.DAS.CourseDelivery.Domain.ImportTypes.Provider;
 
 namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 {
