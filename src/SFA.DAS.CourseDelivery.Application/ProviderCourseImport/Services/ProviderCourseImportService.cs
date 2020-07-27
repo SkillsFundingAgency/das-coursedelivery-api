@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -17,6 +18,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         private readonly IProviderStandardRepository _providerStandardRepository;
         private readonly IProviderStandardLocationRepository _providerStandardLocationRepository;
         private readonly IStandardLocationRepository _standardLocationRepository;
+        private readonly ILogger<ProviderCourseImportService> _logger;
 
         public ProviderCourseImportService (
             ICourseDirectoryService courseDirectoryService,
@@ -27,7 +29,8 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             IProviderRepository providerRepository,
             IProviderStandardRepository providerStandardRepository,
             IProviderStandardLocationRepository providerStandardLocationRepository,
-            IStandardLocationRepository standardLocationRepository)
+            IStandardLocationRepository standardLocationRepository,
+            ILogger<ProviderCourseImportService> logger)
         {
             _courseDirectoryService = courseDirectoryService;
             _providerImportRepository = providerImportRepository;
@@ -38,16 +41,20 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             _providerStandardRepository = providerStandardRepository;
             _providerStandardLocationRepository = providerStandardLocationRepository;
             _standardLocationRepository = standardLocationRepository;
+            _logger = logger;
         }
         public async Task ImportProviderCourses()
         {
+            _logger.LogInformation("Getting data from Course Directory");
             var providerCourseInformation = (await _courseDirectoryService.GetProviderCourseInformation()).ToList();
 
             if (!providerCourseInformation.Any())
             {
+                _logger.LogInformation("No data received from Course Directory. Ending import.");
                 return;
             }
             
+            _logger.LogInformation("Clearing import tables");
             ClearImportTables();
 
             var providers = GetProviderImports(providerCourseInformation).ToList();
@@ -60,11 +67,15 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             var providerStandardImportTask = _providerStandardImportRepository.InsertMany(providerStandardImport);
             var providerStandardLocationImportTask = _providerStandardLocationImportRepository.InsertMany(providerStandardLocationImport);
 
+            _logger.LogInformation($"Adding {providers.Count} providers to import tables");
             await Task.WhenAll(providerImportTask, standardLocationImportTask, providerStandardImportTask, providerStandardLocationImportTask);
-
+            _logger.LogInformation("Finishing adding to import table - clearing main data table");
+            
             ClearDataTables();
 
+            _logger.LogInformation("Adding to tables from import tables");
             await LoadDataFromImportTables();
+            _logger.LogInformation("Finished import");
         }
 
         private static IEnumerable<ProviderImport> GetProviderImports(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
