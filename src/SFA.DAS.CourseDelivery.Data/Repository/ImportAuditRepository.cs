@@ -1,9 +1,10 @@
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
 {
-    public class ImportAuditRepository
+    public class ImportAuditRepository : IImportAuditRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
 
