@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tables\ImportAudit.sql" />
     <Content Include="Tables\Provider.sql" />
     <Content Include="Tables\ProviderStandard.sql" />
     <Content Include="Tables\ProviderStandardLocation.sql" />

@@ -21,6 +21,7 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderStandard> ProviderStandards { get; set; }
         DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
         DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
+        DbSet<Domain.Entities.ImportAudit> ImportAudit { get; set; }
         int SaveChanges();
     }
 
@@ -34,6 +35,7 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderStandard> ProviderStandards { get; set; }
         public DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
         public DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
+        public DbSet<Domain.Entities.ImportAudit> ImportAudit { get; set; }
 
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -83,6 +85,7 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new StandardLocation());
             modelBuilder.ApplyConfiguration(new ProviderStandard());
             modelBuilder.ApplyConfiguration(new ProviderStandardLocation());
+            modelBuilder.ApplyConfiguration(new ImportAudit());
             base.OnModelCreating(modelBuilder);
         }
     }
