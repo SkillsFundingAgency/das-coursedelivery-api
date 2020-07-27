@@ -1,4 +1,8 @@
+using System;
+using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
 using SFA.DAS.CourseDelivery.Application.Provider.Services;
 using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
@@ -11,7 +15,9 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
     {
         public static void AddServiceRegistration(this IServiceCollection services)
         {
-            services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>();
+            services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(10))
+                .AddPolicyHandler(GetCourseDirectoryRetryPolicy());
 
             services.AddTransient<IProviderCourseImportService, ProviderCourseImportService>();
             services.AddTransient<IProviderService, ProviderService>();
@@ -26,5 +32,14 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IStandardLocationRepository, StandardLocationRepository>();
 
         }
+        private static IAsyncPolicy<HttpResponseMessage> GetCourseDirectoryRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
+                    retryAttempt)));
+        }
     }
+    
 }
