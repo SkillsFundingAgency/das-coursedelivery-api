@@ -9,7 +9,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
     public class WhenDeletingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.ProviderStandardLocationRepository _providerStandardLocationImportRepository;
+        private Data.Repository.ProviderStandardLocationRepository _providerStandardLocationRepository;
         private List<ProviderStandardLocation> _providerStandardLocationImports;
 
         [SetUp]
@@ -31,14 +31,14 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ProviderStandardLocations).ReturnsDbSet(_providerStandardLocationImports);
-            _providerStandardLocationImportRepository = new Data.Repository.ProviderStandardLocationRepository(_courseDeliveryDataContext.Object);
+            _providerStandardLocationRepository = new Data.Repository.ProviderStandardLocationRepository(_courseDeliveryDataContext.Object);
         }
 
         [Test]
         public void Then_The_ProviderStandardLocations_Are_Removed()
         {
             //Act
-            _providerStandardLocationImportRepository.DeleteAll();
+            _providerStandardLocationRepository.DeleteAll();
             
             //Assert
             _courseDeliveryDataContext.Verify(x=>x.ProviderStandardLocations.RemoveRange(_courseDeliveryDataContext.Object.ProviderStandardLocations), Times.Once);
