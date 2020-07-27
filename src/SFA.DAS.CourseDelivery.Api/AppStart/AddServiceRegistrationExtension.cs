@@ -18,6 +18,10 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
             services.AddTransient<IProviderStandardLocationImportRepository, ProviderStandardLocationImportRepository>();
             services.AddTransient<IStandardLocationImportRepository, StandardLocationImportRepository>();
+            services.AddTransient<IProviderRepository, ProviderRepository>();
+            services.AddTransient<IProviderStandardRepository, ProviderStandardRepository>();
+            services.AddTransient<IProviderStandardLocationRepository, ProviderStandardLocationRepository>();
+            services.AddTransient<IStandardLocationRepository, StandardLocationRepository>();
 
         }
     }

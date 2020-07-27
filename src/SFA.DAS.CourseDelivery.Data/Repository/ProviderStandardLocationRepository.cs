@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
 {
-    public class ProviderStandardLocationRepository
+    public class ProviderStandardLocationRepository : IProviderStandardLocationRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
 
