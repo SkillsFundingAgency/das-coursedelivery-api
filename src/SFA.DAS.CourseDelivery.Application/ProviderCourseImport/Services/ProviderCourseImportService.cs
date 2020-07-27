@@ -14,19 +14,31 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         private readonly IProviderStandardImportRepository _providerStandardImportRepository;
         private readonly IProviderStandardLocationImportRepository _providerStandardLocationImportRepository;
         private readonly IStandardLocationImportRepository _standardLocationImportRepository;
+        private readonly IProviderRepository _providerRepository;
+        private readonly IProviderStandardRepository _providerStandardRepository;
+        private readonly IProviderStandardLocationRepository _providerStandardLocationRepository;
+        private readonly IStandardLocationRepository _standardLocationRepository;
 
         public ProviderCourseImportService (
             ICourseDirectoryService courseDirectoryService,
             IProviderImportRepository providerImportRepository,
             IProviderStandardImportRepository providerStandardImportRepository,
             IProviderStandardLocationImportRepository providerStandardLocationImportRepository,
-            IStandardLocationImportRepository standardLocationImportRepository)
+            IStandardLocationImportRepository standardLocationImportRepository,
+            IProviderRepository providerRepository,
+            IProviderStandardRepository providerStandardRepository,
+            IProviderStandardLocationRepository providerStandardLocationRepository,
+            IStandardLocationRepository standardLocationRepository)
         {
             _courseDirectoryService = courseDirectoryService;
             _providerImportRepository = providerImportRepository;
             _providerStandardImportRepository = providerStandardImportRepository;
             _providerStandardLocationImportRepository = providerStandardLocationImportRepository;
             _standardLocationImportRepository = standardLocationImportRepository;
+            _providerRepository = providerRepository;
+            _providerStandardRepository = providerStandardRepository;
+            _providerStandardLocationRepository = providerStandardLocationRepository;
+            _standardLocationRepository = standardLocationRepository;
         }
         public async Task ImportProviderCourses()
         {
@@ -50,6 +62,10 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             var providerStandardLocationImportTask = _providerStandardLocationImportRepository.InsertMany(providerStandardLocationImport);
 
             await Task.WhenAll(providerImportTask, standardLocationImportTask, providerStandardImportTask, providerStandardLocationImportTask);
+
+            ClearDataTables();
+
+            await LoadDataFromImportTables();
         }
 
         private static IEnumerable<ProviderImport> GetProviderImports(IEnumerable<Provider> providerCourseInformation)
@@ -103,12 +119,53 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 .Select(item => item.First());
         }
 
+        private async Task LoadDataFromImportTables()
+        {
+            var providerDataTask = _providerImportRepository.GetAll();
+            var providerStandardDataTask = _providerStandardImportRepository.GetAll();
+            var providerStandardLocationDataTask = _providerStandardLocationImportRepository.GetAll();
+            var standardLocationDataTask = _standardLocationImportRepository.GetAll();
+
+            await Task.WhenAll(
+                providerDataTask, 
+                providerStandardDataTask, 
+                providerStandardLocationDataTask,
+                standardLocationDataTask);
+
+            var insertProviderTask = 
+                _providerRepository.InsertMany(
+                    providerDataTask.Result.Select(c=>(Domain.Entities.Provider)c));
+            var insertProviderStandardTask =
+                _providerStandardRepository.InsertMany(
+                    providerStandardDataTask.Result.Select(c => (ProviderStandard) c));
+            var insertProviderStandardLocationTask =
+                _providerStandardLocationRepository.InsertMany(
+                    providerStandardLocationDataTask.Result.Select(c => (ProviderStandardLocation) c));
+            var insertStandardLocationTask =
+                _standardLocationRepository.InsertMany(
+                    standardLocationDataTask.Result.Select(c => (StandardLocation) c));
+            
+            await Task.WhenAll(
+                insertProviderTask, 
+                insertProviderStandardTask, 
+                insertProviderStandardLocationTask,
+                insertStandardLocationTask);
+        }
+
         private void ClearImportTables()
         {
             _providerImportRepository.DeleteAll();
             _providerStandardImportRepository.DeleteAll();
             _providerStandardLocationImportRepository.DeleteAll();
             _standardLocationImportRepository.DeleteAll();
+        }
+
+        private void ClearDataTables()
+        {
+            _providerRepository.DeleteAll();
+            _providerStandardRepository.DeleteAll();
+            _providerStandardLocationRepository.DeleteAll();
+            _standardLocationRepository.DeleteAll();
         }
     }
 }

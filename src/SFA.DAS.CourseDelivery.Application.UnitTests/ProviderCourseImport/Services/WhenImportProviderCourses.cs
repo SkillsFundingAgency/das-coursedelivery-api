@@ -175,5 +175,70 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
                     c.Count.Equals(providerImport.SelectMany(d=>d.Standards).Sum(e=>e.Locations.Count)))), Times.Once);
         }
 
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_The_ProviderStandard_Data_Is_Deleted_When_There_Is_New_Data_In_The_Import_Table(
+            [Frozen] Mock<IProviderStandardRepository> providerStandardRepository,
+            [Frozen] Mock<IProviderRepository> providerRepository,
+            [Frozen] Mock<IProviderStandardLocationRepository> providerStandardLocationRepository,
+            [Frozen] Mock<IStandardLocationRepository> standardLocationRepository,
+            [Frozen] Mock<ICourseDirectoryService> service,
+            List<Domain.ImportTypes.Provider> providerImport,
+            ProviderCourseImportService standardsImportService)
+        {
+            //Arrange
+            service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(providerImport);
+            
+            //Act
+            await standardsImportService.ImportProviderCourses();
+            
+            //Assert
+            providerStandardRepository.Verify(x=>x.DeleteAll(), Times.Once);
+            providerRepository.Verify(x=>x.DeleteAll(), Times.Once);
+            providerStandardLocationRepository.Verify(x=>x.DeleteAll(), Times.Once);
+            standardLocationRepository.Verify(x=>x.DeleteAll(), Times.Once);
+        }
+
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_The_ImportData_Is_Loaded_Into_The_Data_Tables(
+            [Frozen] Mock<IProviderStandardImportRepository> providerStandardImportRepository,
+            [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderStandardLocationImportRepository> providerStandardLocationImportRepository,
+            [Frozen] Mock<IStandardLocationImportRepository> standardLocationImportRepository,
+            [Frozen] Mock<IProviderStandardRepository> providerStandardRepository,
+            [Frozen] Mock<IProviderRepository> providerRepository,
+            [Frozen] Mock<IProviderStandardLocationRepository> providerStandardLocationRepository,
+            [Frozen] Mock<IStandardLocationRepository> standardLocationRepository,
+            [Frozen] Mock<ICourseDirectoryService> service,
+            List<Domain.ImportTypes.Provider> providerImport,
+            List<ProviderImport> providers,
+            List<ProviderStandardImport> providerStandards,
+            List<ProviderStandardLocationImport> providerStandardLocations,
+            List<StandardLocationImport> standardLocations,
+            ProviderCourseImportService standardsImportService)
+        {
+            //Arrange
+            service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(providerImport);
+            providerImportRepository.Setup(x => x.GetAll()).ReturnsAsync(providers);
+            providerStandardImportRepository.Setup(x => x.GetAll()).ReturnsAsync(providerStandards);
+            providerStandardLocationImportRepository.Setup(x => x.GetAll()).ReturnsAsync(providerStandardLocations);
+            standardLocationImportRepository.Setup(x => x.GetAll()).ReturnsAsync(standardLocations);
+            
+            //Act
+            await standardsImportService.ImportProviderCourses();
+            
+            //Assert
+            providerStandardRepository
+                .Verify(x=>
+                    x.InsertMany(It.Is<List<ProviderStandard>>(c=>c.Count.Equals(providerStandards.Count))), Times.Once);
+            providerRepository
+                .Verify(x=>
+                    x.InsertMany(It.Is<List<Domain.Entities.Provider>>(c=>c.Count.Equals(providers.Count))), Times.Once);
+            providerStandardLocationRepository
+                .Verify(x=>
+                    x.InsertMany(It.Is<List<ProviderStandardLocation>>(c=>c.Count.Equals(providerStandardLocations.Count))), Times.Once);
+            standardLocationRepository
+                .Verify(x=>
+                    x.InsertMany(It.Is<List<Domain.Entities.StandardLocation>>(c=>c.Count.Equals(standardLocations.Count))), Times.Once);
+        }
     }
 }
