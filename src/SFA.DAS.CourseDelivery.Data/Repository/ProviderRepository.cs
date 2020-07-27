@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -24,6 +26,17 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             _dataContext.Providers.RemoveRange(_dataContext.Providers);
             _dataContext.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Provider>> GetByStandardId(int standardId)
+        {
+            var providers = await _dataContext
+                .ProviderStandards
+                .Where(c => c.StandardId.Equals(standardId))
+                .Include(c => c.Provider)
+                .Select(c=>c.Provider).ToListAsync();
+
+            return providers;
         }
     }
 }
