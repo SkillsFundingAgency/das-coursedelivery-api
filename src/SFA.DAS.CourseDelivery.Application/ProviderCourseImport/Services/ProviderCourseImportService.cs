@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         private readonly IProviderStandardLocationRepository _providerStandardLocationRepository;
         private readonly IStandardLocationRepository _standardLocationRepository;
         private readonly ILogger<ProviderCourseImportService> _logger;
+        private readonly IImportAuditRepository _importAuditRepository;
 
         public ProviderCourseImportService (
             ICourseDirectoryService courseDirectoryService,
@@ -30,6 +32,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             IProviderStandardRepository providerStandardRepository,
             IProviderStandardLocationRepository providerStandardLocationRepository,
             IStandardLocationRepository standardLocationRepository,
+            IImportAuditRepository importAuditRepository,
             ILogger<ProviderCourseImportService> logger)
         {
             _courseDirectoryService = courseDirectoryService;
@@ -41,10 +44,13 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             _providerStandardRepository = providerStandardRepository;
             _providerStandardLocationRepository = providerStandardLocationRepository;
             _standardLocationRepository = standardLocationRepository;
+            _importAuditRepository = importAuditRepository;
             _logger = logger;
         }
         public async Task ImportProviderCourses()
         {
+            var importStartTime = DateTime.UtcNow;
+            
             _logger.LogInformation("Getting data from Course Directory");
             var providerCourseInformation = (await _courseDirectoryService.GetProviderCourseInformation()).ToList();
 
@@ -75,6 +81,9 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
             _logger.LogInformation("Adding to tables from import tables");
             await LoadDataFromImportTables();
+
+            await _importAuditRepository.Insert(new ImportAudit(importStartTime, providers.Count));
+            
             _logger.LogInformation("Finished import");
         }
 

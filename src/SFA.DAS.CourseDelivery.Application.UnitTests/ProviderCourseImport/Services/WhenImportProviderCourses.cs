@@ -240,5 +240,34 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
                 .Verify(x=>
                     x.InsertMany(It.Is<List<Domain.Entities.StandardLocation>>(c=>c.Count.Equals(standardLocations.Count))), Times.Once);
         }
+
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_An_Audit_Record_Is_Added_After_Successfully_Added(
+            [Frozen] Mock<IProviderStandardImportRepository> providerStandardImportRepository,
+            [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderStandardLocationImportRepository> providerStandardLocationImportRepository,
+            [Frozen] Mock<IStandardLocationImportRepository> standardLocationImportRepository,
+            [Frozen] Mock<ICourseDirectoryService> service,
+            [Frozen] Mock<IImportAuditRepository> auditRepository,
+            List<Domain.ImportTypes.Provider> providerImport,
+            List<ProviderImport> providers,
+            List<ProviderStandardImport> providerStandards,
+            List<ProviderStandardLocationImport> providerStandardLocations,
+            List<StandardLocationImport> standardLocations,
+            ProviderCourseImportService standardsImportService)
+        {
+            //Arrange
+            service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(providerImport);
+            providerImportRepository.Setup(x => x.GetAll()).ReturnsAsync(providers);
+            providerStandardImportRepository.Setup(x => x.GetAll()).ReturnsAsync(providerStandards);
+            providerStandardLocationImportRepository.Setup(x => x.GetAll()).ReturnsAsync(providerStandardLocations);
+            standardLocationImportRepository.Setup(x => x.GetAll()).ReturnsAsync(standardLocations);
+            
+            //Act
+            await standardsImportService.ImportProviderCourses();
+        
+            //Assert
+            auditRepository.Verify(x=>x.Insert(It.Is<ImportAudit>(c=>c.RowsImported.Equals(providers.Count))));
+        }
     }
 }
