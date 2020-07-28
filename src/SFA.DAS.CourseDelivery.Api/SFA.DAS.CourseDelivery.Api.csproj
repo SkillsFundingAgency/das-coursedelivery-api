@@ -38,6 +38,11 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
+        <Content Update="coursedir.json">
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+        </Content>
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\SFA.DAS.CourseDelivery.Application\SFA.DAS.CourseDelivery.Application.csproj" />

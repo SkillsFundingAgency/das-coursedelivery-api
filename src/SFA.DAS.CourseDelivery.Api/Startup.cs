@@ -78,7 +78,7 @@ namespace SFA.DAS.CourseDelivery.Api
 
             services.AddMediatR(typeof(ImportDataCommand).Assembly);
 
-            services.AddServiceRegistration();
+            services.AddServiceRegistration(_configuration["Environment"] == "DEV");
 
             services.AddDatabaseRegistration(coursesConfiguration, _configuration["Environment"]);
 
@@ -108,8 +108,11 @@ namespace SFA.DAS.CourseDelivery.Api
             }
             
             app.UseAuthentication();
-
-            app.UseHealthChecks();    
+            
+            if (_configuration["Environment"] != "DEV")
+            {
+                app.UseHealthChecks();
+            }
 
             app.UseRouting();
             app.UseEndpoints(builder =>

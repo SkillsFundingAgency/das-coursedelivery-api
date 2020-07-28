@@ -13,11 +13,19 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
 {
     public static class AddServiceRegistrationExtension
     {
-        public static void AddServiceRegistration(this IServiceCollection services)
+        public static void AddServiceRegistration(this IServiceCollection services, bool isDev)
         {
-            services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>()
-                .SetHandlerLifetime(TimeSpan.FromMinutes(10))
-                .AddPolicyHandler(GetCourseDirectoryRetryPolicy());
+            if (isDev)
+            {
+                services.AddTransient<ICourseDirectoryService, DevCourseDirectoryService>();
+            }
+            else
+            {
+                services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>()
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(10))
+                    .AddPolicyHandler(GetCourseDirectoryRetryPolicy());    
+            }
+            
 
             services.AddTransient<IProviderCourseImportService, ProviderCourseImportService>();
             services.AddTransient<IProviderService, ProviderService>();
