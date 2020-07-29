@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -89,6 +90,7 @@ namespace SFA.DAS.CourseDelivery.Api
                     {
                         o.Conventions.Add(new AuthorizeControllerModelConvention());
                     }
+                    o.Conventions.Add(new ApiExplorerGroupPerVersionConvention());
                 }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddApplicationInsightsTelemetry(_configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
@@ -96,12 +98,26 @@ namespace SFA.DAS.CourseDelivery.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseDeliveryAPI", Version = "v1" });
+                c.SwaggerDoc("operations", new OpenApiInfo { Title = "CoursesAPI operations" });
+            });
+            services.AddApiVersioning(opt => {
+                opt.ApiVersionReader = new HeaderApiVersionReader("X-Version");
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1,0);
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseDeliveryAPI");
+                c.SwaggerEndpoint("/swagger/operations/swagger.json", "Operations v1");
+                c.RoutePrefix = string.Empty;
+            });
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -122,12 +138,7 @@ namespace SFA.DAS.CourseDelivery.Api
                     pattern: "api/{controller=Providers}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseDeliveryAPI");
-                c.RoutePrefix = string.Empty;
-            });
+            
         }
         
         private bool ConfigurationIsLocalOrDev()
