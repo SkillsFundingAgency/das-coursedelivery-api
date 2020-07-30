@@ -6,7 +6,7 @@
     <Name>SFA.DAS.CourseDelivery.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{0d11a0d2-8457-4d0c-a9d4-a63700a96684}</ProjectGuid>
+    <ProjectGuid>{87ff079a-4bb0-4b15-b95e-919c70c2761f}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
@@ -56,16 +56,17 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tables\ImportAudit.sql" />
-    <Content Include="Tables\Provider.sql" />
-    <Content Include="Tables\ProviderStandard.sql" />
-    <Content Include="Tables\ProviderStandardLocation.sql" />
-    <Content Include="Tables\ProviderStandardLocation_Import.sql" />
-    <Content Include="Tables\ProviderStandard_Import.sql" />
-    <Content Include="Tables\Provider_Import.sql" />
-    <Content Include="Tables\StandardLocation.sql" />
-    <Content Include="Tables\StandardLocation_Import.sql" />
+    <Build Include="Tables\ImportAudit.sql" />
+    <Build Include="Tables\Provider.sql" />
+    <Build Include="Tables\Provider_Import.sql" />
+    <Build Include="Tables\ProviderStandard.sql" />
+    <Build Include="Tables\ProviderStandard_Import.sql" />
+    <Build Include="Tables\ProviderStandardLocation.sql" />
+    <Build Include="Tables\ProviderStandardLocation_Import.sql" />
+    <Build Include="Tables\StandardLocation.sql" />
+    <Build Include="Tables\StandardLocation_Import.sql" />
   </ItemGroup>
 </Project>
