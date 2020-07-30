@@ -99,11 +99,10 @@ namespace SFA.DAS.CourseDelivery.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseDeliveryAPI", Version = "v1" });
                 c.SwaggerDoc("operations", new OpenApiInfo { Title = "CoursesAPI operations" });
+                c.OperationFilter<SwaggerVersionHeaderFilter>();
             });
             services.AddApiVersioning(opt => {
                 opt.ApiVersionReader = new HeaderApiVersionReader("X-Version");
-                opt.AssumeDefaultVersionWhenUnspecified = true;
-                opt.DefaultApiVersion = new ApiVersion(1,0);
             });
         }
 
