@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.CourseDelivery.Api", "SFA.DAS.CourseDelivery.Api\SFA.DAS.CourseDelivery.Api.csproj", "{4075B63D-C800-4C58-B192-316F50DD0B24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.CourseDelivery.Database", "SFA.DAS.CourseDelivery.Database\SFA.DAS.CourseDelivery.Database.sqlproj", "{8EE80DB6-D02E-4D04-8350-407BA322E5AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.CourseDelivery.Database", "SFA.DAS.CourseDelivery.Database\SFA.DAS.CourseDelivery.Database.sqlproj", "{0D11A0D2-8457-4D0C-A9D4-A63700A96684}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6857CC53-8EA1-43AB-B5D2-3E847A9D3FD5}"
 EndProject
@@ -34,10 +34,10 @@ Global
 		{4075B63D-C800-4C58-B192-316F50DD0B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4075B63D-C800-4C58-B192-316F50DD0B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4075B63D-C800-4C58-B192-316F50DD0B24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8EE80DB6-D02E-4D04-8350-407BA322E5AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EE80DB6-D02E-4D04-8350-407BA322E5AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EE80DB6-D02E-4D04-8350-407BA322E5AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EE80DB6-D02E-4D04-8350-407BA322E5AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D11A0D2-8457-4D0C-A9D4-A63700A96684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D11A0D2-8457-4D0C-A9D4-A63700A96684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D11A0D2-8457-4D0C-A9D4-A63700A96684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D11A0D2-8457-4D0C-A9D4-A63700A96684}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18C1C9BE-7061-4203-91E4-3FD0CE4420C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{18C1C9BE-7061-4203-91E4-3FD0CE4420C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18C1C9BE-7061-4203-91E4-3FD0CE4420C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
