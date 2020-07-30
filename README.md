@@ -16,6 +16,8 @@ das-coursedelivery-api represents the inner api definition for provider course d
 
 ## Local running
 
+**Do not run in IISExpress**
+
 ### In memory database
 It is possible to run the whole of the API using the InMemory database. To do this the environment variable in appsettings.json should be set to **DEV**. 
 Once done, start the application as normal, then run the ```ops/dataload``` operation in swagger. You will then be able to query the API
