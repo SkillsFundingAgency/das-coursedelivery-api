@@ -7,6 +7,7 @@ using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.ImportPro
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("/ops/dataload/")]
     public class DataLoadController : ControllerBase

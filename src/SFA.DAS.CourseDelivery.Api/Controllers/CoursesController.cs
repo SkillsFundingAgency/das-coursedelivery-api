@@ -9,6 +9,7 @@ using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("/api/[controller]/")]
     public class CoursesController : ControllerBase
