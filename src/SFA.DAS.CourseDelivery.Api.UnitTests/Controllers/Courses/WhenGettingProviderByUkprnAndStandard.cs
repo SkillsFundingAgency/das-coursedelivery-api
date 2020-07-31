@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,13 +10,12 @@ using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
 using SFA.DAS.Testing.AutoFixture;
 using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
 
-namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
+namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
 {
-    public class WhenGettingProviderByUkprn
+    public class WhenGettingProviderByUkprnAndStandard
     {
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Providers_List_From_Mediator(
@@ -37,9 +34,9 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
 
             var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as ObjectResult;
 
-            var model = controllerResult.Value as GetProviderResponse;
+            var model = controllerResult.Value as GetCourseProviderResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            model.Should().BeAssignableTo<GetProviderResponse>();
+            model.Should().BeAssignableTo<GetCourseProviderResponse>();
         }
 
         [Test, RecursiveMoqAutoData]

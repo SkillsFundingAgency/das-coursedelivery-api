@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 
@@ -11,6 +13,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string Email { get ; set ; }
         public string Website { get ; set ; }
         public string Phone { get ; set ; }
+        public IEnumerable<GetProviderStandardResponse> ProviderStandard { get; set; } 
 
         public static implicit operator GetProviderResponse(Provider provider)
         {
@@ -18,9 +21,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
             {
                 Ukprn = provider.Ukprn,
                 Name = provider.Name,
-                Email = provider.Email,
-                Phone = provider.Phone,
-                Website = provider.Website
+                ProviderStandard = provider.ProviderStandards.Select(c=>(GetProviderStandardResponse)c)
             };
         }
     }

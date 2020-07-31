@@ -16,9 +16,6 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
-            actual.Email.Should().Be(provider.Email);
-            actual.Website.Should().Be(provider.Website);
-            actual.Phone.Should().Be(provider.Phone);
         }
     }
 }
