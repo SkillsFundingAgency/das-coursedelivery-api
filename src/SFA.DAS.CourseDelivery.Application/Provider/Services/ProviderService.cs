@@ -18,5 +18,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
             return providers;
         }
+
+        public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukPrn)
+        {
+            var provider = await _providerRepository.GetByUkprn(ukPrn);
+
+            return provider;
+        }
     }
 }
