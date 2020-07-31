@@ -8,25 +8,25 @@ using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.Testing.AutoFixture;
 
-namespace SFA.DAS.CourseDelivery.Application.UnitTests.Providers.Queries
+namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
 {
-    public class WhenGettingAProvider
+    public class WhenGettingACourseProvider
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_Provider_From_The_Service_By_Ukprn(
+        public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_And_StandardId(
             GetProviderQuery query,
-            Domain.Entities.Provider provider,
+            Domain.Entities.ProviderStandard providerStandard,
             [Frozen] Mock<IProviderService> providerService,
             GetProviderQueryHandler handler)
         {
             //Arrange
-            providerService.Setup(x => x.GetProviderByUkprn(query.Ukprn)).ReturnsAsync(provider);
+            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId)).ReturnsAsync(providerStandard);
 
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
 
             //Assert
-            actual.Provider.Should().BeEquivalentTo(provider);
+            actual.ProviderStandardContact.Should().BeEquivalentTo(providerStandard);
         }
     }
 }

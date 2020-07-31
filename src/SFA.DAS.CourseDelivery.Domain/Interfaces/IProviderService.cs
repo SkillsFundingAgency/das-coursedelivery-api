@@ -6,6 +6,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     public interface IProviderService
     {
         Task<IEnumerable<Domain.Entities.Provider>> GetProvidersByStandardId(int standardId);
-        Task<Domain.Entities.Provider> GetProviderByUkprn(int ukPrn);
+        Task<Domain.Entities.ProviderStandard> GetProviderByUkprnAndStandard(int ukPrn, int standardId);
     }
 }

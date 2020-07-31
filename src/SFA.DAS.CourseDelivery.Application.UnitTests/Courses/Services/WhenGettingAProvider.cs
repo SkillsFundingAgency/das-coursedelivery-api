@@ -14,18 +14,19 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_The_Provider_From_The_Repository(
             int ukPrn,
-            Domain.Entities.Provider provider,
-            [Frozen]Mock<IProviderRepository> repository,
+            int standardId,
+            Domain.Entities.ProviderStandard provider,
+            [Frozen]Mock<IProviderStandardRepository> repository,
             ProviderService service)
         {
             //Arrange
-            repository.Setup(x => x.GetByUkprn(ukPrn)).ReturnsAsync(provider);
+            repository.Setup(x => x.GetByUkprnAndStandard(ukPrn,standardId)).ReturnsAsync(provider);
             
             //Act
-            var actual = await service.GetProviderByUkprn(ukPrn);
+            var actual = await service.GetProviderByUkprnAndStandard(ukPrn, standardId);
             
             //Assert
-            repository.Verify(x=>x.GetByUkprn(ukPrn), Times.Once);
+            repository.Verify(x=>x.GetByUkprnAndStandard(ukPrn, standardId), Times.Once);
             actual.Should().BeEquivalentTo(provider);
         }
     }

@@ -7,10 +7,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
     public class ProviderService : IProviderService
     {
         private readonly IProviderRepository _providerRepository;
+        private readonly IProviderStandardRepository _providerStandardRepository;
 
-        public ProviderService (IProviderRepository providerRepository)
+        public ProviderService (IProviderRepository providerRepository, IProviderStandardRepository providerStandardRepository)
         {
             _providerRepository = providerRepository;
+            _providerStandardRepository = providerStandardRepository;
         }
         public async Task<IEnumerable<Domain.Entities.Provider>> GetProvidersByStandardId(int standardId)
         {
@@ -19,9 +21,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             return providers;
         }
 
-        public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukPrn)
+        public async Task<Domain.Entities.ProviderStandard> GetProviderByUkprnAndStandard(int ukPrn, int standardId)
         {
-            var provider = await _providerRepository.GetByUkprn(ukPrn);
+            var provider = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
 
             return provider;
         }

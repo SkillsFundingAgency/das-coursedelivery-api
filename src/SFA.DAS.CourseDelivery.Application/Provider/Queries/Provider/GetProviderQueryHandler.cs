@@ -15,11 +15,11 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider
         }
         public async Task<GetProviderResponse> Handle(GetProviderQuery request, CancellationToken cancellationToken)
         {
-            var provider = await _service.GetProviderByUkprn(request.Ukprn);
+            var provider = await _service.GetProviderByUkprnAndStandard(request.Ukprn, request.StandardId);
             
             return new GetProviderResponse
             {
-                Provider = provider
+                ProviderStandardContact = provider,
             }; 
                 
         }
