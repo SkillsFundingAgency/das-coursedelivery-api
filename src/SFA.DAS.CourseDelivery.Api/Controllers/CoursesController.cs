@@ -33,7 +33,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=>(GetCourseProviderResponse)c)
+                    .Select(c=>(GetProviderResponse)c)
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
