@@ -7,7 +7,7 @@ using SFA.DAS.CourseDelivery.Application.Provider.Services;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.Testing.AutoFixture;
 
-namespace SFA.DAS.CourseDelivery.Application.UnitTests.Providers.Services
+namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
 {
     public class WhenGettingAProvider
     {

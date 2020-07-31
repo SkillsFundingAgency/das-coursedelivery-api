@@ -23,18 +23,19 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Providers_List_From_Mediator(
             int standardId,
+            int ukPrn,
             Application.Provider.Queries.Provider.GetProviderResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] ProvidersController controller)
+            [Greedy] CoursesController controller)
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
                     It.Is<GetProviderQuery>(query => 
-                        query.Ukprn == standardId), 
+                        query.Ukprn == ukPrn && query.StandardId == standardId), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProviderByUkprn(standardId) as ObjectResult;
+            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as ObjectResult;
 
             var model = controllerResult.Value as GetProviderResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
@@ -44,8 +45,9 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
         [Test, RecursiveMoqAutoData]
         public async Task And_Null_Then_Returns_NotFound_Request(
             int standardId,
+            int ukPrn,
             [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] ProvidersController controller)
+            [Greedy] CoursesController controller)
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
@@ -53,7 +55,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Application.Provider.Queries.Provider.GetProviderResponse());
 
-            var controllerResult = await controller.GetProviderByUkprn(standardId) as StatusCodeResult;
+            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as StatusCodeResult;
 
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
