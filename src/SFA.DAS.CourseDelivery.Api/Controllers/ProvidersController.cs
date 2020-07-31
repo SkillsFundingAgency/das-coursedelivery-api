@@ -23,6 +23,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         [Route("{ukprn}")]
         public async Task<IActionResult> GetProviderByUkprn(int ukprn)
         {
