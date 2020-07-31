@@ -38,5 +38,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
             return providers;
         }
+
+        public async Task<Provider> GetByUkprn(int ukPrn)
+        {
+            var provider = await _dataContext.Providers.SingleOrDefaultAsync(c => c.Ukprn.Equals(ukPrn));
+
+            return provider;
+        }
     }
 }
