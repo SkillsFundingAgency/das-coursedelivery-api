@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
         [HttpGet]
         [Route("{ukprn}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderResponse))]
+        [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderResponse))]
         public async Task<IActionResult> GetProviderByUkprn(int ukprn)
         {
             var queryResult = await _mediator.Send(new GetProviderQuery {Ukprn = ukprn});
