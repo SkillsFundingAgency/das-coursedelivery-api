@@ -1,21 +1,24 @@
-using Newtonsoft.Json;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 
 namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
     public class GetCourseProviderResponse
     {
-        public int Ukprn { get ; set ; }
-
         public string Name { get ; set ; }
+        public int Ukprn { get ; set ; }
+        public string ContactUrl { get ; set ; }
+        public string Email { get ; set ; }
+        public string Phone { get ; set ; }
 
-        public static implicit operator GetCourseProviderResponse(Provider provider)
+        public static implicit operator GetCourseProviderResponse(ProviderStandard source)
         {
             return new GetCourseProviderResponse
             {
-                Ukprn = provider.Ukprn,
-                Name = provider.Name
-
+                Email = source.Email,
+                Phone = source.Phone,
+                ContactUrl = source.ContactUrl,
+                Name = source.Provider.Name,
+                Ukprn = source.Provider.Ukprn
             };
         }
     }

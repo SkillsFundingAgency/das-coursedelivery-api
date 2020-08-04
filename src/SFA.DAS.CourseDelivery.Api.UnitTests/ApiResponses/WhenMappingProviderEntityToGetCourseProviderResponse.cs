@@ -12,7 +12,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         [Test, RecursiveMoqAutoData]
         public void Then_Maps_Fields(Provider provider)
         {
-            var actual = (GetCourseProviderResponse) provider;
+            var actual = (GetProviderResponse) provider;
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);

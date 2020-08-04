@@ -1,11 +1,14 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
+using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -33,7 +36,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=>(GetCourseProviderResponse)c)
+                    .Select(c=>(GetProviderResponse)c)
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
@@ -49,6 +52,22 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 _logger.LogError(e, $"Unable to get providers by course id:{id}");
                 return BadRequest();
             }
+        }
+        
+        [HttpGet]
+        [Route("{id}/providers/{ukprn}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderResponse))]
+        [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderResponse))]
+        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn)
+        {
+            var queryResult = await _mediator.Send(new GetProviderQuery {Ukprn = ukprn, StandardId = id});
+
+            if (queryResult.ProviderStandardContact == null)
+            {
+                return NotFound();
+            }
+
+            return Ok((GetCourseProviderResponse) queryResult.ProviderStandardContact);
         }
     }
 }
