@@ -9,5 +9,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         void DeleteAll();
         Task InsertMany(IEnumerable<ProviderStandard> providerStandards);
         Task<ProviderStandard> GetByUkprnAndStandard(int ukPrn, int standardId);
+        Task<IEnumerable<int>> GetCoursesByUkprn(int ukPrn);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -35,6 +36,16 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .SingleOrDefaultAsync(c => c.StandardId.Equals(standardId) && c.Ukprn.Equals(ukPrn));
 
             return providerStandard;
+        }
+
+        public async Task<IEnumerable<int>> GetCoursesByUkprn(int ukPrn)
+        {
+            var courses = await _dataContext
+                .ProviderStandards
+                .Where(c => c.Ukprn == ukPrn)
+                .Select(c => c.StandardId).ToListAsync();
+
+            return courses;
         }
     }
 }

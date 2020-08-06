@@ -45,6 +45,5 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
             return provider;
         }
-
     }
 }

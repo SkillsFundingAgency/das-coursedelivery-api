@@ -27,5 +27,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
             return provider;
         }
+
+        public async Task<IEnumerable<int>> GetStandardIdsByUkprn(int ukprn)
+        {
+            var standardIds = await _providerStandardRepository.GetCoursesByUkprn(ukprn);
+
+            return standardIds;
+        }
     }
 }
