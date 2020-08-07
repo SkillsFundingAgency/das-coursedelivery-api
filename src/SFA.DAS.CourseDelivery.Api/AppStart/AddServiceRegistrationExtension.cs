@@ -34,6 +34,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<INationalAchievementRatesPageParser, NationalAchievementRatesPageParser>();
             services.AddTransient<IZipArchiveHelper, ZipArchiveHelper>();
+            services.AddTransient<INationalAchievementRatesImportService, NationalAchievementRatesImportService>();
 
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
