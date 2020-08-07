@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AngleSharp;
 using AngleSharp.Dom;
@@ -17,17 +18,25 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.PageParsing
             var config = AngleSharp.Configuration.Default.WithDefaultLoader();
             var context = BrowsingContext.New(config);
             IDocument document = null;
-            while (document == null)
+            var pageFound = false;
+            while (!pageFound)
             {
                 document = await context.OpenAsync(string.Format(Constants.NationalAchievementRatesPageUrl, yearFrom, yearTo));
-                yearTo--;
-                yearFrom--;
+                if (document.StatusCode != HttpStatusCode.NotFound)
+                {
+                    pageFound = true;
+                }
+                else
+                {
+                    yearTo--;
+                    yearFrom--;    
+                }
             }
             
             var downloadHref = document
                 .QuerySelectorAll($"a:contains('{yearFrom} to {yearTo} apprenticeship NARTs overall CSV')")
                 .First()
-                .ParentElement.GetAttribute("Href");
+                .GetAttribute("Href");
             
             var uri = new Uri(downloadHref);
 
