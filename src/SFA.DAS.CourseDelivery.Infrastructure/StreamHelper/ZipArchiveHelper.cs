@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -12,10 +13,9 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.StreamHelper
     {
         public IEnumerable<T> ExtractModelFromCsvFileZipStream<T>(Stream stream, string filePath)
         {
-            
             using(var zip = new ZipArchive(stream, ZipArchiveMode.Read, true))
             {
-                var entry = zip.Entries.FirstOrDefault(m => m.FullName.EndsWith(filePath));
+                var entry = zip.Entries.FirstOrDefault(m => m.FullName.EndsWith(filePath, StringComparison.CurrentCultureIgnoreCase));
 
                 if (entry == null)
                 {
