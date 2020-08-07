@@ -6,5 +6,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     public interface IImportAuditRepository
     {
         Task Insert(ImportAudit importAudit);
+        Task<ImportAudit> GetLastImportByType(ImportType importType);
     }
 }
