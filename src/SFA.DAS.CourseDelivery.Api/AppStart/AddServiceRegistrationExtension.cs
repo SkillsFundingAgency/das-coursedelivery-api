@@ -45,6 +45,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IStandardLocationRepository, StandardLocationRepository>();
             services.AddTransient<IImportAuditRepository, ImportAuditRepository>();
             services.AddTransient<INationalAchievementRateImportRepository, NationalAchievementRateImportRepository>();
+            services.AddTransient<INationalAchievementRateRepository, NationalAchievementRateRepository>();
 
         }
         private static IAsyncPolicy<HttpResponseMessage> GetCourseDirectoryRetryPolicy()

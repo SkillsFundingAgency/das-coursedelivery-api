@@ -8,29 +8,29 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 {
     public class NationalAchievementRateImportRepository : INationalAchievementRateImportRepository
     {
-        private readonly ICourseDeliveryDataContext _dataDataContext;
+        private readonly ICourseDeliveryDataContext _dataContext;
 
         public NationalAchievementRateImportRepository (ICourseDeliveryDataContext dataContext)
         {
-            _dataDataContext = dataContext;
+            _dataContext = dataContext;
         }
         
         public async Task<IEnumerable<NationalAchievementRateImport>> GetAll()
         {
-            var providerStandardImports = await _dataDataContext.NationalAchievementRateImports.ToListAsync();
-            return providerStandardImports;
+            var items = await _dataContext.NationalAchievementRateImports.ToListAsync();
+            return items;
         }
 
         public void DeleteAll()
         {
-            _dataDataContext.NationalAchievementRateImports.RemoveRange(_dataDataContext.NationalAchievementRateImports);
-            _dataDataContext.SaveChanges();
+            _dataContext.NationalAchievementRateImports.RemoveRange(_dataContext.NationalAchievementRateImports);
+            _dataContext.SaveChanges();
         }
 
         public async Task InsertMany(IEnumerable<NationalAchievementRateImport> items)
         {
-            await _dataDataContext.NationalAchievementRateImports.AddRangeAsync(items);
-            _dataDataContext.SaveChanges();
+            await _dataContext.NationalAchievementRateImports.AddRangeAsync(items);
+            _dataContext.SaveChanges();
         }
         
     }
