@@ -8,6 +8,7 @@ using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Infrastructure.Api;
+using SFA.DAS.CourseDelivery.Infrastructure.PageParsing;
 
 namespace SFA.DAS.CourseDelivery.Api.AppStart
 {
@@ -29,6 +30,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
 
             services.AddTransient<IProviderCourseImportService, ProviderCourseImportService>();
             services.AddTransient<IProviderService, ProviderService>();
+            services.AddTransient<INationalAchievementRatesPageParser, NationalAchievementRatesPageParser>();
             
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
