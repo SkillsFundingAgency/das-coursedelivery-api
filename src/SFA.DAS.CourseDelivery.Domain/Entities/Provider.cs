@@ -5,6 +5,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
     public class Provider : ProviderBase
     {
         public virtual ICollection<ProviderStandard> ProviderStandards { get ; set ; }
+        public virtual ICollection<NationalAchievementRate> NationalAchievementRates { get ; set ; }
 
         public static implicit operator Provider(ProviderImport providerImport)
         {

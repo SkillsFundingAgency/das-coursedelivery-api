@@ -22,6 +22,8 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
         DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
         DbSet<Domain.Entities.ImportAudit> ImportAudit { get; set; }
+        DbSet<Domain.Entities.NationalAchievementRate> NationalAchievementRates { get; set; }
+        DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
         int SaveChanges();
     }
 
@@ -36,6 +38,8 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
         public DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
         public DbSet<Domain.Entities.ImportAudit> ImportAudit { get; set; }
+        public DbSet<Domain.Entities.NationalAchievementRate> NationalAchievementRates { get; set; }
+        public DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
 
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -86,6 +90,8 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderStandard());
             modelBuilder.ApplyConfiguration(new ProviderStandardLocation());
             modelBuilder.ApplyConfiguration(new ImportAudit());
+            modelBuilder.ApplyConfiguration(new NationalAchievementRate());
+            modelBuilder.ApplyConfiguration(new NationalAchievementRateImport());
             base.OnModelCreating(modelBuilder);
         }
     }

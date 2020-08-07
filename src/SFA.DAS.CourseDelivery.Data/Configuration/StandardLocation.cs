@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace SFA.DAS.CourseDelivery.Data.Configuration
 {
-    public class StandardLocationImport : IEntityTypeConfiguration<Domain.Entities.StandardLocationImport>
+    public class StandardLocation : IEntityTypeConfiguration<Domain.Entities.StandardLocation>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entities.StandardLocationImport> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entities.StandardLocation> builder)
         {
-            builder.ToTable("StandardLocation_Import");
+            builder.ToTable("StandardLocation");
             builder.HasKey(x => x.LocationId);
 
             builder.Property(c => c.LocationId).HasColumnName("LocationId").HasColumnType("int").IsRequired();
