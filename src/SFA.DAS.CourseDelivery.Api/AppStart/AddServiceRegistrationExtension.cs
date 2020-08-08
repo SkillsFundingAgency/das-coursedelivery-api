@@ -23,7 +23,10 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             }
             else
             {
-                services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>()
+                services.AddHttpClient<ICourseDirectoryService, CourseDirectoryService>
+                    (
+                        options=> options.Timeout = TimeSpan.FromMinutes(10)
+                    )
                     .SetHandlerLifetime(TimeSpan.FromMinutes(10))
                     .AddPolicyHandler(GetCourseDirectoryRetryPolicy());    
             }
