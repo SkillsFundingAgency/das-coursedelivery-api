@@ -66,7 +66,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             _repository.DeleteAll();
 
             _logger.LogInformation("Importing to main table");
-            var items = (await _importRepository.GetAll()).ToList();
+            var items = (await _importRepository.GetAllWithAchievementData()).ToList();
 
             await _repository.InsertMany(items.Select(c => (NationalAchievementRate) c).ToList());
 

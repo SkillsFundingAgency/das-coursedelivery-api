@@ -152,7 +152,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
         }
 
         [Test, RecursiveMoqAutoData]
-        public async Task Then_The_Imported_Data_Is_Loaded_To_Actual_Table(
+        public async Task Then_The_Imported_Data_Is_Loaded_To_Actual_Table_Excluding_Null_Values(
             string filePath,
             string content,
             string newFilePath,
@@ -171,7 +171,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             pageParser.Setup(x => x.GetCurrentDownloadFilePath()).ReturnsAsync(newFilePath);
             auditRepository.Setup(x => x.GetLastImportByType(ImportType.NationalAchievementRates))
                 .ReturnsAsync((ImportAudit)null);
-            importRepository.Setup(x => x.GetAll()).ReturnsAsync(importData);
+            importRepository.Setup(x => x.GetAllWithAchievementData()).ReturnsAsync(importData);
             
             //Act
             await importService.ImportData();
@@ -202,7 +202,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             pageParser.Setup(x => x.GetCurrentDownloadFilePath()).ReturnsAsync(newFilePath);
             auditRepository.Setup(x => x.GetLastImportByType(ImportType.NationalAchievementRates))
                 .ReturnsAsync((ImportAudit)null);
-            importRepository.Setup(x => x.GetAll()).ReturnsAsync(importData);
+            importRepository.Setup(x => x.GetAllWithAchievementData()).ReturnsAsync(importData);
             
             //Act
             await importService.ImportData();
