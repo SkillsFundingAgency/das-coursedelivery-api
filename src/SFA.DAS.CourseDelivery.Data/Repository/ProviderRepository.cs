@@ -34,7 +34,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .ProviderStandards
                 .Where(c => c.StandardId.Equals(standardId))
                 .Include(c => c.Provider)
-                .Select(c=>c.Provider).OrderBy(c=>c.Name).ToListAsync();
+                .ThenInclude(c=>c.NationalAchievementRates)
+                .Select(c=>c.Provider)
+                .OrderBy(c=>c.Name).ToListAsync();
 
             return providers;
         }

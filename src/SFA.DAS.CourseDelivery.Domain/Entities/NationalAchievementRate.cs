@@ -3,6 +3,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
     public class NationalAchievementRate : NationalAchievementRateBase
     {
         public virtual Provider Provider { get ; set ; }
+        public virtual ProviderStandard ProviderStandard { get ; set ; }
 
         public static implicit operator NationalAchievementRate(NationalAchievementRateImport source)
         {
