@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -21,11 +22,19 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
             {
                 new NationalAchievementRateImport
                 {
-                    Id = 1
+                    Id = 1,
+                    OverallAchievementRate = 1
                 },
                 new NationalAchievementRateImport
                 {
-                    Id = 1
+                    Id = 2,
+                    OverallCohort = 1
+                },
+                new NationalAchievementRateImport
+                {
+                    Id = 3,
+                    OverallCohort = null,
+                    OverallAchievementRate = null
                 }
             };
 
@@ -35,14 +44,14 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
         }
         
         [Test]
-        public async Task Then_The_NationalAchievementRateImport_Items_Are_Returned()
+        public async Task Then_The_NationalAchievementRateImport_Items_Are_Returned_That_Have_Values()
         {
             //Act
-            var actual = await _importRepository.GetAll();
+            var actual = await _importRepository.GetAllWithAchievementData();
             
             //Assert
             Assert.IsNotNull(actual);
-            actual.Should().BeEquivalentTo(_importItems);
+            actual.Count().Should().Be(2);
         }
     }
 }

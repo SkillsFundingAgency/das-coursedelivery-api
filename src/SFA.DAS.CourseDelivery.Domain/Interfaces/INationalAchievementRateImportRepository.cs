@@ -6,7 +6,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
 {
     public interface INationalAchievementRateImportRepository
     {
-        Task<IEnumerable<NationalAchievementRateImport>> GetAll();
+        Task<IEnumerable<NationalAchievementRateImport>> GetAllWithAchievementData();
         void DeleteAll();
         Task InsertMany(IEnumerable<NationalAchievementRateImport> items);
     }

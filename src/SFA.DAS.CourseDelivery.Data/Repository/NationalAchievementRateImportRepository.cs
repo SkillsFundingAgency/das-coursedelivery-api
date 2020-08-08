@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -15,9 +16,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext = dataContext;
         }
         
-        public async Task<IEnumerable<NationalAchievementRateImport>> GetAll()
+        public async Task<IEnumerable<NationalAchievementRateImport>> GetAllWithAchievementData()
         {
-            var items = await _dataContext.NationalAchievementRateImports.ToListAsync();
+            var items = await _dataContext.NationalAchievementRateImports
+                .Where(c=>c.OverallCohort.HasValue || c.OverallAchievementRate.HasValue)
+                .ToListAsync();
             return items;
         }
 
