@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AutoFixture.NUnit3;
 using FluentAssertions;
 using NUnit.Framework;
@@ -16,6 +17,36 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
+        }
+
+        [Test, RecursiveMoqAutoData]
+        public void Then_Only_All_Levels_And_All_Ages_Achievement_Rates_Are_Returned(Provider provider)
+        {
+            //Arrange
+            provider.NationalAchievementRates = new List<NationalAchievementRate>
+            {
+                new NationalAchievementRate
+                {
+                    Age = Age.AllAges,
+                    ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
+                },
+                new NationalAchievementRate
+                {
+                    Age = Age.SixteenToEighteen,
+                    ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
+                },
+                new NationalAchievementRate
+                {
+                    Age = Age.AllAges,
+                    ApprenticeshipLevel = ApprenticeshipLevel.Three
+                }
+            };
+            
+            //Act
+            var actual = (GetProviderResponse) provider;
+            
+            //Assert
+            actual.AchievementRates.Count.Should().Be(1);
         }
     }
 }

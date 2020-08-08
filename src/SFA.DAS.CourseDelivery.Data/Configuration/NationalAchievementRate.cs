@@ -17,6 +17,11 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.ApprenticeshipLevel).HasColumnName("ApprenticeshipLevel").HasColumnType("smallint").IsRequired();
             builder.Property(x => x.OverallCohort).HasColumnName("OverallCohort").HasColumnType("int").IsRequired(false);
             builder.Property(x => x.OverallAchievementRate).HasColumnName("OverallAchievementRate").HasColumnType("decimal").IsRequired(false);
+
+            builder.HasOne(c => c.Provider)
+                .WithMany(c => c.NationalAchievementRates)
+                .HasForeignKey(c => c.Ukprn)
+                .HasPrincipalKey(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
             
             builder.HasIndex(x => x.Id).IsUnique();
         }

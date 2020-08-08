@@ -10,10 +10,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public int Ukprn { get ; set ; }
 
         public string Name { get ; set ; }
-        public string Email { get ; set ; }
-        public string Website { get ; set ; }
-        public string Phone { get ; set ; }
-        public IEnumerable<GetProviderStandardResponse> ProviderStandard { get; set; } 
+
+        public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
 
         public static implicit operator GetProviderResponse(Provider provider)
         {
@@ -21,7 +19,11 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
             {
                 Ukprn = provider.Ukprn,
                 Name = provider.Name,
-                ProviderStandard = provider.ProviderStandards.Select(c=>(GetProviderStandardResponse)c)
+                AchievementRates = provider.NationalAchievementRates
+                    .Where(c=>
+                        c.Age.Equals(Age.AllAges) 
+                        && c.ApprenticeshipLevel.Equals(ApprenticeshipLevel.AllLevels))
+                    .Select(c=>(GetNationalAchievementRateResponse)c).ToList()
             };
         }
     }
