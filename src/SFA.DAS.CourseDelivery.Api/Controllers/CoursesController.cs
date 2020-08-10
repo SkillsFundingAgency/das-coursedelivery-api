@@ -28,21 +28,22 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers")]
-        public async Task<IActionResult> GetProvidersByStandardId(int id)
+        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]short age = 0, [FromQuery]short level = 0)
         {
             try
             {
+                _logger.LogInformation("Beginning request");
                 var queryResult = await _mediator.Send(new GetCourseProvidersQuery {StandardId = id});
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=>(GetProviderResponse)c)
+                    .Select(c=> new GetProviderResponse().Map(c, age, level))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
                 {
                     Providers = getCourseProviderResponses,
-                    TotalResults = getCourseProviderResponses.Count 
+                    TotalResults = queryResult.Providers.Count() 
                         
                 };
                 return Ok(response);

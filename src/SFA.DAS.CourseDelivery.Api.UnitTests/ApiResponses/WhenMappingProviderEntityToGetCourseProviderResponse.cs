@@ -13,7 +13,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         [Test, RecursiveMoqAutoData]
         public void Then_Maps_Fields(Provider provider)
         {
-            var actual = (GetProviderResponse) provider;
+            var actual = new GetProviderResponse().Map(provider);
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
@@ -43,7 +43,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             };
             
             //Act
-            var actual = (GetProviderResponse) provider;
+            var actual = new GetProviderResponse().Map(provider, (short)Age.AllAges, (short)ApprenticeshipLevel.AllLevels);
             
             //Assert
             actual.AchievementRates.Count.Should().Be(1);
