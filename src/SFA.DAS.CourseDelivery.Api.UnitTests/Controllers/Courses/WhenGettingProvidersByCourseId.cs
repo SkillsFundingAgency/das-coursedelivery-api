@@ -10,11 +10,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using SFA.DAS.CourseDelivery.Api.ApiRequests;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.Testing.AutoFixture;
+using Age = SFA.DAS.CourseDelivery.Api.ApiRequests.Age;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
 {
@@ -31,13 +33,13 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
             provider.NationalAchievementRates.Clear();
             provider.NationalAchievementRates.Add(new NationalAchievementRate
             {
-                Age = Age.SixteenToEighteen,
+                Age = Domain.Entities.Age.SixteenToEighteen,
                 ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
             });
             provider2.NationalAchievementRates.Clear();
             provider2.NationalAchievementRates.Add(new NationalAchievementRate
             {
-                Age = Age.AllAges,
+                Age = Domain.Entities.Age.AllAges,
                 ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
             });
             
@@ -53,7 +55,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProvidersByStandardId(standardId, (short)Age.AllAges, (short)ApprenticeshipLevel.AllLevels) as ObjectResult;
+            var controllerResult = await controller.GetProvidersByStandardId(standardId, Age.AllAges, Level.AllLevels) as ObjectResult;
 
             var model = controllerResult.Value as GetCourseProvidersListResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);

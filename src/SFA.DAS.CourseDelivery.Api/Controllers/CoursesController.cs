@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SFA.DAS.CourseDelivery.Api.ApiRequests;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
@@ -28,7 +29,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers")]
-        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]short age = 0, [FromQuery]short level = 0)
+        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]Age age = 0, [FromQuery]Level level = 0)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=> new GetProviderResponse().Map(c, age, level))
+                    .Select(c=> new GetProviderResponse().Map(c, (short)age, (short)level))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
