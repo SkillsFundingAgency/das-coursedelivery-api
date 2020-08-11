@@ -8,6 +8,8 @@ using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Infrastructure.Api;
+using SFA.DAS.CourseDelivery.Infrastructure.PageParsing;
+using SFA.DAS.CourseDelivery.Infrastructure.StreamHelper;
 
 namespace SFA.DAS.CourseDelivery.Api.AppStart
 {
@@ -28,11 +30,15 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
                     .SetHandlerLifetime(TimeSpan.FromMinutes(10))
                     .AddPolicyHandler(GetCourseDirectoryRetryPolicy());    
             }
-            
 
+            services.AddHttpClient<IDataDownloadService, DataDownloadService>();
+            
             services.AddTransient<IProviderCourseImportService, ProviderCourseImportService>();
             services.AddTransient<IProviderService, ProviderService>();
-            
+            services.AddTransient<INationalAchievementRatesPageParser, NationalAchievementRatesPageParser>();
+            services.AddTransient<IZipArchiveHelper, ZipArchiveHelper>();
+            services.AddTransient<INationalAchievementRatesImportService, NationalAchievementRatesImportService>();
+
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
             services.AddTransient<IProviderStandardLocationImportRepository, ProviderStandardLocationImportRepository>();
@@ -42,6 +48,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderStandardLocationRepository, ProviderStandardLocationRepository>();
             services.AddTransient<IStandardLocationRepository, StandardLocationRepository>();
             services.AddTransient<IImportAuditRepository, ImportAuditRepository>();
+            services.AddTransient<INationalAchievementRateImportRepository, NationalAchievementRateImportRepository>();
+            services.AddTransient<INationalAchievementRateRepository, NationalAchievementRateRepository>();
 
         }
         private static IAsyncPolicy<HttpResponseMessage> GetCourseDirectoryRetryPolicy()

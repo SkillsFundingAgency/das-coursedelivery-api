@@ -30,12 +30,17 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<IEnumerable<Provider>> GetByStandardId(int standardId)
         {
+            _dataContext.TrackChanges(false);
+            
             var providers = await _dataContext
                 .ProviderStandards
-                .Where(c => c.StandardId.Equals(standardId))
                 .Include(c => c.Provider)
-                .Select(c=>c.Provider).OrderBy(c=>c.Name).ToListAsync();
-
+                .ThenInclude(c=>c.NationalAchievementRates)
+                .Where(c => c.StandardId.Equals(standardId))
+                .Select(c=>c.Provider)
+                .OrderBy(c=>c.Name).ToListAsync();
+            
+            _dataContext.TrackChanges();
             return providers;
         }
 
