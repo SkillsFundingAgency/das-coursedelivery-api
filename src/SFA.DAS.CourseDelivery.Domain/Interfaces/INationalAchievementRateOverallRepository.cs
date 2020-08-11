@@ -8,5 +8,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     {
         void DeleteAll();
         Task InsertMany(IEnumerable<NationalAchievementRateOverall> items);
+        Task<IEnumerable<NationalAchievementRateOverall>> GetBySectorSubjectArea(string expectedSectorSubjectArea);
     }
 }
