@@ -31,7 +31,6 @@ namespace SFA.DAS.CourseDelivery.Data
 
     public class CourseDeliveryDataContext: DbContext, ICourseDeliveryDataContext
     {
-        private readonly ILoggerFactory _logger;
         public DbSet<Domain.Entities.ProviderImport> ProviderImports { get; set; }
         public DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
         public DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
@@ -53,9 +52,8 @@ namespace SFA.DAS.CourseDelivery.Data
         {
         }
 
-        public CourseDeliveryDataContext(DbContextOptions options, ILoggerFactory logger) : base(options)
+        public CourseDeliveryDataContext(DbContextOptions options) : base(options)
         {
-            _logger = logger;
         }
 
         public CourseDeliveryDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
@@ -66,8 +64,6 @@ namespace SFA.DAS.CourseDelivery.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(_logger);
-            
             if (_configuration == null || _azureServiceTokenProvider == null)
             {
                 return;
