@@ -12,7 +12,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Entities
         {
             var actual = (NationalAchievementRateOverall) source;
             
-            actual.Should().BeEquivalentTo(source);
+            actual.Should().BeEquivalentTo(source, options => options.Excluding(c=>c.Id));
         }
     }
 }

@@ -16,6 +16,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Hand
             ImportDataCommand command,
             [Frozen] Mock<IProviderCourseImportService> providerStandardsImportService,
             [Frozen] Mock<INationalAchievementRatesImportService> nationalAchievementRatesImportService,
+            [Frozen] Mock<INationalAchievementRatesOverallImportService> nationalAchievementRatesOverallImportService,
             ImportDataCommandHandler handler)
         {
             // Act
@@ -24,7 +25,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Hand
             //Assert
             providerStandardsImportService.Verify(x=>x.ImportProviderCourses(), Times.Once);
             nationalAchievementRatesImportService.Verify(x=>x.ImportData(), Times.Once);
-            
+            nationalAchievementRatesOverallImportService.Verify(x=>x.ImportData(), Times.Once);
         }
     }
 }
