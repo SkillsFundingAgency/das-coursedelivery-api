@@ -32,7 +32,7 @@ You are able to run the API by doing the following:
 ```
 ParitionKey: LOCAL
 RowKey: SFA.DAS.CourseDelivery.Api_1.0
-data: {"CourseDeliveryConfiguration":{"ConnectionString":"DBCONNECTIONSTRING","CourseDirectoryConfiguration":{"Url":"CourseDirectoryBulkUrl","Key":"ApimKey"}}}
+Data: {"CourseDeliveryConfiguration":{"ConnectionString":"DBCONNECTIONSTRING"},"CourseDirectoryConfiguration":{"Url":"CourseDirectoryBulkUrl","Key":"ApimKey"}}
 ```
 
 * Start the api project ```SFA.DAS.CourseDelivery.Api```
