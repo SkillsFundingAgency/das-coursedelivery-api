@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -41,7 +42,9 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
             _providerStandardRepository.DeleteAll();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.ProviderStandards.RemoveRange(_courseDeliveryDataContext.Object.ProviderStandards), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.ProviderStandards
+                .RemoveRange(It.Is<List<ProviderStandard>>(c=>
+                    c.ToList().Count.Equals(_providerStandards.Count))), Times.Once);
             _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }

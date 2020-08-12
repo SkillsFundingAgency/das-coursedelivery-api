@@ -24,7 +24,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public void DeleteAll()
         {
-            _dataContext.Providers.RemoveRange(_dataContext.Providers);
+            _dataContext.Providers.RemoveRange(_dataContext.Providers.ToList());
             _dataContext.SaveChanges();
         }
 

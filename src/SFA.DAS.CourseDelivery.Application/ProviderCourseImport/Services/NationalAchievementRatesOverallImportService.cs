@@ -17,7 +17,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         private readonly IZipArchiveHelper _zipArchiveHelper;
         private readonly INationalAchievementRateOverallImportRepository _importRepository;
         private readonly INationalAchievementRateOverallRepository _repository;
-        private readonly ILogger<NationalAchievementRatesImportService> _logger;
+        private readonly ILogger<NationalAchievementRatesOverallImportService> _logger;
 
         public NationalAchievementRatesOverallImportService (INationalAchievementRatesPageParser pageParser,
             IImportAuditRepository auditRepository,
@@ -25,7 +25,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             IZipArchiveHelper zipArchiveHelper,
             INationalAchievementRateOverallImportRepository importRepository,
             INationalAchievementRateOverallRepository repository,
-            ILogger<NationalAchievementRatesImportService> logger)
+            ILogger<NationalAchievementRatesOverallImportService> logger)
         {
             _pageParser = pageParser;
             _auditRepository = auditRepository;
@@ -46,7 +46,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             if (auditTask.Result != null && auditTask.Result.FileName.Equals(downloadFilePathTask.Result,
                 StringComparison.CurrentCultureIgnoreCase))
             {
-                _logger.LogInformation("No new achievement rate data to load");
+                _logger.LogInformation("No new overall achievement rate data to load");
                 return;
             }
 

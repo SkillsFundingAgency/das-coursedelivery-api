@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -17,7 +18,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public void DeleteAll()
         {
-            _dataContext.ProviderStandards.RemoveRange(_dataContext.ProviderStandards);
+            _dataContext.ProviderStandards.RemoveRange(_dataContext.ProviderStandards.ToList());
             _dataContext.SaveChanges();
         }
 

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -10,12 +12,12 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
         private Data.Repository.ProviderStandardLocationRepository _providerStandardLocationRepository;
-        private List<ProviderStandardLocation> _providerStandardLocationImports;
+        private List<ProviderStandardLocation> _providerStandardLocations;
 
         [SetUp]
         public void Arrange()
         {
-            _providerStandardLocationImports = new List<ProviderStandardLocation>
+            _providerStandardLocations = new List<ProviderStandardLocation>
             {
                 new ProviderStandardLocation
                 {
@@ -30,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
             };
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
-            _courseDeliveryDataContext.Setup(x => x.ProviderStandardLocations).ReturnsDbSet(_providerStandardLocationImports);
+            _courseDeliveryDataContext.Setup(x => x.ProviderStandardLocations).ReturnsDbSet(_providerStandardLocations);
             _providerStandardLocationRepository = new Data.Repository.ProviderStandardLocationRepository(_courseDeliveryDataContext.Object);
         }
 
@@ -41,7 +43,9 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
             _providerStandardLocationRepository.DeleteAll();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.ProviderStandardLocations.RemoveRange(_courseDeliveryDataContext.Object.ProviderStandardLocations), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.ProviderStandardLocations
+                .RemoveRange(It.Is<List<ProviderStandardLocation>>(c=>
+                    c.ToList().Count.Equals(_providerStandardLocations.Count))), Times.Once);
             _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -41,7 +42,9 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.StandardLocationRepos
             _standardLocationRepository.DeleteAll();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.StandardLocations.RemoveRange(_courseDeliveryDataContext.Object.StandardLocations), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.StandardLocations
+                .RemoveRange(It.Is<List<StandardLocation>>(c=>
+                    c.ToList().Count.Equals(_standardLocations.Count))), Times.Once);
             _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }

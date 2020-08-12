@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
@@ -22,7 +23,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public void DeleteAll()
         {
-            _dataContext.ProviderStandardLocations.RemoveRange(_dataContext.ProviderStandardLocations);
+            _dataContext.ProviderStandardLocations.RemoveRange(_dataContext.ProviderStandardLocations.ToList());
             _dataContext.SaveChanges();
         }
     }
