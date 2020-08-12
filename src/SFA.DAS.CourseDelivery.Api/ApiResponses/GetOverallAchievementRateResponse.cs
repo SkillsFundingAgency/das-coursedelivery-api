@@ -6,7 +6,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
     {
         public string Age { get ; set ; }
 
-        public string ApprenticeshipLevel { get ; set ; }
+        public string Level { get ; set ; }
 
         public string SectorSubjectArea { get ; set ; }
 
@@ -22,7 +22,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 OverallAchievementRate = source.OverallAchievementRate,
                 SectorSubjectArea = source.SectorSubjectArea,
                 Age = source.Age.ToString(),
-                ApprenticeshipLevel = source.ApprenticeshipLevel.ToString()
+                Level = source.ApprenticeshipLevel.ToString()
             };
         }
     }

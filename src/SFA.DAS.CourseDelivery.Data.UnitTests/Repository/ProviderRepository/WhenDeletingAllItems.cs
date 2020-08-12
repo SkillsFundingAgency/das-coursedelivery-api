@@ -45,8 +45,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             _courseDeliveryDataContext.Verify(x=>x.Providers
                 .RemoveRange(It.Is<List<Provider>>(c=>
                     c.ToList().Count.Equals(_providers.Count))), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.Providers.RemoveRange(_courseDeliveryDataContext.Object.Providers.ToList()), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
+            
         }
     }
 }

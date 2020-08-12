@@ -18,7 +18,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
                 .Excluding(c=>c.Age)
                 .Excluding(c=>c.ApprenticeshipLevel)
             );
-            actual.ApprenticeshipLevel.Should().Be(source.ApprenticeshipLevel.ToString());
+            actual.Level.Should().Be(source.ApprenticeshipLevel.ToString());
             actual.Age.Should().Be(source.Age.ToString());
         }
     }
