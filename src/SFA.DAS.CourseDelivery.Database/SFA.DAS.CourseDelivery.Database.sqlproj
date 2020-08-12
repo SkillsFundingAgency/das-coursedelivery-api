@@ -56,10 +56,12 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Tables" />
+    <Folder Include="Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\ImportAudit.sql" />
+    <Build Include="Tables\NationalAchievementRate.sql" />
+    <Build Include="Tables\NationalAchievementRate_Import.sql" />
     <Build Include="Tables\Provider.sql" />
     <Build Include="Tables\Provider_Import.sql" />
     <Build Include="Tables\ProviderStandard.sql" />

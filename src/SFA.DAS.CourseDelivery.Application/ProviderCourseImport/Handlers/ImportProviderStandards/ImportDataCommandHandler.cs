@@ -8,14 +8,19 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.Impor
     public class ImportDataCommandHandler : IRequestHandler<ImportDataCommand, Unit>
     {
         private readonly IProviderCourseImportService _providerCourseImportService;
+        private readonly INationalAchievementRatesImportService _nationalAchievementRatesImportService;
 
-        public ImportDataCommandHandler (IProviderCourseImportService providerCourseImportService)
+        public ImportDataCommandHandler (IProviderCourseImportService providerCourseImportService, INationalAchievementRatesImportService nationalAchievementRatesImportService)
         {
             _providerCourseImportService = providerCourseImportService;
+            _nationalAchievementRatesImportService = nationalAchievementRatesImportService;
         }
         public async Task<Unit> Handle(ImportDataCommand request, CancellationToken cancellationToken)
         {
-            await _providerCourseImportService.ImportProviderCourses();
+            var providerImportTask =  _providerCourseImportService.ImportProviderCourses();
+            var achievementRatesImportTask = _nationalAchievementRatesImportService.ImportData();
+
+            await Task.WhenAll(providerImportTask, achievementRatesImportTask);
             
             return Unit.Value;
         }

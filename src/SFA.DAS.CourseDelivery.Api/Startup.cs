@@ -59,7 +59,7 @@ namespace SFA.DAS.CourseDelivery.Api
             services.Configure<AzureActiveDirectoryConfiguration>(_configuration.GetSection("AzureAd"));
             services.AddSingleton(cfg => cfg.GetService<IOptions<AzureActiveDirectoryConfiguration>>().Value);
 
-            var coursesConfiguration = _configuration
+            var courseDeliveryConfiguration = _configuration
                 .GetSection("CourseDeliveryConfiguration")
                 .Get<CourseDeliveryConfiguration>();
 
@@ -81,7 +81,7 @@ namespace SFA.DAS.CourseDelivery.Api
 
             services.AddServiceRegistration(_configuration["Environment"] == "DEV");
 
-            services.AddDatabaseRegistration(coursesConfiguration, _configuration["Environment"]);
+            services.AddDatabaseRegistration(courseDeliveryConfiguration, _configuration["Environment"]);
 
             services
                 .AddMvc(o =>
