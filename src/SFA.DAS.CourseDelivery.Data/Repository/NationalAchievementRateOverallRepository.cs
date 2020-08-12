@@ -32,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         public async Task<IEnumerable<NationalAchievementRateOverall>> GetBySectorSubjectArea(string expectedSectorSubjectArea)
         {
             var results = await _dataContext.NationalAchievementRateOverall.Where(c =>
-                    c.SectorSubjectArea.Equals(expectedSectorSubjectArea, StringComparison.CurrentCultureIgnoreCase))
+                    c.SectorSubjectArea.Equals(expectedSectorSubjectArea))
                 .ToListAsync();
 
             return results;

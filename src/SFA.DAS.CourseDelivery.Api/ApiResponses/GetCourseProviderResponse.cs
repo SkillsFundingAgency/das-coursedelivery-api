@@ -1,4 +1,5 @@
-using SFA.DAS.CourseDelivery.Domain.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
@@ -10,15 +11,19 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string Email { get ; set ; }
         public string Phone { get ; set ; }
 
-        public static implicit operator GetCourseProviderResponse(ProviderStandard source)
+        public List<GetOverallAchievementRateResponse> OverallAchievementRates { get ; set ; }
+        public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
+        public static implicit operator GetCourseProviderResponse(Application.Provider.Queries.Provider.GetProviderResponse source)
         {
             return new GetCourseProviderResponse
             {
-                Email = source.Email,
-                Phone = source.Phone,
-                ContactUrl = source.ContactUrl,
-                Name = source.Provider.Name,
-                Ukprn = source.Provider.Ukprn
+                Email = source.ProviderStandardContact.Email,
+                Phone = source.ProviderStandardContact.Phone,
+                ContactUrl = source.ProviderStandardContact.ContactUrl,
+                Name = source.ProviderStandardContact.Provider.Name,
+                Ukprn = source.ProviderStandardContact.Provider.Ukprn,
+                OverallAchievementRates = source.OverallAchievementRates.Select(c=>(GetOverallAchievementRateResponse)c).ToList(),
+                AchievementRates = source.ProviderStandardContact.NationalAchievementRate.Select(c=>(GetNationalAchievementRateResponse)c).ToList()
             };
         }
     }
