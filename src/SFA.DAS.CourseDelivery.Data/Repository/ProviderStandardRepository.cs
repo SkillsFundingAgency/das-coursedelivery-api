@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +21,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task InsertMany(IEnumerable<ProviderStandard> providerStandards)
+        public async Task InsertFromImportTable()
         {
-            await _dataContext.ProviderStandards.AddRangeAsync(providerStandards);
-            _dataContext.SaveChanges();
+            await _dataContext.ExecuteRawSql("INSERT INTO dbo.ProviderStandard SELECT * FROM dbo.ProviderStandard_Import");
         }
         
         public async Task<ProviderStandard> GetByUkprnAndStandard(int ukPrn, int standardId)

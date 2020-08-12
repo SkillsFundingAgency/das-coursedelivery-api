@@ -1,7 +1,7 @@
-﻿using Microsoft.Azure.Services.AppAuthentication;
+﻿using System.Threading.Tasks;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
@@ -29,6 +29,7 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
         int SaveChanges();
         void TrackChanges(bool enable = true);
+        Task<int> ExecuteRawSql(string sql);
     }
 
     public class CourseDeliveryDataContext: DbContext, ICourseDeliveryDataContext
@@ -58,6 +59,13 @@ namespace SFA.DAS.CourseDelivery.Data
         public CourseDeliveryDataContext(DbContextOptions options) : base(options)
         {
         }
+
+        public async Task<int> ExecuteRawSql(string sql)
+        {
+            var result = await Database.ExecuteSqlRawAsync(sql);
+            return result;
+        }
+
 
         public CourseDeliveryDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
         {

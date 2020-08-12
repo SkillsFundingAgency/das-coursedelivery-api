@@ -140,30 +140,16 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
         private async Task LoadDataFromImportTables()
         {
-            var providerDataTask = _providerImportRepository.GetAll();
-            var providerStandardDataTask = _providerStandardImportRepository.GetAll();
-            var providerStandardLocationDataTask = _providerStandardLocationImportRepository.GetAll();
-            var standardLocationDataTask = _standardLocationImportRepository.GetAll();
-
-            await Task.WhenAll(
-                providerDataTask, 
-                providerStandardDataTask, 
-                providerStandardLocationDataTask,
-                standardLocationDataTask);
-
             var insertProviderTask = 
-                _providerRepository.InsertMany(
-                    providerDataTask.Result.Select(c=>(Domain.Entities.Provider)c).ToList());
+                _providerRepository.InsertFromImportTable();
             var insertProviderStandardTask =
-                _providerStandardRepository.InsertMany(
-                    providerStandardDataTask.Result.Select(c => (ProviderStandard) c).ToList());
+                _providerStandardRepository.InsertFromImportTable();
             var insertProviderStandardLocationTask =
-                _providerStandardLocationRepository.InsertMany(
-                    providerStandardLocationDataTask.Result.Select(c => (ProviderStandardLocation) c).ToList());
+                _providerStandardLocationRepository.InsertFromImportTable();
             var insertStandardLocationTask =
-                _standardLocationRepository.InsertMany(
-                    standardLocationDataTask.Result.Select(c => (StandardLocation) c).ToList());
-            
+                _standardLocationRepository.InsertFromImportTable();
+
+
             await Task.WhenAll(
                 insertProviderTask, 
                 insertProviderStandardTask, 
