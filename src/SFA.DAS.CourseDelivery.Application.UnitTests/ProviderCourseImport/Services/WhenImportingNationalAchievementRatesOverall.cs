@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
@@ -120,10 +121,13 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
         }
 
         [Test, RecursiveMoqAutoData]
-        public async Task Then_The_Import_Table_Is_Cleared_And_Data_Loaded_From_Csv(
+        public async Task Then_The_Import_Table_Is_Cleared_And_Data_Loaded_From_Csv_And_Filtered(
             string filePath,
             string content,
             string newFilePath,
+            NationalAchievementRateOverallCsv item1,
+            NationalAchievementRateOverallCsv item2,
+            NationalAchievementRateOverallCsv item3,
             List<NationalAchievementRateOverallCsv> downloadData,
             [Frozen] Mock<INationalAchievementRatesPageParser> pageParser,
             [Frozen] Mock<IDataDownloadService> service,
@@ -132,7 +136,21 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             [Frozen] Mock<IZipArchiveHelper> zipHelper,
             NationalAchievementRatesOverallImportService importService)
         {
-            //Arrange
+            //Arrange 
+            downloadData = downloadData.Select(c => {
+                c.InstitutionType = "All Institution Type";
+                c.Age = "All Age"; 
+                return c;
+            }).ToList();
+            item1.SectorSubjectArea = "All Sector Subject Area  Tier 2";
+            item1.Age = "All Age";
+            item2.Age = "All Age";
+            item2.InstitutionType = "Other";
+            item3.Age = "16";
+            item3.InstitutionType = "All Institution Type";
+            downloadData.Add(item1);
+            downloadData.Add(item2);
+            downloadData.Add(item3);
             service.Setup(x => x.GetFileStream(newFilePath))
                 .ReturnsAsync(new MemoryStream(Encoding.UTF8.GetBytes(content)));
             pageParser.Setup(x => x.GetCurrentDownloadFilePath()).ReturnsAsync(newFilePath);
@@ -148,7 +166,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             //Assert
             importRepository.Verify(x=>x.DeleteAll(), Times.Once);
             importRepository.Verify(x =>
-                x.InsertMany(It.Is<List<NationalAchievementRateOverallImport>>(c => c.Count.Equals(downloadData.Count))));
+                x.InsertMany(It.Is<List<NationalAchievementRateOverallImport>>(c => c.Count.Equals(downloadData.Count - 3))));
         }
 
         [Test, RecursiveMoqAutoData]

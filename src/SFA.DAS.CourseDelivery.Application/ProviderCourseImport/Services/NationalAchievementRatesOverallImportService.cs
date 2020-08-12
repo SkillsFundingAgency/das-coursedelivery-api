@@ -58,7 +58,14 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             _importRepository.DeleteAll();
 
             _logger.LogInformation("Loading to import table");
-            await _importRepository.InsertMany(data.Select(c => (NationalAchievementRateOverallImport) c).ToList());    
+            await _importRepository.InsertMany(data
+                .Where(c=>
+                    !c.SectorSubjectArea.Contains("All Sector Subject Area"))
+                .Where(c=>c.InstitutionType == "All Institution Type")
+                .Where(c=>c.Age == "All Age")
+                .Select(c => (NationalAchievementRateOverallImport) c)
+                
+                .ToList());    
             
             _logger.LogInformation("Clearing main table");
             _repository.DeleteAll();

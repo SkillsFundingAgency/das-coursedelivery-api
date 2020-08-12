@@ -14,5 +14,7 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public string OverallCohort { get; set; }
         [Name("Overall_Achievement_Rate")]
         public string OverallAchievementRate { get; set; }
+        [Name("Institution_Type")]
+        public string InstitutionType { get; set; }
     }
 }
