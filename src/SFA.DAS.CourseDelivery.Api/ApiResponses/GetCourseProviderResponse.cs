@@ -11,7 +11,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string Email { get ; set ; }
         public string Phone { get ; set ; }
 
-        public List<GetOverallAchievementRateResponse> OverallAchievementRates { get ; set ; }
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public static implicit operator GetCourseProviderResponse(Application.Provider.Queries.Provider.GetProviderResponse source)
         {
@@ -22,7 +21,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 ContactUrl = source.ProviderStandardContact.ContactUrl,
                 Name = source.ProviderStandardContact.Provider.Name,
                 Ukprn = source.ProviderStandardContact.Provider.Ukprn,
-                OverallAchievementRates = source.OverallAchievementRates.Select(c=>(GetOverallAchievementRateResponse)c).ToList(),
                 AchievementRates = source.ProviderStandardContact.NationalAchievementRate.Select(c=>(GetNationalAchievementRateResponse)c).ToList()
             };
         }

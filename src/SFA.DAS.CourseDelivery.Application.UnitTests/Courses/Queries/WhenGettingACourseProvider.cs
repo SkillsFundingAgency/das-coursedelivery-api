@@ -39,7 +39,6 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
 
             //Assert
             actual.ProviderStandardContact.Should().BeEquivalentTo(providerStandard);
-            actual.OverallAchievementRates.Should().BeEquivalentTo(overallAchievementRates);
         }
         
         [Test, RecursiveMoqAutoData]
@@ -59,7 +58,6 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
 
             //Assert
             actual.ProviderStandardContact.Should().BeEquivalentTo(providerStandard);
-            actual.OverallAchievementRates.Should().BeEquivalentTo(new List<NationalAchievementRateOverall>());
         }
     }
 }

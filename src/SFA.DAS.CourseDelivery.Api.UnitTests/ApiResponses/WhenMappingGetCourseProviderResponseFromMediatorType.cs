@@ -25,12 +25,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
                 .Excluding(c=>c.Age)
                 .Excluding(c=>c.ApprenticeshipLevel)
             );
-            actual.OverallAchievementRates.Should().BeEquivalentTo(source.OverallAchievementRates, 
-                options => options
-                    .Excluding(c=>c.Id)
-                    .Excluding(c=>c.Age)
-                    .Excluding(c=>c.ApprenticeshipLevel)
-                );
+            
         }
     }
 }
