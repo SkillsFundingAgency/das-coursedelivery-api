@@ -61,6 +61,8 @@
   <ItemGroup>
     <Build Include="Tables\ImportAudit.sql" />
     <Build Include="Tables\NationalAchievementRate.sql" />
+    <Build Include="Tables\NationalAchievementRateOverall.sql" />
+    <Build Include="Tables\NationalAchievementRateOverall_Import.sql" />
     <Build Include="Tables\NationalAchievementRate_Import.sql" />
     <Build Include="Tables\Provider.sql" />
     <Build Include="Tables\Provider_Import.sql" />

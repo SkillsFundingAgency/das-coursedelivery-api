@@ -33,7 +33,6 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             try
             {
-                _logger.LogInformation("Beginning request");
                 var queryResult = await _mediator.Send(new GetCourseProvidersQuery {StandardId = id});
 
                 var getCourseProviderResponses = queryResult
@@ -69,7 +68,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 return NotFound();
             }
 
-            return Ok((GetCourseProviderResponse) queryResult.ProviderStandardContact);
+            return Ok((GetCourseProviderResponse) queryResult);
         }
     }
 }

@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider
@@ -19,7 +22,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider
             
             return new GetProviderResponse
             {
-                ProviderStandardContact = provider,
+                ProviderStandardContact = provider
             }; 
                 
         }

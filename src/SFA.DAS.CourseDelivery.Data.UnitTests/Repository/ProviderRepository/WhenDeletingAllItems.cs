@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -10,12 +11,12 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
         private Data.Repository.ProviderRepository _providerImportRepository;
-        private List<Provider> _providerImports;
+        private List<Provider> _providers;
 
         [SetUp]
         public void Arrange()
         {
-            _providerImports = new List<Provider>
+            _providers = new List<Provider>
             {
                 new Provider
                 {
@@ -30,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             };
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
-            _courseDeliveryDataContext.Setup(x => x.Providers).ReturnsDbSet(_providerImports);
+            _courseDeliveryDataContext.Setup(x => x.Providers).ReturnsDbSet(_providers);
             _providerImportRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object);
         }
 
@@ -41,8 +42,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             _providerImportRepository.DeleteAll();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.Providers.RemoveRange(_courseDeliveryDataContext.Object.Providers), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.Providers
+                .RemoveRange(It.Is<List<Provider>>(c=>
+                    c.ToList().Count.Equals(_providers.Count))), Times.Once);
+            
         }
     }
 }
