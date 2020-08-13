@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 
 namespace SFA.DAS.CourseDelivery.Api.ApiResponses
@@ -10,18 +9,29 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public int Ukprn { get ; set ; }
 
         public string Name { get ; set ; }
-        public string Email { get ; set ; }
-        public string Website { get ; set ; }
-        public string Phone { get ; set ; }
-        public IEnumerable<GetProviderStandardResponse> ProviderStandard { get; set; } 
 
-        public static implicit operator GetProviderResponse(Provider provider)
+        public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
+
+        public GetProviderResponse Map(Provider provider, short age = 0, short apprenticeshipLevel = 0)
         {
+            var nationalAchievementRates = provider.NationalAchievementRates.AsQueryable();
+
+            if (apprenticeshipLevel != 0)
+            {
+                nationalAchievementRates = nationalAchievementRates.Where(c => c.Age.Equals((Age)age));
+            }
+
+            if (age != 0)
+            {
+                nationalAchievementRates = nationalAchievementRates.Where(c=> c.ApprenticeshipLevel.Equals((ApprenticeshipLevel)apprenticeshipLevel));
+            }
+
             return new GetProviderResponse
             {
                 Ukprn = provider.Ukprn,
                 Name = provider.Name,
-                ProviderStandard = provider.ProviderStandards.Select(c=>(GetProviderStandardResponse)c)
+                AchievementRates = nationalAchievementRates
+                    .Select(c=>(GetNationalAchievementRateResponse)c).ToList()
             };
         }
     }

@@ -70,6 +70,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             Assert.IsNotNull(actual);
             actual.Count().Should().Be(2);
             actual.Should().BeInAscendingOrder(c=>c.Name);
+            _courseDeliveryDataContext.Verify(x=>x.TrackChanges(false), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.TrackChanges(true), Times.Once);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Hand
         public async Task Then_The_Service_Is_Called_To_Import_Data(
             ImportDataCommand command,
             [Frozen] Mock<IProviderCourseImportService> providerStandardsImportService,
+            [Frozen] Mock<INationalAchievementRatesImportService> nationalAchievementRatesImportService,
             ImportDataCommandHandler handler)
         {
             // Act
@@ -22,6 +23,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Hand
             
             //Assert
             providerStandardsImportService.Verify(x=>x.ImportProviderCourses(), Times.Once);
+            nationalAchievementRatesImportService.Verify(x=>x.ImportData(), Times.Once);
             
         }
     }

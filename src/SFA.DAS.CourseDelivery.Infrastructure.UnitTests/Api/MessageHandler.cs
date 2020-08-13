@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
 {
     public class MessageHandler
     {
-        public static Mock<HttpMessageHandler> SetupMessageHandlerMock(HttpResponseMessage response, Uri uri, string key)
+        public static Mock<HttpMessageHandler> SetupMessageHandlerMock(HttpResponseMessage response, Uri uri, string key = "")
         {
             var httpMessageHandler = new Mock<HttpMessageHandler>();
             httpMessageHandler.Protected()
@@ -18,8 +18,8 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(c =>
                         c.Method.Equals(HttpMethod.Get)
-                        && c.Headers.Contains("Ocp-Apim-Subscription-Key")
-                        && c.Headers.GetValues("Ocp-Apim-Subscription-Key").First().Equals(key)
+                        && string.IsNullOrEmpty(key) || c.Headers.Contains("Ocp-Apim-Subscription-Key")
+                        && string.IsNullOrEmpty(key) || c.Headers.GetValues("Ocp-Apim-Subscription-Key").First().Equals(key)
                         && c.RequestUri.Equals(uri)
                     ),
                     ItExpr.IsAny<CancellationToken>()
