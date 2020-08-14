@@ -37,14 +37,14 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
         }
 
         [Test]
-        public async Task Then_The_ProviderStandardLocation_Items_Are_Added()
+        public async Task Then_The_ProviderStandardLocation_Items_Are_Added_From_The_Import_Table()
         {
             //Act
-            await _providerStandardLocationRepository.InsertMany(_providerStandardLocations);
+            await _providerStandardLocationRepository.InsertFromImportTable();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.ProviderStandardLocations.AddRangeAsync(_providerStandardLocations, It.IsAny<CancellationToken>()), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>
+                x.ExecuteRawSql(@"INSERT INTO dbo.ProviderStandardLocation SELECT * FROM dbo.ProviderStandardLocation_Import"), Times.Once);
         }
     }
 }

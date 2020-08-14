@@ -16,15 +16,14 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext = dataContext;
         }
 
-        public async Task InsertMany(IEnumerable<Provider> providers)
+        public async Task InsertFromImportTable()
         {
-            await _dataContext.Providers.AddRangeAsync(providers);
-            _dataContext.SaveChanges();
+            await _dataContext.ExecuteRawSql(@"INSERT INTO dbo.Provider SELECT * FROM dbo.Provider_Import");
         }
 
         public void DeleteAll()
         {
-            _dataContext.Providers.RemoveRange(_dataContext.Providers);
+            _dataContext.Providers.RemoveRange(_dataContext.Providers.ToList());
             _dataContext.SaveChanges();
         }
 

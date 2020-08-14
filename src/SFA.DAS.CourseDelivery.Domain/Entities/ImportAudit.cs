@@ -24,6 +24,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
     public enum ImportType : byte
     {
         CourseDirectory = 0,
-        NationalAchievementRates = 1
+        NationalAchievementRates = 1,
+        NationalAchievementRatesOverall = 2
     }
 }

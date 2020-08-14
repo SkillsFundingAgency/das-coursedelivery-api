@@ -3,6 +3,7 @@ using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
+using SFA.DAS.CourseDelivery.Application.OverallNationalAchievementRates.Services;
 using SFA.DAS.CourseDelivery.Application.Provider.Services;
 using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
@@ -38,6 +39,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<INationalAchievementRatesPageParser, NationalAchievementRatesPageParser>();
             services.AddTransient<IZipArchiveHelper, ZipArchiveHelper>();
             services.AddTransient<INationalAchievementRatesImportService, NationalAchievementRatesImportService>();
+            services.AddTransient<INationalAchievementRatesOverallImportService, NationalAchievementRatesOverallImportService>();
+            services.AddTransient<IOverallNationalAchievementRateService, OverallNationalAchievementRateService>();
 
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
@@ -50,6 +53,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IImportAuditRepository, ImportAuditRepository>();
             services.AddTransient<INationalAchievementRateImportRepository, NationalAchievementRateImportRepository>();
             services.AddTransient<INationalAchievementRateRepository, NationalAchievementRateRepository>();
+            services.AddTransient<INationalAchievementRateOverallRepository, NationalAchievementRateOverallRepository>();
+            services.AddTransient<INationalAchievementRateOverallImportRepository, NationalAchievementRateOverallImportRepository>();
 
         }
         private static IAsyncPolicy<HttpResponseMessage> GetCourseDirectoryRetryPolicy()
