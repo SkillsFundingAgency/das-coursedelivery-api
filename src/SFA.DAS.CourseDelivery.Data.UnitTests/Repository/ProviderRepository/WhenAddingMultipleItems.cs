@@ -37,14 +37,14 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
         }
 
         [Test]
-        public async Task Then_The_Providers_Are_Added()
+        public async Task Then_The_Providers_Are_Added_From_The_Import_Table()
         {
             //Act
-            await _providerRepository.InsertMany(_providers);
+            await _providerRepository.InsertFromImportTable();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.Providers.AddRangeAsync(_providers, It.IsAny<CancellationToken>()), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>
+                x.ExecuteRawSql(@"INSERT INTO dbo.Provider SELECT * FROM dbo.Provider_Import"), Times.Once);
         }
     }
 }

@@ -40,11 +40,11 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.StandardLocationRepos
         public async Task Then_The_StandardLocation_Items_Are_Added()
         {
             //Act
-            await _standardLocationRepository.InsertMany(_standardLocations);
+            await _standardLocationRepository.InsertFromImportTable();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.StandardLocations.AddRangeAsync(_standardLocations, It.IsAny<CancellationToken>()), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>
+                x.ExecuteRawSql(@"INSERT INTO dbo.StandardLocation SELECT * FROM dbo.StandardLocation_Import"), Times.Once);
         }
     }
 }

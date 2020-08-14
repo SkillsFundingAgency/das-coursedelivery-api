@@ -8,11 +8,15 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
     {
         private readonly IProviderRepository _providerRepository;
         private readonly IProviderStandardRepository _providerStandardRepository;
+        private readonly INationalAchievementRateOverallRepository _nationalAchievementRateOverallRepository;
 
-        public ProviderService (IProviderRepository providerRepository, IProviderStandardRepository providerStandardRepository)
+        public ProviderService (IProviderRepository providerRepository, 
+            IProviderStandardRepository providerStandardRepository, 
+            INationalAchievementRateOverallRepository nationalAchievementRateOverallRepository)
         {
             _providerRepository = providerRepository;
             _providerStandardRepository = providerStandardRepository;
+            _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
         }
         public async Task<IEnumerable<Domain.Entities.Provider>> GetProvidersByStandardId(int standardId)
         {
@@ -28,6 +32,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             return provider;
         }
 
+        public async Task<IEnumerable<Domain.Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description)
+        {
+            var items = await _nationalAchievementRateOverallRepository.GetBySectorSubjectArea(description);
+
+            return items;
+        }
         public async Task<IEnumerable<int>> GetStandardIdsByUkprn(int ukprn)
         {
             var standardIds = await _providerStandardRepository.GetCoursesByUkprn(ukprn);

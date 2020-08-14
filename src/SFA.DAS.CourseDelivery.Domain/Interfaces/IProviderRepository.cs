@@ -6,7 +6,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
 {
     public interface IProviderRepository
     {
-        Task InsertMany(IEnumerable<Provider> providers);
+        Task InsertFromImportTable();
         void DeleteAll();
         Task<IEnumerable<Provider>> GetByStandardId(int standardId);
         Task<Provider> GetByUkprn(int ukPrn);

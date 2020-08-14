@@ -8,7 +8,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
         public void Configure(EntityTypeBuilder<Domain.Entities.ProviderStandard> builder)
         {
             builder.ToTable("ProviderStandard");
-            builder.HasKey(x => new { x.Ukprn , x.StandardId });
+            builder.HasKey(x => new { x.Ukprn , x.StandardId }).HasName("PK_ProviderStandard");
 
             builder.Property(c => c.StandardId).HasColumnName("StandardId").HasColumnType("int").IsRequired();
             builder.Property(c => c.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();

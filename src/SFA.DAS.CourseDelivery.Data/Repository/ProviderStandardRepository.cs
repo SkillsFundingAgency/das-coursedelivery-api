@@ -18,14 +18,13 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public void DeleteAll()
         {
-            _dataContext.ProviderStandards.RemoveRange(_dataContext.ProviderStandards);
+            _dataContext.ProviderStandards.RemoveRange(_dataContext.ProviderStandards.ToList());
             _dataContext.SaveChanges();
         }
 
-        public async Task InsertMany(IEnumerable<ProviderStandard> providerStandards)
+        public async Task InsertFromImportTable()
         {
-            await _dataContext.ProviderStandards.AddRangeAsync(providerStandards);
-            _dataContext.SaveChanges();
+            await _dataContext.ExecuteRawSql("INSERT INTO dbo.ProviderStandard SELECT * FROM dbo.ProviderStandard_Import");
         }
         
         public async Task<ProviderStandard> GetByUkprnAndStandard(int ukPrn, int standardId)
@@ -33,6 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providerStandard = await _dataContext
                 .ProviderStandards
                 .Include(c => c.Provider)
+                .Include(c=>c.NationalAchievementRate)
                 .SingleOrDefaultAsync(c => c.StandardId.Equals(standardId) && c.Ukprn.Equals(ukPrn));
 
             return providerStandard;
