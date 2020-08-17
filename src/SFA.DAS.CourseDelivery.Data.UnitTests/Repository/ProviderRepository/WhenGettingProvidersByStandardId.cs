@@ -5,7 +5,10 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.Courses.Data.UnitTests.DatabaseMock;
+using Provider = SFA.DAS.CourseDelivery.Domain.Entities.Provider;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Domain.Entities.ProviderRegistration;
 
 namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 {
@@ -27,7 +30,12 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
                     StandardId = 1,
                     Provider = new Provider
                     {
-                        Ukprn = 123
+                        Ukprn = 123,
+                        ProviderRegistration = new ProviderRegistration
+                        {
+                            StatusId = RoatpTypeConstants.StatusOfActive, 
+                            ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider
+                        }
                     } 
                         
                 },
@@ -38,7 +46,12 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
                     Provider = new Provider
                     {
                         Ukprn = 12335,
-                        Name="Second"
+                        Name="Second",
+                        ProviderRegistration = new ProviderRegistration
+                        {
+                            StatusId = RoatpTypeConstants.StatusOfActive, 
+                            ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider
+                        }
                     } 
                 }  ,
                 new ProviderStandard
@@ -48,7 +61,12 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
                     Provider = new Provider
                     {
                         Ukprn = 1233,
-                        Name="First"
+                        Name="First",
+                        ProviderRegistration = new ProviderRegistration
+                        {
+                            StatusId = RoatpTypeConstants.StatusOfActive, 
+                            ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider
+                        }
                     } 
                 }  
             };
