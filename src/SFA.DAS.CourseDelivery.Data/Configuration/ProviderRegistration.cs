@@ -13,10 +13,17 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.HasKey(x => x.Ukprn);
 
             builder.Property(x => x.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();
-            builder.Property(x => x.Ukprn).HasColumnName("StatusDate").HasColumnType("datetime").IsRequired();
-            builder.Property(x => x.Ukprn).HasColumnName("StatusId").HasColumnType("int").IsRequired();
-            builder.Property(x => x.Ukprn).HasColumnName("ProviderTypeId").HasColumnType("int").IsRequired();
-            builder.Property(x => x.Ukprn).HasColumnName("OrganisationTypeId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.StatusDate).HasColumnName("StatusDate").HasColumnType("datetime").IsRequired();
+            builder.Property(x => x.StatusId).HasColumnName("StatusId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.ProviderTypeId).HasColumnName("ProviderTypeId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.OrganisationTypeId).HasColumnName("OrganisationTypeId").HasColumnType("int").IsRequired();
+
+            builder.HasOne(c => c.Provider)
+                .WithOne(c=>c.ProviderRegistration)
+                .HasPrincipalKey<Domain.Entities.Provider>(c => c.Ukprn)
+                .HasForeignKey<Domain.Entities.ProviderRegistration>(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
+            builder.HasIndex(x => x.Ukprn).IsUnique();
         }
     }
 }

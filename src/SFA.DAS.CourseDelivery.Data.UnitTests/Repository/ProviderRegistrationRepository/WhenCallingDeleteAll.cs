@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationR
 {
     public class WhenCallingDeleteAll
     {
-        [Test, MoqAutoData]
+        [Test, RecursiveMoqAutoData]
         public void Then_Deletes_All_Records_In_Db(
             List<ProviderRegistration> providerRegistrationsInDb,
             [Frozen] Mock<ICourseDeliveryDataContext> mockContext,

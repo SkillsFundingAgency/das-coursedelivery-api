@@ -2,6 +2,6 @@
 {
     public class ProviderRegistration : ProviderRegistrationBase
     {
-        
+        public virtual Provider Provider { get ; set ; }
     }
 }
