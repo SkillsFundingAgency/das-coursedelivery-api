@@ -1,0 +1,1227 @@
+[
+  {
+    "UKPRN": 10049431,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10046498,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10031126,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10055771,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10008054,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10061435,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10034310,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10061102,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000020,
+    "StatusDate": "2019-09-02T12:45:54.087",
+    "StatusId": 3,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10036788,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10039529,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10038023,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10039813,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10029069,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10061462,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10053055,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10028269,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10041388,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000055,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10019646,
+    "StatusDate": "2019-02-21T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10061603,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10029426,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10036227,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10061857,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10028009,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10043579,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000060,
+    "StatusDate": "2019-09-02T12:50:29.99",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000061,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10046006,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10033736,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10036814,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10053076,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10009950,
+    "StatusDate": "2018-07-03T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000066,
+    "StatusDate": "2017-10-12T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10046146,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10039859,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10063391,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10055763,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10024806,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000080,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10010584,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10009059,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10058012,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10042735,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000093,
+    "StatusDate": "2019-02-21T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10034055,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10055253,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10019431,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10046334,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10053951,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000099,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10023357,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10023489,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10026402,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10034423,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10007706,
+    "StatusDate": "2018-01-04T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10004927,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000119,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10062096,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10057981,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10043865,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000137,
+    "StatusDate": "2019-09-02T12:46:42.78",
+    "StatusId": 3,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10000147,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10010169,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10028693,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10037442,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10043565,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10019155,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10036378,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10063434,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10046798,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10024018,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10048865,
+    "StatusDate": "2019-03-13T00:00:00",
+    "StatusId": 2,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000182,
+    "StatusDate": "2019-09-02T12:49:33.307",
+    "StatusId": 2,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10042119,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10029699,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10047241,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10033950,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10021865,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10020199,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10015933,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10021202,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10065814,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10034356,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10000201,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10058195,
+    "StatusDate": "2018-06-14T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10038566,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10032555,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10030511,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10061684,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10027693,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000238,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000362,
+    "StatusDate": "2019-09-18T11:58:04.17",
+    "StatusId": 1,
+    "OrganisationTypeId": 15,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10010631,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10022070,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10024177,
+    "StatusDate": "2017-04-07T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10061905,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10001777,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10054692,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10034128,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10043702,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000268,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10026196,
+    "StatusDate": "2017-10-17T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10018897,
+    "StatusDate": "2019-09-03T12:30:57.167",
+    "StatusId": 1,
+    "OrganisationTypeId": 11,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10062656,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000275,
+    "StatusDate": "2017-12-14T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10055337,
+    "StatusDate": "2018-12-13T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10023918,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000285,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10040684,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000291,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10024213,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10022210,
+    "StatusDate": "2019-08-05T13:51:59.187",
+    "StatusId": 2,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10040513,
+    "StatusDate": "2019-09-02T12:48:16.23",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10005087,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10043333,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10064562,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10061819,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10036679,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10062759,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10058019,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10043793,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000105,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10052968,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10032404,
+    "StatusDate": "2017-06-02T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000848,
+    "StatusDate": "2019-09-18T12:12:06.393",
+    "StatusId": 2,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10056863,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10028109,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10000348,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10062106,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10005451,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10043324,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10019236,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10056190,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10064877,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10054573,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10000389,
+    "StatusDate": "2019-09-02T12:51:24.697",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10047982,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10021234,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10065620,
+    "StatusDate": "2019-09-02T13:38:45.357",
+    "StatusId": 2,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10038201,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10034001,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10022877,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000415,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10062108,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10062060,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000417,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10031662,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10055355,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10065752,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 2
+  },
+  {
+    "UKPRN": 10019293,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10000421,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10031241,
+    "StatusDate": "2018-06-07T15:42:23.267",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10054055,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10054587,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10032029,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10037170,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10023313,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10006942,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10003248,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000427,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10049099,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10057050,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10037337,
+    "StatusDate": "2018-10-25T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10042141,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000440,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10007759,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10044705,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10020307,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000476,
+    "StatusDate": "2018-09-21T00:00:00",
+    "StatusId": 0,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10008083,
+    "StatusDate": "2019-09-18T09:52:45.217",
+    "StatusId": 3,
+    "OrganisationTypeId": 13,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10045007,
+    "StatusDate": "2017-05-17T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000452,
+    "StatusDate": "2017-03-13T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 1
+  },
+  {
+    "UKPRN": 10000460,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  },
+  {
+    "UKPRN": 10023810,
+    "StatusDate": "2018-01-30T00:00:00",
+    "StatusId": 1,
+    "OrganisationTypeId": 0,
+    "ProviderTypeId": 3
+  }
+]    

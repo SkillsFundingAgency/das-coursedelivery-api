@@ -54,6 +54,8 @@ namespace SFA.DAS.CourseDelivery.Api
             services.AddOptions();
             services.Configure<CourseDirectoryConfiguration>(_configuration.GetSection("CourseDirectoryConfiguration"));
             services.AddSingleton(cfg => cfg.GetService<IOptions<CourseDirectoryConfiguration>>().Value);
+            services.Configure<RoatpConfiguration>(_configuration.GetSection("RoatpConfiguration"));
+            services.AddSingleton(cfg => cfg.GetService<IOptions<RoatpConfiguration>>().Value);
             services.Configure<CourseDeliveryConfiguration>(_configuration.GetSection("CourseDeliveryConfiguration"));
             services.AddSingleton(cfg => cfg.GetService<IOptions<CourseDirectoryConfiguration>>().Value);
             services.Configure<AzureActiveDirectoryConfiguration>(_configuration.GetSection("AzureAd"));

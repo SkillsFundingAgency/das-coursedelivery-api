@@ -21,6 +21,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             if (isDev)
             {
                 services.AddTransient<ICourseDirectoryService, DevCourseDirectoryService>();
+                services.AddTransient<IRoatpApiService, DevRoatpApiService>();
             }
             else
             {
@@ -29,7 +30,13 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
                         options=> options.Timeout = TimeSpan.FromMinutes(10)
                     )
                     .SetHandlerLifetime(TimeSpan.FromMinutes(10))
-                    .AddPolicyHandler(GetCourseDirectoryRetryPolicy());    
+                    .AddPolicyHandler(HttpClientRetryPolicy());   
+                services.AddHttpClient<IRoatpApiService, RoatpApiService>
+                    (
+                        options=> options.Timeout = TimeSpan.FromMinutes(10)
+                    )
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(10))
+                    .AddPolicyHandler(HttpClientRetryPolicy()); 
             }
 
             services.AddHttpClient<IDataDownloadService, DataDownloadService>();
@@ -60,7 +67,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
 
         }
-        private static IAsyncPolicy<HttpResponseMessage> GetCourseDirectoryRetryPolicy()
+        private static IAsyncPolicy<HttpResponseMessage> HttpClientRetryPolicy()
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
@@ -69,5 +76,4 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
                     retryAttempt)));
         }
     }
-    
 }
