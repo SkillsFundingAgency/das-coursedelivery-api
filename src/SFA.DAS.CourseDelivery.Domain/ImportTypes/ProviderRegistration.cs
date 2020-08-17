@@ -16,4 +16,10 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         [JsonProperty("ProviderTypeId")]
         public int ProviderTypeId { get; set; }
     }
+
+    public class RoatpTypeConstants
+    {
+        public const int StatusOfActive = 1;
+        public const int ProviderTypeOfMainProvider = 1;
+    }
 }
