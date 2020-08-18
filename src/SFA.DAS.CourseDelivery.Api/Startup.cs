@@ -83,8 +83,12 @@ namespace SFA.DAS.CourseDelivery.Api
                     .AddDbContextCheck<CourseDeliveryDataContext>()
                     .AddCheck<CourseDirectoryHealthCheck>("Course Directory Health Check",
                         failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" })
+                    .AddCheck<ProviderRegistrationsHealthCheck>("Provider Registrations Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
                         tags: new[] { "ready" });
-                
+
+
             }
 
             services.AddMediatR(typeof(ImportDataCommand).Assembly);
