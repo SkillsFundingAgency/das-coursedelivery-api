@@ -65,7 +65,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderRegistrationImportRepository, ProviderRegistrationImportRepository>();
             services.AddTransient<IProviderRegistrationRepository, ProviderRegistrationRepository>();
             services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
-
+            services.AddTransient<IAzureClientCredentialHelper, AzureClientCredentialHelper>();
         }
         private static IAsyncPolicy<HttpResponseMessage> HttpClientRetryPolicy()
         {

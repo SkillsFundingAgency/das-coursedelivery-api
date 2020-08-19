@@ -8,6 +8,3 @@
 )
 GO
 
-CREATE NONCLUSTERED INDEX [IDX_ProviderRegistration_Ukprn] ON [dbo].[ProviderRegistration] (UkPrn) 
-INCLUDE (StatusDate, StatusId, ProviderTypeId, OrganisationTypeId) WITH (ONLINE = ON) 
-GO 

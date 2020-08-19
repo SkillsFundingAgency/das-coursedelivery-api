@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
 using SFA.DAS.CourseDelivery.Domain.ImportTypes;
@@ -13,20 +16,26 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
     public class RoatpApiService : IRoatpApiService
     {
         private readonly HttpClient _client;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IAzureClientCredentialHelper _azureClientCredentialHelper;
         private readonly RoatpConfiguration _configuration;
 
-        public RoatpApiService(HttpClient client, 
-            IOptions<RoatpConfiguration> configuration)
+        public RoatpApiService(IHttpClientFactory httpClientFactory, 
+            IOptions<RoatpConfiguration> configuration, 
+            IWebHostEnvironment hostingEnvironment,
+            IAzureClientCredentialHelper azureClientCredentialHelper)
         {
-            _client = client;
+            _client = httpClientFactory.CreateClient();
+            _hostingEnvironment = hostingEnvironment;
+            _azureClientCredentialHelper = azureClientCredentialHelper;
             _configuration = configuration.Value;
         }
 
         public async Task<IEnumerable<ProviderRegistration>> GetProviderRegistrations()
         {
-            AddHeaders();
+            await AddAuthenticationHeader();
             
-            var response = await _client.GetAsync(new Uri(_configuration.Url));
+            var response = await _client.GetAsync(_configuration.Url);
             
             response.EnsureSuccessStatusCode();
             
@@ -35,9 +44,13 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
             return JsonConvert.DeserializeObject<List<ProviderRegistration>>(jsonResponse);
         }
 
-        private void AddHeaders()
+        private async Task AddAuthenticationHeader()
         {
-            _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _configuration.Key);
+            if (!_hostingEnvironment.IsDevelopment())
+            {
+                var accessToken = await _azureClientCredentialHelper.GetAccessTokenAsync(_configuration.Identifier);
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);    
+            }
         }
     }
 }
