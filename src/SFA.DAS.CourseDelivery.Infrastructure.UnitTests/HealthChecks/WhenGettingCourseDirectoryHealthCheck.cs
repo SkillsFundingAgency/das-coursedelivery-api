@@ -31,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.HealthChecks
         }
 
         [Test, MoqAutoData]
-        public async Task Then_If_No_Course_Directory_Rows_Are_Loaded_Then_Shows_As_Degraded(
+        public async Task Then_If_No_Course_Directory_Rows_Are_Loaded_Then_Shows_As_Unhealthy(
             [Frozen] Mock<IImportAuditRepository> repository,
             HealthCheckContext healthCheckContext,
             CourseDirectoryHealthCheck healthCheck)
