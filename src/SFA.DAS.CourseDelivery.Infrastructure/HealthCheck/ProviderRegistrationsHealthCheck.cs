@@ -5,6 +5,7 @@ using SFA.DAS.Courses.Infrastructure.HealthCheck;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,9 +28,9 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.HealthCheck
             timer.Stop();
             var durationString = timer.Elapsed.ToHumanReadableString();
 
-            if (DateTime.UtcNow >= latestProviderRegistrationsData.TimeStarted.AddHours(25))
+            if (latestProviderRegistrationsData == null)
             {
-                return new HealthCheckResult(HealthStatus.Degraded, "Provider registrations data load is over 25 hours old", null, new Dictionary<string, object> { { "Duration", durationString } });
+                return new HealthCheckResult(HealthStatus.Degraded, "No provider registration data loaded", null, new Dictionary<string, object> { { "Duration", durationString } });
             }
 
             if (latestProviderRegistrationsData.RowsImported == 0)
@@ -37,7 +38,14 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.HealthCheck
                 return new HealthCheckResult(HealthStatus.Degraded, "Provider registrations data load has imported zero rows", null, new Dictionary<string, object> { { "Duration", durationString } });
             }
 
-            return HealthCheckResult.Healthy(HealthCheckResultDescription, new Dictionary<string, object> { { "Duration", durationString } });
+            if (DateTime.UtcNow >= latestProviderRegistrationsData.TimeStarted.AddHours(25))
+            {
+                return new HealthCheckResult(HealthStatus.Degraded, "Provider registrations data load is over 25 hours old", null, new Dictionary<string, object> { { "Duration", durationString } });
+            }
+
+            return HealthCheckResult.Healthy(HealthCheckResultDescription, new Dictionary<string, object> { 
+                { "Duration", durationString }, { "FileName", latestProviderRegistrationsData.FileName.Split('\\').Last() } 
+            });
         }
     }
 }

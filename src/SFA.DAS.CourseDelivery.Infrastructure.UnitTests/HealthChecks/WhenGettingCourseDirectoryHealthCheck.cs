@@ -44,7 +44,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.HealthChecks
             var actual = await healthCheck.CheckHealthAsync(healthCheckContext);
 
             //Assert
-            actual.Status.Should().Be(HealthStatus.Degraded);
+            actual.Status.Should().Be(HealthStatus.Unhealthy);
         }
 
         [Test, MoqAutoData]
