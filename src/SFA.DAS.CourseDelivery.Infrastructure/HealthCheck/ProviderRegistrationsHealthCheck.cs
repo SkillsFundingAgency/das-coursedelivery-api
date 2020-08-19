@@ -43,9 +43,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.HealthCheck
                 return new HealthCheckResult(HealthStatus.Degraded, "Provider registrations data load is over 25 hours old", null, new Dictionary<string, object> { { "Duration", durationString } });
             }
 
-            return HealthCheckResult.Healthy(HealthCheckResultDescription, new Dictionary<string, object> { 
-                { "Duration", durationString }, { "FileName", latestProviderRegistrationsData.FileName.Split('\\').Last() } 
-            });
+            return HealthCheckResult.Healthy(HealthCheckResultDescription, new Dictionary<string, object> { { "Duration", durationString } });
         }
     }
 }
