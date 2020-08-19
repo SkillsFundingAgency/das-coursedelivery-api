@@ -86,9 +86,13 @@ namespace SFA.DAS.CourseDelivery.Api
                         tags: new[] { "ready" })
                     .AddCheck<ProviderRegistrationsHealthCheck>("Provider Registrations Health Check",
                         failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" })
+                    .AddCheck<NationalAchievementRatesHealthCheck>("National Achievement Rates Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" })
+                    .AddCheck<OverallNationalAchievementRatesHealthCheck>("Overall National Achievement Rates Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
                         tags: new[] { "ready" });
-
-
             }
 
             services.AddMediatR(typeof(ImportDataCommand).Assembly);
