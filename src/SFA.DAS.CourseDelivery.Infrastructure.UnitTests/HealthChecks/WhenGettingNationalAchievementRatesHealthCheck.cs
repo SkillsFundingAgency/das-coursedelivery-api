@@ -8,9 +8,6 @@ using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Infrastructure.HealthCheck;
 using SFA.DAS.Testing.AutoFixture;
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.HealthChecks
