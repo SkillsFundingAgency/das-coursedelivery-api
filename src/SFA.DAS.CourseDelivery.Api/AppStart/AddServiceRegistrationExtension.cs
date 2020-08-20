@@ -30,13 +30,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
                         options=> options.Timeout = TimeSpan.FromMinutes(10)
                     )
                     .SetHandlerLifetime(TimeSpan.FromMinutes(10))
-                    .AddPolicyHandler(HttpClientRetryPolicy());   
-                services.AddHttpClient<IRoatpApiService, RoatpApiService>
-                    (
-                        options=> options.Timeout = TimeSpan.FromMinutes(10)
-                    )
-                    .SetHandlerLifetime(TimeSpan.FromMinutes(10))
-                    .AddPolicyHandler(HttpClientRetryPolicy()); 
+                    .AddPolicyHandler(HttpClientRetryPolicy());
+                services.AddTransient<IRoatpApiService, RoatpApiService>();
             }
 
             services.AddHttpClient<IDataDownloadService, DataDownloadService>();
