@@ -56,6 +56,7 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\ImportAudit.sql" />
@@ -71,5 +72,7 @@
     <Build Include="Tables\ProviderStandardLocation_Import.sql" />
     <Build Include="Tables\StandardLocation.sql" />
     <Build Include="Tables\StandardLocation_Import.sql" />
+    <Build Include="Tables\ProviderRegistration.sql" />
+    <Build Include="Tables\ProviderRegistration_Import.sql" />
   </ItemGroup>
 </Project>

@@ -4,8 +4,10 @@ using FluentAssertions;
 using J2N.Collections.Generic;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.Courses.Data.UnitTests.DatabaseMock;
+using Provider = SFA.DAS.CourseDelivery.Domain.Entities.Provider;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Domain.Entities.ProviderRegistration;
 
 namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 {
@@ -22,17 +24,32 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
         {
             _expectedProvider = new Provider
             {
-                Ukprn = ExpectedUkprn
+                Ukprn = ExpectedUkprn,
+                ProviderRegistration = new ProviderRegistration
+                {
+                    StatusId = RoatpTypeConstants.StatusOfActive, 
+                    ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider
+                }
             };
             _providers = new List<Provider>
             {
                 new Provider
+                {
+                    Ukprn = 123,
+                    ProviderRegistration = new ProviderRegistration
                     {
-                        Ukprn = 123
-                    },
+                        StatusId = RoatpTypeConstants.StatusOfActive, 
+                        ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider
+                    }
+                },
                 new Provider
                 {
-                    Ukprn = 1234
+                    Ukprn = 1234,
+                    ProviderRegistration = new ProviderRegistration
+                    {
+                        StatusId = RoatpTypeConstants.StatusOfActive, 
+                        ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider
+                    }
                 },
                 _expectedProvider
             };

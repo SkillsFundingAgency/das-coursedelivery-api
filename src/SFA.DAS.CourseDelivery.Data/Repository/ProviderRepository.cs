@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SFA.DAS.CourseDelivery.Data.Extensions;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -37,6 +38,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .ThenInclude(c=>c.NationalAchievementRates)
                 .Where(c => c.StandardId.Equals(standardId))
                 .Select(c=>c.Provider)
+                .FilterRegisteredProviders()
                 .OrderBy(c=>c.Name).ToListAsync();
             
             _dataContext.TrackChanges();
@@ -45,7 +47,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<Provider> GetByUkprn(int ukPrn)
         {
-            var provider = await _dataContext.Providers.SingleOrDefaultAsync(c => c.Ukprn.Equals(ukPrn));
+            var provider = await _dataContext.Providers
+                .FilterRegisteredProviders()
+                .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukPrn));
 
             return provider;
         }

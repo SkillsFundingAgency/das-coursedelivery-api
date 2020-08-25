@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -14,7 +15,9 @@ using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.CourseDelivery.Api.AppStart;
 using SFA.DAS.CourseDelivery.Api.Infrastructure;
 using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.ImportProviderStandards;
+using SFA.DAS.CourseDelivery.Data;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
+using SFA.DAS.CourseDelivery.Infrastructure.HealthCheck;
 
 namespace SFA.DAS.CourseDelivery.Api
 {
@@ -54,6 +57,8 @@ namespace SFA.DAS.CourseDelivery.Api
             services.AddOptions();
             services.Configure<CourseDirectoryConfiguration>(_configuration.GetSection("CourseDirectoryConfiguration"));
             services.AddSingleton(cfg => cfg.GetService<IOptions<CourseDirectoryConfiguration>>().Value);
+            services.Configure<RoatpConfiguration>(_configuration.GetSection("RoatpConfiguration"));
+            services.AddSingleton(cfg => cfg.GetService<IOptions<RoatpConfiguration>>().Value);
             services.Configure<CourseDeliveryConfiguration>(_configuration.GetSection("CourseDeliveryConfiguration"));
             services.AddSingleton(cfg => cfg.GetService<IOptions<CourseDirectoryConfiguration>>().Value);
             services.Configure<AzureActiveDirectoryConfiguration>(_configuration.GetSection("AzureAd"));
@@ -74,7 +79,20 @@ namespace SFA.DAS.CourseDelivery.Api
 
             if (_configuration["Environment"] != "DEV")
             {
-                services.AddHealthChecks();
+                services.AddHealthChecks()
+                    .AddDbContextCheck<CourseDeliveryDataContext>()
+                    .AddCheck<CourseDirectoryHealthCheck>("Course Directory Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" })
+                    .AddCheck<ProviderRegistrationsHealthCheck>("Provider Registrations Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" })
+                    .AddCheck<NationalAchievementRatesHealthCheck>("National Achievement Rates Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" })
+                    .AddCheck<OverallNationalAchievementRatesHealthCheck>("Overall National Achievement Rates Health Check",
+                        failureStatus: HealthStatus.Unhealthy,
+                        tags: new[] { "ready" });
             }
 
             services.AddMediatR(typeof(ImportDataCommand).Assembly);

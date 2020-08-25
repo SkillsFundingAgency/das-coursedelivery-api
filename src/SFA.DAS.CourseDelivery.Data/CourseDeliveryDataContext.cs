@@ -27,6 +27,8 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
         DbSet<Domain.Entities.NationalAchievementRateOverall> NationalAchievementRateOverall { get; set; }
         DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
+        DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         int SaveChanges();
         void TrackChanges(bool enable = true);
         Task<int> ExecuteRawSql(string sql);
@@ -47,6 +49,9 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
         public DbSet<Domain.Entities.NationalAchievementRateOverall> NationalAchievementRateOverall { get; set; }
         public DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
+        public DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
+        public DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
+
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
         private readonly AzureServiceTokenProvider _azureServiceTokenProvider;
@@ -116,6 +121,8 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new NationalAchievementRateImport());
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverall());
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverallImport());
+            modelBuilder.ApplyConfiguration(new ProviderRegistration());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationImport());
             base.OnModelCreating(modelBuilder);
         }
     }

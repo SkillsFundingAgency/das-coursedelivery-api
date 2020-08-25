@@ -21,6 +21,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             if (isDev)
             {
                 services.AddTransient<ICourseDirectoryService, DevCourseDirectoryService>();
+                services.AddTransient<IRoatpApiService, DevRoatpApiService>();
             }
             else
             {
@@ -29,7 +30,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
                         options=> options.Timeout = TimeSpan.FromMinutes(10)
                     )
                     .SetHandlerLifetime(TimeSpan.FromMinutes(10))
-                    .AddPolicyHandler(GetCourseDirectoryRetryPolicy());    
+                    .AddPolicyHandler(HttpClientRetryPolicy());
+                services.AddTransient<IRoatpApiService, RoatpApiService>();
             }
 
             services.AddHttpClient<IDataDownloadService, DataDownloadService>();
@@ -55,9 +57,12 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<INationalAchievementRateRepository, NationalAchievementRateRepository>();
             services.AddTransient<INationalAchievementRateOverallRepository, NationalAchievementRateOverallRepository>();
             services.AddTransient<INationalAchievementRateOverallImportRepository, NationalAchievementRateOverallImportRepository>();
-
+            services.AddTransient<IProviderRegistrationImportRepository, ProviderRegistrationImportRepository>();
+            services.AddTransient<IProviderRegistrationRepository, ProviderRegistrationRepository>();
+            services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
+            services.AddTransient<IAzureClientCredentialHelper, AzureClientCredentialHelper>();
         }
-        private static IAsyncPolicy<HttpResponseMessage> GetCourseDirectoryRetryPolicy()
+        private static IAsyncPolicy<HttpResponseMessage> HttpClientRetryPolicy()
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
@@ -66,5 +71,4 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
                     retryAttempt)));
         }
     }
-    
 }
