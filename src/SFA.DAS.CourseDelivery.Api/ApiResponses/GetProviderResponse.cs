@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
@@ -12,9 +13,9 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
 
-        public GetProviderResponse Map(Provider provider, short age = 0, short apprenticeshipLevel = 0)
+        public GetProviderResponse Map(ProviderLocation provider, short age = 0, short apprenticeshipLevel = 0)
         {
-            var nationalAchievementRates = provider.NationalAchievementRates.AsQueryable();
+            var nationalAchievementRates = provider.AchievementRates.AsQueryable();
 
             if (apprenticeshipLevel != 0)
             {
