@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Data.Extensions;
@@ -82,12 +84,20 @@ inner join (select
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn
 where psl.StandardId = {standardId}
-and l.DistanceInMiles <= psl.Radius
-order by l.DistanceInMiles asc
-"
+and l.DistanceInMiles <= psl.Radius"//TODO join on providerregistration
                 )
+                .OrderBy(OrderProviderStandards(sortOrder))
                 .ToListAsync();
             return providers;
+        }
+
+        private static Expression<Func<ProviderWithStandardAndLocation, object>> OrderProviderStandards(short sortOrder)
+        {
+            if (sortOrder == 0)
+            {
+                return c => c.DistanceInMiles;
+            }
+            return c=>c.Name;
         }
     }
 }
