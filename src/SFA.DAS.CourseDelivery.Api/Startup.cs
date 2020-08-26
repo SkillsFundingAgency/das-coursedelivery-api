@@ -97,7 +97,7 @@ namespace SFA.DAS.CourseDelivery.Api
 
             services.AddMediatR(typeof(ImportDataCommand).Assembly);
 
-            services.AddServiceRegistration(_configuration["Environment"] == "DEV");
+            services.AddServiceRegistration(_configuration["StubImport"] == "true");
 
             services.AddDatabaseRegistration(courseDeliveryConfiguration, _configuration["Environment"]);
 

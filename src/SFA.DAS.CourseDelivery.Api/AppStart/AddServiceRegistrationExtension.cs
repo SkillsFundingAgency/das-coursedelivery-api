@@ -16,9 +16,9 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
 {
     public static class AddServiceRegistrationExtension
     {
-        public static void AddServiceRegistration(this IServiceCollection services, bool isDev)
+        public static void AddServiceRegistration(this IServiceCollection services, bool useStub)
         {
-            if (isDev)
+            if (useStub)
             {
                 services.AddTransient<ICourseDirectoryService, DevCourseDirectoryService>();
                 services.AddTransient<IRoatpApiService, DevRoatpApiService>();
