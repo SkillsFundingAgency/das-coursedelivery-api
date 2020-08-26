@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
+using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 {
@@ -18,11 +20,14 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             _providerStandardRepository = providerStandardRepository;
             _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
         }
-        public async Task<IEnumerable<Domain.Entities.Provider>> GetProvidersByStandardId(int standardId)
+        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId)
         {
-            var providers = await _providerRepository.GetByStandardId(standardId);
+            var providers = (await _providerRepository.GetByStandardId(standardId)).ToList();
 
-            return providers;
+
+            var providerLocation = providers.Select(c => new ProviderLocation(c)).ToList();
+            
+            return providerLocation;
         }
 
         public async Task<Domain.Entities.ProviderStandard> GetProviderByUkprnAndStandard(int ukPrn, int standardId)
@@ -43,6 +48,18 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             var standardIds = await _providerStandardRepository.GetCoursesByUkprn(ukprn);
 
             return standardIds;
+        }
+
+        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(int standardId, double lat, double lon)
+        {
+            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon);
+
+            var providerLocations = providers
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name, group.ToList()))
+                .ToList();
+            
+            return providerLocations;
         }
     }
 }

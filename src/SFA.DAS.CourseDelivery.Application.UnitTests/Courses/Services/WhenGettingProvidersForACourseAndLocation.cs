@@ -10,23 +10,25 @@ using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
 {
-    public class WhenGettingProvidersForACourse
+    public class WhenGettingProvidersForACourseAndLocation
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_The_Providers_For_A_Course_From_The_Repository(
+        public async Task Then_Gets_The_Providers_For_A_Course_And_Location_From_The_Repository(
             int standardId,
-            List<Domain.Entities.Provider> providers,
+            double lat, 
+            double lon,
+            List<Domain.Entities.ProviderWithStandardAndLocation> providers,
             [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
         {
             //Arrange
-            repository.Setup(x => x.GetByStandardId(standardId)).ReturnsAsync(providers);
+            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon)).ReturnsAsync(providers);
             
             //Act
-            var actual = await service.GetProvidersByStandardId(standardId);
+            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardId(standardId), Times.Once);
+            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon), Times.Once);
             actual.Should().BeEquivalentTo(providers, options=> options.ExcludingMissingMembers());
         }
     }
