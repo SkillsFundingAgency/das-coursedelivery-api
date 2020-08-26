@@ -33,14 +33,14 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
         }
 
         [Test, RecursiveMoqAutoData]
-        public async Task Then_If_There_Is_Location_Data_In_The_Request_It_Is_Filtered_By_Location(
+        public async Task Then_If_There_Is_Location_Data_In_The_Request_It_Is_Filtered_By_Location_With_Sorting(
             GetCourseProvidersQuery query,
             List<Domain.Models.ProviderLocation> providers,
             [Frozen] Mock<IProviderService> providerService,
             GetCourseProvidersQueryHandler handler)
         {
             //Arrange
-            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value)).ReturnsAsync(providers);
+            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value, query.SortOrder)).ReturnsAsync(providers);
             
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());

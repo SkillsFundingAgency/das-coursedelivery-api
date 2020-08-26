@@ -50,7 +50,8 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             return standardIds;
         }
 
-        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(int standardId, double lat, double lon)
+        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,
+            double lon, short querySortOrder)
         {
             var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon);
 

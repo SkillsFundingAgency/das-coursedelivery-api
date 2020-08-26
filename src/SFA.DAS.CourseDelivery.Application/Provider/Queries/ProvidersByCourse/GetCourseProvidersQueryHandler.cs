@@ -20,7 +20,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
 
             if (request.Lat != null && request.Lon != null)
             {
-                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value);
+                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value, request.SortOrder);
             }
             else
             {
