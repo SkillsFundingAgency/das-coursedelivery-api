@@ -55,7 +55,8 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return provider;
         }
 
-        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId, double lat, double lon)
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(  int standardId,
+            double lat, double lon, short sortOrder)
         {
             var providers = await _dataContext.ProviderWithStandardAndLocations.FromSqlInterpolated($@"
 select

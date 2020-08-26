@@ -53,7 +53,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,
             double lon, short querySortOrder)
         {
-            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon);
+            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder);
 
             var providerLocations = providers
                 .GroupBy(item => new { UkPrn = item.Ukprn, item.Name})
