@@ -7,7 +7,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.ProviderWithStandardAndLocation> builder)
         {
-            builder.HasKey(x => new {x.UkPrn, x.LocationId});
+            builder.HasKey(x => new {UkPrn = x.Ukprn, x.LocationId});
             builder.Property(x => x.DistanceInMiles).HasColumnType("float");
             builder.Property(x => x.Age).IsRequired(false);
             builder.Property(x => x.SectorSubjectArea).IsRequired(false);
