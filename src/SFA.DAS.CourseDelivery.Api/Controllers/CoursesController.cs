@@ -29,7 +29,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers")]
-        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]Age age = 0, [FromQuery]Level level = 0, [FromQuery]double? lat = null, [FromQuery]double? lon = null)
+        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]Age age = 0, [FromQuery]Level level = 0, [FromQuery]double? lat = null, [FromQuery]double? lon = null, [FromQuery]SortOrder sortOrder = SortOrder.Distance)
         {
             try
             {
@@ -37,7 +37,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 {
                     StandardId = id,
                     Lat = lat,
-                    Lon = lon
+                    Lon = lon,
+                    SortOrder = (short)sortOrder
                 });
 
                 var getCourseProviderResponses = queryResult
