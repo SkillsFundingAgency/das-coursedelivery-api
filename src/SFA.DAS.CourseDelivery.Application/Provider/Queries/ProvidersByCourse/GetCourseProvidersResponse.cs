@@ -4,6 +4,6 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
 {
     public class GetCourseProvidersResponse
     {
-        public IEnumerable<Domain.Entities.Provider> Providers { get ; set ; }
+        public IEnumerable<Domain.Models.ProviderLocation> Providers { get ; set ; }
     }
 }

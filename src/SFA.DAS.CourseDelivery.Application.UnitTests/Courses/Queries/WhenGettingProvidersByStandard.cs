@@ -14,15 +14,34 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
     public class WhenGettingProvidersByStandard
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_Providers_From_The_Service_By_Standard(
+        public async Task Then_Gets_Providers_From_The_Service_By_Standard_If_No_Location(
             GetCourseProvidersQuery query,
-            List<Domain.Entities.Provider> providers,
+            List<Domain.Models.ProviderLocation> providers,
             [Frozen] Mock<IProviderService> providerService,
             GetCourseProvidersQueryHandler handler)
         {
             //Arrange
+            query.Lat = null;
+            query.Lon = null;
             providerService.Setup(x => x.GetProvidersByStandardId(query.StandardId)).ReturnsAsync(providers);
 
+            //Act
+            var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
+
+            //Assert
+            actual.Providers.Should().BeEquivalentTo(providers);
+        }
+
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_If_There_Is_Location_Data_In_The_Request_It_Is_Filtered_By_Location(
+            GetCourseProvidersQuery query,
+            List<Domain.Models.ProviderLocation> providers,
+            [Frozen] Mock<IProviderService> providerService,
+            GetCourseProvidersQueryHandler handler)
+        {
+            //Arrange
+            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value)).ReturnsAsync(providers);
+            
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
 
