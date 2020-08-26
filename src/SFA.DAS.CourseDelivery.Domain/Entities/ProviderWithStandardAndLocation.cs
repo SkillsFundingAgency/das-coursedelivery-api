@@ -5,7 +5,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
 {
     public class ProviderWithStandardAndLocation
     {
-        public int UkPrn { get; set; }
+        public int Ukprn { get; set; }
         public string Name { get; set; }
         public int LocationId { get ; set ; }
         public string DeliveryModes { get; set; }
