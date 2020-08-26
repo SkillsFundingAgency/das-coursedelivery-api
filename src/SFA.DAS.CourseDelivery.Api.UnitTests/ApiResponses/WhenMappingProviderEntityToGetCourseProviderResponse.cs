@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoFixture.NUnit3;
 using FluentAssertions;
 using NUnit.Framework;
@@ -18,6 +19,14 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
+        }
+
+        [Test, RecursiveMoqAutoData]
+        public void Then_The_Delivery_Modes_Are_Mapped_If_Available(ProviderLocation providerLocation)
+        {
+            var actual = new GetProviderResponse().Map(providerLocation);
+
+            actual.DeliveryTypes.Count.Should().Be(providerLocation.DeliveryTypes.Count);
         }
 
         [Test, RecursiveMoqAutoData]
