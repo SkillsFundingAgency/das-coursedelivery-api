@@ -60,13 +60,16 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(  int standardId,
             double lat, double lon, short sortOrder)
         {
+            _dataContext.TrackChanges(false);
             var providers = await _dataContext.ProviderWithStandardAndLocations.FromSqlInterpolated($@"
 select
+    
     P.Ukprn,
     P.Name,
     sl.LocationId,
     psl.DeliveryModes,
     l.DistanceInMiles,
+    NAR.Id,
     NAR.Age, 
     NAR.SectorSubjectArea, 
     NAR.ApprenticeshipLevel,
@@ -82,12 +85,15 @@ inner join (select
             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
-left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn
+inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
+left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
 where psl.StandardId = {standardId}
-and l.DistanceInMiles <= psl.Radius"//TODO join on providerregistration
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1
+and l.DistanceInMiles <= psl.Radius"
                 )
                 .OrderBy(OrderProviderStandards(sortOrder))
                 .ToListAsync();
+            _dataContext.TrackChanges();
             return providers;
         }
 

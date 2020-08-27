@@ -9,6 +9,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
         {
             builder.HasKey(x => new {UkPrn = x.Ukprn, x.LocationId});
             builder.Property(x => x.DistanceInMiles).HasColumnType("float");
+            builder.Property(x => x.Id).IsRequired(false);
             builder.Property(x => x.Age).IsRequired(false);
             builder.Property(x => x.SectorSubjectArea).IsRequired(false);
             builder.Property(x => x.ApprenticeshipLevel).IsRequired(false);

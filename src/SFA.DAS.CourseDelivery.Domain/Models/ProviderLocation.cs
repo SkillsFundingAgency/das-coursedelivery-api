@@ -14,7 +14,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 .Select(p=>p.FirstOrDefault())
                 .Select(c => (DeliveryType) c).ToList();
             AchievementRates = providerWithStandardAndLocations
-                .Where(c=>c.Age.HasValue && c.ApprenticeshipLevel.HasValue).Select(c => (AchievementRate) c).ToList();
+                .Where(c=>c.Id!=null)
+                .GroupBy(x=>new {x.Id})
+                .Select(p=>p.FirstOrDefault())
+                .Select(c => (AchievementRate) c).ToList();
         }
 
         public ProviderLocation(Provider provider)
