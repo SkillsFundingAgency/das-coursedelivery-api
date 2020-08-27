@@ -14,6 +14,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             var actual = (AchievementRate) source;
             
             actual.Should().BeEquivalentTo(source, options=> options
+                .Excluding(c=>c.Id)
                 .Excluding(c=>c.Name)
                 .Excluding(c=>c.LocationId)
                 .Excluding(c=>c.DeliveryModes)
