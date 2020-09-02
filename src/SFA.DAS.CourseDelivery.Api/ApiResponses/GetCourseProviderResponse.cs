@@ -12,7 +12,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string Phone { get ; set ; }
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
 
-        public static implicit operator GetCourseProviderResponse(Application.Provider.Queries.Provider.GetProviderResponse source)
+        public static implicit operator GetCourseProviderResponse(Application.Provider.Queries.ProviderStandard.GetProviderStandardResponse source)
         {
             return new GetCourseProviderResponse
             {

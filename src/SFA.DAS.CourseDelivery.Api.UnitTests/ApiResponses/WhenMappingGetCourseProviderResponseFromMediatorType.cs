@@ -2,14 +2,14 @@ using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.Testing.AutoFixture;
-using GetProviderResponse = SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider.GetProviderResponse;
+using GetProviderStandardResponse = SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderStandard.GetProviderStandardResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
 {
     public class WhenMappingGetCourseProviderResponseFromMediatorType
     {
         [Test, RecursiveMoqAutoData]
-        public void Then_Maps_Fields(GetProviderResponse source)
+        public void Then_Maps_Fields(GetProviderStandardResponse source)
         {
             var actual = (GetCourseProviderResponse) source;
 

@@ -6,7 +6,7 @@ using AutoFixture.NUnit3;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderStandard;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.Testing.AutoFixture;
@@ -18,11 +18,11 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_And_StandardId_And_Overall_AchievementRates(
             string sectorSubjectArea,
-            GetProviderQuery query,
+            GetProviderStandardQuery query,
             ProviderStandard providerStandard,
             List<NationalAchievementRateOverall> overallAchievementRates,
             [Frozen] Mock<IProviderService> providerService,
-            GetProviderQueryHandler handler)
+            GetProviderStandardQueryHandler handler)
         {
             //Arrange
             providerStandard.NationalAchievementRate = providerStandard.NationalAchievementRate.Select(c =>
@@ -44,10 +44,10 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_And_StandardId_And_Returns_Null_For_Overall_AchievementRates_If_No_AchievementRate(
             string sectorSubjectArea,
-            GetProviderQuery query,
+            GetProviderStandardQuery query,
             ProviderStandard providerStandard,
             [Frozen] Mock<IProviderService> providerService,
-            GetProviderQueryHandler handler)
+            GetProviderStandardQueryHandler handler)
         {
             //Arrange
             providerStandard.NationalAchievementRate = null;

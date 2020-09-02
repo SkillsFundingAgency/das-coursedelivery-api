@@ -9,9 +9,10 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderStandard;
 using SFA.DAS.Testing.AutoFixture;
 using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
+using GetProviderStandardResponse = SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderStandard.GetProviderStandardResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
 {
@@ -21,13 +22,13 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
         public async Task Then_Gets_Providers_List_From_Mediator(
             int standardId,
             int ukPrn,
-            Application.Provider.Queries.Provider.GetProviderResponse queryResult,
+            GetProviderStandardResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] CoursesController controller)
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
-                    It.Is<GetProviderQuery>(query => 
+                    It.Is<GetProviderStandardQuery>(query => 
                         query.Ukprn == ukPrn && query.StandardId == standardId), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
@@ -48,9 +49,9 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
-                    It.IsAny<GetProviderQuery>(),
+                    It.IsAny<GetProviderStandardQuery>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Application.Provider.Queries.Provider.GetProviderResponse());
+                .ReturnsAsync(new GetProviderStandardResponse());
 
             var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as StatusCodeResult;
 
