@@ -33,9 +33,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
         public async Task<Domain.Entities.ProviderStandard> GetProviderByUkprnAndStandard(int ukPrn, int standardId)
         {
-            var provider = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
+            var providerStandard = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
 
-            return provider;
+            return providerStandard;
         }
 
         public async Task<IEnumerable<Domain.Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description)
@@ -44,6 +44,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
             return items;
         }
+
         public async Task<IEnumerable<int>> GetStandardIdsByUkprn(int ukprn)
         {
             var standardIds = await _providerStandardRepository.GetCoursesByUkprn(ukprn);
@@ -53,7 +54,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
         public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukPrn)
         {
-            throw new NotImplementedException();
+            var provider = await _providerRepository.GetByUkprn(ukPrn);
+
+            return provider;
         }
 
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,
