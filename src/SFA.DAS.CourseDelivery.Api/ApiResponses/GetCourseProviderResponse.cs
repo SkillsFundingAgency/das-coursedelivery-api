@@ -10,8 +10,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string ContactUrl { get ; set ; }
         public string Email { get ; set ; }
         public string Phone { get ; set ; }
-
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
+
         public static implicit operator GetCourseProviderResponse(Application.Provider.Queries.Provider.GetProviderResponse source)
         {
             return new GetCourseProviderResponse

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,6 +49,11 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             var standardIds = await _providerStandardRepository.GetCoursesByUkprn(ukprn);
 
             return standardIds;
+        }
+
+        public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukPrn)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,

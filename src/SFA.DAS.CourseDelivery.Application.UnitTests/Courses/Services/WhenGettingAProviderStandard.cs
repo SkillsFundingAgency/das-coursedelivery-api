@@ -9,10 +9,10 @@ using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
 {
-    public class WhenGettingAProvider
+    public class WhenGettingAProviderStandard
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_The_Provider_From_The_Repository(
+        public async Task Then_Gets_The_ProviderStandard_From_The_Repository(
             int ukPrn,
             int standardId,
             Domain.Entities.ProviderStandard provider,
