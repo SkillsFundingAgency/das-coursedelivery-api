@@ -57,7 +57,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return provider;
         }
 
-        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(  int standardId,
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId,
             double lat, double lon, short sortOrder)
         {
             _dataContext.TrackChanges(false);

@@ -10,7 +10,6 @@ using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
 using SFA.DAS.CourseDelivery.Application.OverallNationalAchievementRates.Queries;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
 using SFA.DAS.Testing.AutoFixture;
 using GetOverallAchievementRatesResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetOverallAchievementRatesResponse;
 

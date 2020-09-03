@@ -1,8 +1,8 @@
 using SFA.DAS.CourseDelivery.Domain.Entities;
 
-namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider
+namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse
 {
-    public class GetProviderResponse
+    public class GetCourseProviderResponse
     {
         public ProviderStandard ProviderStandardContact { get ; set ; }
     }
