@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -15,7 +16,17 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
         }
         public async Task<GetCourseProvidersResponse> Handle(GetCourseProvidersQuery request, CancellationToken cancellationToken)
         {
-            var providers = await _providerService.GetProvidersByStandardId(request.StandardId);
+            IEnumerable<Domain.Models.ProviderLocation> providers;
+
+            if (request.Lat != null && request.Lon != null)
+            {
+                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value, request.SortOrder);
+            }
+            else
+            {
+                providers = await _providerService.GetProvidersByStandardId(request.StandardId);    
+            }
+            
             
             return new GetCourseProvidersResponse
             {

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +29,7 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
         DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
+        DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
         int SaveChanges();
         void TrackChanges(bool enable = true);
         Task<int> ExecuteRawSql(string sql);
@@ -51,6 +52,7 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
         public DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
+        public DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
 
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -123,6 +125,9 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverallImport());
             modelBuilder.ApplyConfiguration(new ProviderRegistration());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationImport());
+
+            modelBuilder.ApplyConfiguration(new ProviderWithStandardAndLocation());
+            
             base.OnModelCreating(modelBuilder);
         }
     }
