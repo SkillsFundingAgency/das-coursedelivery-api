@@ -11,7 +11,6 @@ using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderStandard;
 using SFA.DAS.Testing.AutoFixture;
-using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
 using GetProviderStandardResponse = SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderStandard.GetProviderStandardResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses

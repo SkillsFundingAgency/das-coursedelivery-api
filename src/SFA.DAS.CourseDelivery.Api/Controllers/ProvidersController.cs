@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.CoursesByProvider;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -21,6 +22,25 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet]
+        [Route("{ukprn}")]
+        public async Task<IActionResult> GetProvider(int ukprn)
+        {
+            try
+            {
+                var queryResult = await _mediator.Send(new GetProviderQuery { Ukprn = ukprn });
+
+                GetProviderDetailsResponse response = queryResult.Provider;
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Unable to get provider by ukprn:{ukprn}");
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -44,7 +64,6 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 _logger.LogError(e, $"Unable to get courses by ukprn:{ukprn}");
                 return BadRequest();
             }
-            
         }
     }
 }
