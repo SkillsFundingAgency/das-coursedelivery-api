@@ -89,7 +89,10 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
         private static IEnumerable<ProviderImport> GetProviderImports(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
         {
-            return providerCourseInformation.Select(c => (ProviderImport) c);
+            return providerCourseInformation
+                .Select(c => (ProviderImport) c)
+                .GroupBy(c=>c.Id)
+                .Select(item=>item.First());
         }
 
         private static IEnumerable<StandardLocationImport> GetStandardLocationImports(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
