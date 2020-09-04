@@ -61,12 +61,53 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             double lat, double lon, short sortOrder)
         {
             _dataContext.TrackChanges(false);
-            var providers = await _dataContext.ProviderWithStandardAndLocations.FromSqlInterpolated($@"
+            var providers = await _dataContext.ProviderWithStandardAndLocations
+                .FromSqlInterpolated(GetProviderQuery(standardId, lat, lon))
+                .OrderBy(OrderProviderStandards(sortOrder))
+                .ToListAsync();
+            _dataContext.TrackChanges();
+            return providers;
+        }
+
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(int ukprn, int standardId,
+            double lat = 0, double lon = 0)
+        {
+            _dataContext.TrackChanges(false);
+
+            var provider = await _dataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon))
+                .Where(c=>c.Ukprn.Equals(ukprn))
+                .OrderBy(c=>c.DistanceInMiles)
+                .ToListAsync();
+            
+            _dataContext.TrackChanges();
+
+            return provider;
+        }
+
+        private static Expression<Func<ProviderWithStandardAndLocation, object>> OrderProviderStandards(short sortOrder)
+        {
+            if (sortOrder == 0)
+            {
+                return c => c.DistanceInMiles;
+            }
+            return c=>c.Name;
+        }
+
+        private FormattableString GetProviderQuery(int standardId, double lat, double lon)
+        {
+            return $@"
 select
-    
     P.Ukprn,
     P.Name,
+    ps.ContactUrl,
+    ps.Email,
+    ps.Phone,
     sl.LocationId,
+    sl.Address1,
+    sl.Address2,
+    sl.Town,
+    sl.Postcode,
+    sl.County,
     psl.DeliveryModes,
     l.DistanceInMiles,
     NAR.Id,
@@ -89,21 +130,7 @@ inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
 where psl.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
-and l.DistanceInMiles <= psl.Radius"
-                )
-                .OrderBy(OrderProviderStandards(sortOrder))
-                .ToListAsync();
-            _dataContext.TrackChanges();
-            return providers;
-        }
-
-        private static Expression<Func<ProviderWithStandardAndLocation, object>> OrderProviderStandards(short sortOrder)
-        {
-            if (sortOrder == 0)
-            {
-                return c => c.DistanceInMiles;
-            }
-            return c=>c.Name;
+and l.DistanceInMiles <= psl.Radius";
         }
     }
 }

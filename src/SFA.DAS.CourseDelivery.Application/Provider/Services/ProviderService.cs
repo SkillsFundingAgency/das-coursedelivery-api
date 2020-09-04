@@ -30,11 +30,22 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             return providerLocation;
         }
 
-        public async Task<Domain.Entities.ProviderStandard> GetProviderByUkprnAndStandard(int ukPrn, int standardId)
+        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double lat, double lon)
         {
-            var provider = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
+            if (lat == 0 && lon == 0)
+            {
+                var providerResult = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
 
-            return provider;
+                return providerResult;
+            }
+            
+            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat, lon);
+            var providerLocation = provider
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.ToList()))
+                .FirstOrDefault();
+            
+            return providerLocation;
         }
 
         public async Task<IEnumerable<Domain.Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description)
@@ -56,8 +67,8 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder);
 
             var providerLocations = providers
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name, group.ToList()))
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.ToList()))
                 .ToList();
             
             return providerLocations;
