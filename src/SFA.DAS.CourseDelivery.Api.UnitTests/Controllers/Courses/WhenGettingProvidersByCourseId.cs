@@ -47,7 +47,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                 ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
             });
             
-            var queryResult = new GetCourseProvidersResponse
+            var queryResult = new GetCourseProvidersQueryResponse
             {
                 Providers = new List<ProviderLocation>{provider, provider2}
             }; 

@@ -8,7 +8,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
     public class WhenMappingGetCourseProviderResponseFromMediatorType
     {
         [Test, RecursiveMoqAutoData]
-        public void Then_Maps_Fields(Application.Provider.Queries.ProviderByCourse.GetCourseProviderResponse source)
+        public void Then_Maps_Fields(Application.Provider.Queries.ProviderByCourse.GetCourseProviderQueryResponse source)
         {
             var actual = (GetCourseProviderResponse) source;
 

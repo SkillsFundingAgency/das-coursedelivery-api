@@ -21,7 +21,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_StandardId_List_From_Mediator(
             int ukprn,
-            GetProviderCoursesResponse queryResult,
+            GetProviderCoursesQueryResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] ProvidersController controller)
         {
