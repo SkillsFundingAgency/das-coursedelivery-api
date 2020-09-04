@@ -11,8 +11,6 @@ using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse;
 using SFA.DAS.Testing.AutoFixture;
-using GetCourseProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetCourseProviderResponse;
-using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
 {
@@ -22,22 +20,28 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
         public async Task Then_Gets_Providers_List_From_Mediator(
             int standardId,
             int ukPrn,
-            Application.Provider.Queries.ProviderByCourse.GetCourseProviderResponse queryResult,
+            double lat,
+            double lon,
+            GetCourseProviderQueryResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] CoursesController controller)
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
                     It.Is<GetCourseProviderQuery>(query => 
-                        query.Ukprn == ukPrn && query.StandardId == standardId), 
+                        query.Ukprn == ukPrn 
+                        && query.StandardId == standardId
+                        && query.Lat.Equals(lat)
+                        && query.Lon.Equals(lon)
+                        ), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as ObjectResult;
+            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn, lat, lon) as ObjectResult;
 
-            var model = controllerResult.Value as GetCourseProviderResponse;
+            var model = controllerResult.Value as GetProviderResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            model.Should().BeAssignableTo<GetCourseProviderResponse>();
+            model.Should().BeAssignableTo<GetProviderResponse>();
         }
 
         [Test, RecursiveMoqAutoData]
@@ -51,7 +55,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                 .Setup(mediator => mediator.Send(
                     It.IsAny<GetCourseProviderQuery>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Application.Provider.Queries.ProviderByCourse.GetCourseProviderResponse());
+                .ReturnsAsync(new GetCourseProviderQueryResponse());
 
             var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as StatusCodeResult;
 

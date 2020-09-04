@@ -9,7 +9,6 @@ using SFA.DAS.CourseDelivery.Api.ApiRequests;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
-using GetCourseProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetCourseProviderResponse;
 using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
@@ -64,18 +63,24 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers/{ukprn}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetCourseProviderResponse))]
-        [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetCourseProviderResponse))]
-        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn)
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderResponse))]
+        [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderResponse))]
+        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, double lat = 0, double lon = 0)
         {
-            var queryResult = await _mediator.Send(new GetCourseProviderQuery {Ukprn = ukprn, StandardId = id});
+            var queryResult = await _mediator.Send(new GetCourseProviderQuery
+            {
+                Ukprn = ukprn, 
+                StandardId = id, 
+                Lat = lat, 
+                Lon = lon
+            });
 
-            if (queryResult.ProviderStandardContact == null)
+            if (queryResult.ProviderStandardLocation == null)
             {
                 return NotFound();
             }
 
-            return Ok((GetCourseProviderResponse) queryResult);
+            return Ok(new GetProviderResponse().Map(queryResult.ProviderStandardLocation));
         }
     }
 }

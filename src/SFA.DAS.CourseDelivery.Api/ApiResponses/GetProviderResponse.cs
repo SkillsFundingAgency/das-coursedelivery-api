@@ -10,6 +10,9 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public int Ukprn { get ; set ; }
 
         public string Name { get ; set ; }
+        public string ContactUrl { get ; set ; }
+        public string Email { get ; set ; }
+        public string Phone { get ; set ; }
 
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
@@ -32,6 +35,9 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
             {
                 Ukprn = provider.Ukprn,
                 Name = provider.Name,
+                Email = provider.Email,
+                ContactUrl = provider.ContactUrl,
+                Phone = provider.Phone,
                 AchievementRates = nationalAchievementRates
                     .Select(c=>(GetNationalAchievementRateResponse)c).ToList(),
                 DeliveryTypes = provider.DeliveryTypes.Select(c=>(GetDeliveryTypesResponse)c).ToList()
