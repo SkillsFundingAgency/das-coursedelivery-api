@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,6 +73,13 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
                 .ToList();
             
             return providerLocations;
+        }
+
+        public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukprn)
+        {
+            var provider = await _providerRepository.GetByUkprn(ukprn);
+
+            return provider;
         }
     }
 }
