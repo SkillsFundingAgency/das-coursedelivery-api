@@ -65,7 +65,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         [Route("{id}/providers/{ukprn}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderResponse))]
         [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderResponse))]
-        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, double lat = 0, double lon = 0)
+        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, double? lat = null, double? lon = null)
         {
             var queryResult = await _mediator.Send(new GetCourseProviderQuery
             {

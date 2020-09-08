@@ -47,7 +47,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             repository.Setup(x => x.GetByUkprnAndStandard(ukPrn, standardId)).ReturnsAsync(provider);
             
             //Act
-            var actual = await service.GetProviderByUkprnAndStandard(ukPrn, standardId, 0, 0);
+            var actual = await service.GetProviderByUkprnAndStandard(ukPrn, standardId, null, null);
             
             //Assert
             actual.Should().NotBeNull();

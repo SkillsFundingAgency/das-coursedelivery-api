@@ -30,16 +30,16 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             return providerLocation;
         }
 
-        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double lat, double lon)
+        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon)
         {
-            if (lat == 0 && lon == 0)
+            if (lat ==null && lon == null)
             {
                 var providerResult = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
 
                 return providerResult;
             }
             
-            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat, lon);
+            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
             var providerLocation = provider
                 .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone})
                 .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.ToList()))
