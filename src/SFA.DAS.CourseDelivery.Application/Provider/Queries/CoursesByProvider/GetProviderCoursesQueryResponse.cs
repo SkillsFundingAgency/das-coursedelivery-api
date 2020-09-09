@@ -2,7 +2,7 @@
 
 namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.CoursesByProvider
 {
-    public class GetProviderCoursesResponse
+    public class GetProviderCoursesQueryResponse
     {
         public IEnumerable<int> CourseIds { get; set; }
     }

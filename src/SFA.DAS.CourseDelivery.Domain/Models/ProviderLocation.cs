@@ -6,10 +6,18 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
 {
     public class ProviderLocation
     {
-        public ProviderLocation(int ukPrn, string name, IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
+        public ProviderLocation ()
+        {
+            
+        }
+        public ProviderLocation(int ukPrn, string name, string contactUrl, string phone, string email,  IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
             Ukprn = ukPrn;
             Name = name;
+            ContactUrl = contactUrl;
+            Email = email;
+            Phone = phone;
+            
             DeliveryTypes = providerWithStandardAndLocations.GroupBy(x=>new {x.DeliveryModes, x.LocationId,x.DistanceInMiles})
                 .Select(p=>p.FirstOrDefault())
                 .Select(c => (DeliveryType) c).ToList();
@@ -28,9 +36,27 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             DeliveryTypes = new List<DeliveryType>();
         }
 
-        public int Ukprn { get; }
-        public string Name { get; }
-        public List<DeliveryType> DeliveryTypes { get; }
+        public static implicit operator ProviderLocation(ProviderStandard provider)
+        {
+            return new ProviderLocation
+            {
+                Ukprn = provider.Provider.Ukprn,
+                Name = provider.Provider.Name,
+                Email = provider.Email,
+                Phone = provider.Phone,
+                ContactUrl = provider.ContactUrl,
+                AchievementRates = provider.NationalAchievementRate.Select(c => (AchievementRate) c).ToList(),
+                DeliveryTypes = new List<DeliveryType>()
+                    
+            };
+        }
+
+        public int Ukprn { get; private set; }
+        public string Name { get; private set; }
+        public string ContactUrl { get ; private set ; }
+        public string Email { get ; private set ; }
+        public string Phone { get ; private set ; }
+        public List<DeliveryType> DeliveryTypes { get; set; }
         public List<AchievementRate> AchievementRates { get; set; }
     }
 }

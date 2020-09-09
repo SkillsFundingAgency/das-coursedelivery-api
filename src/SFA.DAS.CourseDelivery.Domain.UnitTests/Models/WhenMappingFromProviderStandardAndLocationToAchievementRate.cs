@@ -19,6 +19,14 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
                 .Excluding(c=>c.LocationId)
                 .Excluding(c=>c.DeliveryModes)
                 .Excluding(c=>c.DistanceInMiles)
+                .Excluding(c=>c.ContactUrl)
+                .Excluding(c=>c.Email)
+                .Excluding(c=>c.Phone)
+                .Excluding(c=>c.Address1)
+                .Excluding(c=>c.Address2)
+                .Excluding(c=>c.Town)
+                .Excluding(c=>c.Postcode)
+                .Excluding(c=>c.County)
             );
         }
     }
