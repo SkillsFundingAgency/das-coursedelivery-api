@@ -1,14 +1,12 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
-using SFA.DAS.Courses.Infrastructure.HealthCheck;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SFA.DAS.Api.Common.Infrastructure;
 
 namespace SFA.DAS.CourseDelivery.Infrastructure.HealthCheck
 {
