@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
@@ -31,6 +30,10 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             [Frozen] Mock<IRoatpApiService> mockRoatpApiService,
             [Frozen] Mock<IProviderRegistrationImportRepository> mockImportRepository,
             [Frozen] Mock<IProviderRegistrationRepository> mockRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackAttributeRepository> mockFeedbackAttributeRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackAttributeImportRepository> mockFeedbackAttributeImportRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackRatingRepository> mockFeedbackRatingRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackRatingImportRepository> mockFeedbackRatingImportRepository,
             ProviderRegistrationImportService importService)
         {
             mockRoatpApiService
@@ -43,37 +46,74 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             mockImportRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationImport>>()), Times.Never);
             mockRepository.Verify(repository => repository.DeleteAll(), Times.Never);
             mockRepository.Verify(repository => repository.InsertFromImportTable(), Times.Never);
+            mockFeedbackAttributeRepository.Verify(repository => repository.DeleteAll(), Times.Never);
+            mockFeedbackAttributeRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationFeedbackAttribute>>()), Times.Never);
+            mockFeedbackAttributeImportRepository.Verify(repository => repository.DeleteAll(), Times.Never);
+            mockFeedbackAttributeImportRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationFeedbackAttributeImport>>()), Times.Never);
+            mockFeedbackRatingRepository.Verify(repository => repository.DeleteAll(), Times.Never);
+            mockFeedbackRatingRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationFeedbackRating>>()), Times.Never);
+            mockFeedbackRatingImportRepository.Verify(repository => repository.DeleteAll(), Times.Never);
+            mockFeedbackRatingImportRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationFeedbackRatingImport>>()), Times.Never);
         }
 
         [Test, MoqAutoData]
         public async Task Then_Adds_Roatp_Data_To_Import_Table(
             List<ProviderRegistration> providerRegistrationsFromRoatp,
+            List<ProviderRegistrationFeedbackRatingImport> feedbackRatingImports,
+            List<ProviderRegistrationFeedbackAttributeImport> feedbackAttributeImports,
             [Frozen] Mock<IRoatpApiService> mockRoatpApiService,
             [Frozen] Mock<IProviderRegistrationImportRepository> mockImportRepository,
             [Frozen] Mock<IProviderRegistrationRepository> mockRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackAttributeRepository> mockFeedbackAttributeRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackAttributeImportRepository> mockFeedbackAttributeImportRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackRatingRepository> mockFeedbackRatingRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackRatingImportRepository> mockFeedbackRatingImportRepository,
             ProviderRegistrationImportService importService)
         {
             mockRoatpApiService
                 .Setup(service => service.GetProviderRegistrations())
                 .ReturnsAsync(providerRegistrationsFromRoatp);
+            mockFeedbackAttributeImportRepository.Setup(x => x.GetAll())
+                .ReturnsAsync(feedbackAttributeImports);
+            mockFeedbackRatingImportRepository.Setup(x => x.GetAll())
+                .ReturnsAsync(feedbackRatingImports);
             var expectedProviderRegistrationImports = providerRegistrationsFromRoatp
                 .Select(registration => (ProviderRegistrationImport) registration)
                 .ToList();
+            
             var actualProviderRegistrationImports = new List<ProviderRegistrationImport>();
+            
             mockImportRepository
                 .Setup(repository =>
                     repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationImport>>()))
                 .Callback((IEnumerable<ProviderRegistrationImport> imports) =>
                     actualProviderRegistrationImports = imports.ToList())
                 .Returns(Task.CompletedTask);
-
+            
             await importService.ImportData();
 
             mockImportRepository.Verify(repository => repository.DeleteAll(), Times.Once);
             mockImportRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationImport>>()), Times.Once);
+            mockFeedbackAttributeImportRepository.Verify(repository => repository.DeleteAll(), Times.Once);
+            mockFeedbackAttributeImportRepository.Verify(
+                repository =>
+                    repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackAttributeImport>>(c=>
+                        c.Count().Equals(providerRegistrationsFromRoatp.Sum(s => s.Feedback.ProviderAttributes.Count)))),
+                Times.Once);
+            mockFeedbackRatingImportRepository.Verify(repository => repository.DeleteAll(), Times.Once);
+            mockFeedbackRatingImportRepository.Verify(
+                repository => repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackRatingImport>>(s=>
+                    s.Count().Equals(providerRegistrationsFromRoatp.Sum(c => c.Feedback.FeedbackRating.Count)))),
+                Times.Once);
             actualProviderRegistrationImports.Should().BeEquivalentTo(expectedProviderRegistrationImports);
             mockRepository.Verify(repository => repository.DeleteAll(), Times.Once);
+            mockFeedbackAttributeRepository.Verify(repository => repository.DeleteAll(), Times.Once);
+            mockFeedbackRatingRepository.Verify(repository => repository.DeleteAll(), Times.Once);
             mockRepository.Verify(repository => repository.InsertFromImportTable(), Times.Once);
+            mockFeedbackAttributeRepository.Verify(repository => repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackAttribute>>
+                (c=> c.Count().Equals(feedbackAttributeImports.Count))), Times.Once);
+            mockFeedbackRatingRepository.Verify(repository => repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackRating>>
+                (c=> c.Count().Equals(feedbackRatingImports.Count))), Times.Once);
         }
 
         [Test, RecursiveMoqAutoData]
