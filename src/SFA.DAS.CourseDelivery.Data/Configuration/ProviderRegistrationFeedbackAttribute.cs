@@ -8,7 +8,11 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
         public void Configure(EntityTypeBuilder<Domain.Entities.ProviderRegistrationFeedbackAttribute> builder)
         {
             builder.ToTable("ProviderRegistrationFeedbackAttribute");
-            builder.HasKey(x => x.Ukprn);
+            builder.HasKey(x => new
+            {
+                x.Ukprn,x.AttributeName
+            });
+            builder.Property(x=>x.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();
             builder.Property(x=>x.Strength).HasColumnName("Strength").HasColumnType("int").IsRequired();
             builder.Property(x=>x.Weakness).HasColumnName("Weakness").HasColumnType("int").IsRequired();
             builder.Property(x => x.AttributeName).HasColumnName("AttributeName").IsRequired();

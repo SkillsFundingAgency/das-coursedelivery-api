@@ -8,7 +8,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
         public void Configure(EntityTypeBuilder<Domain.Entities.ProviderRegistrationFeedbackRatingImport> builder)
         {
             builder.ToTable("ProviderRegistrationFeedbackRating_Import");
-            builder.HasKey(x => x.Ukprn);
+            builder.HasKey(x => new{x.Ukprn, x.FeedbackName});
             builder.Property(x => x.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();
             builder.Property(x => x.FeedbackCount).HasColumnName("FeedbackCount").HasColumnType("int").IsRequired();
             builder.Property(x => x.FeedbackName).HasColumnName("FeedbackName").IsRequired();
