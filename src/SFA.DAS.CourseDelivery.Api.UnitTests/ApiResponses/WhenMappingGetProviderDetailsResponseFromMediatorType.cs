@@ -16,7 +16,10 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             result.Should().BeEquivalentTo(source, options => options
                 .Excluding(provider => provider.ProviderStandards)
                 .Excluding(provider => provider.NationalAchievementRates)
-                .Excluding(provider => provider.ProviderRegistration));
+                .Excluding(provider => provider.ProviderRegistration)
+                .Excluding(provider => provider.ProviderRegistrationFeedbackAttributes)
+                .Excluding(provider => provider.ProviderRegistrationFeedbackRating)
+            );
         }
 
         [Test]

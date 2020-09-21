@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationF
 {
     public class WhenCallingInsertMany
     {
-        [Test, MoqAutoData]
+        [Test, RecursiveMoqAutoData]
         public async Task Then_Inserts_Records_Into_DbContext(
             List<ProviderRegistrationFeedbackAttribute> items,
             [Frozen] Mock<ICourseDeliveryDataContext> mockContext,

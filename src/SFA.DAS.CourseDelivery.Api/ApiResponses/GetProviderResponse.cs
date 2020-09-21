@@ -16,6 +16,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
+        public List<GetFeedbackAttributeResponse> FeedbackAttributes { get; set; }
+        public List<GetFeedbackRatingResponse> FeedbackRatings { get; set; }
 
         public GetProviderResponse Map(ProviderLocation provider, short age = 0, short apprenticeshipLevel = 0)
         {
