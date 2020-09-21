@@ -65,26 +65,30 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             ClearMainTables();
             _logger.LogInformation("Populate data table");
 
+            await PopulateMainTables();
 
+            await _auditRepository.Insert(new ImportAudit(
+                importStartTime,
+                providerRegistrationImports.Count, 
+                ImportType.ProviderRegistrations));
+        }
+
+        private async Task PopulateMainTables()
+        {
             var feedbackRating = _providerRegistrationFeedbackRatingImportRepository.GetAll();
             var feedbackAttributes = _providerRegistrationFeedbackAttributeImportRepository.GetAll();
 
             await Task.WhenAll(feedbackRating, feedbackAttributes);
-            
+
             var insertProviderTask = _providerRegistrationRepository.InsertFromImportTable();
             var insertProviderRatingTask =
                 _providerRegistrationFeedbackRatingRepository.InsertMany(feedbackRating.Result
-                    .Select(c => (ProviderRegistrationFeedbackRating)c).ToList());
+                    .Select(c => (ProviderRegistrationFeedbackRating) c).ToList());
             var insertProviderAttributeTask =
                 _providerRegistrationFeedbackAttributeRepository.InsertMany(feedbackAttributes.Result
                     .Select(c => (ProviderRegistrationFeedbackAttribute) c).ToList());
 
             await Task.WhenAll(insertProviderTask, insertProviderAttributeTask, insertProviderRatingTask);
-            
-            await _auditRepository.Insert(new ImportAudit(
-                importStartTime,
-                providerRegistrationImports.Count, 
-                ImportType.ProviderRegistrations));
         }
 
         private async Task<List<ProviderRegistrationImport>> PopulateImportTables(IReadOnlyCollection<ProviderRegistration> providerRegistrationsFromRoatp)
