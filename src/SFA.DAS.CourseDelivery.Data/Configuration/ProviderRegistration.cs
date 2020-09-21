@@ -24,6 +24,15 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
                 .HasPrincipalKey<Domain.Entities.Provider>(c => c.Ukprn)
                 .HasForeignKey<Domain.Entities.ProviderRegistration>(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
 
+            builder.HasMany(c => c.ProviderRegistrationFeedbackAttributes)
+                .WithOne(c => c.ProviderRegistration)
+                .HasForeignKey(c => c.Ukprn)
+                .HasPrincipalKey(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+            
+            builder.HasMany(c => c.ProviderRegistrationFeedbackRating)
+                .WithOne(c => c.ProviderRegistration)
+                .HasForeignKey(c => c.Ukprn)
+                .HasPrincipalKey(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
             builder.HasIndex(x => x.Ukprn).IsUnique();
         }
     }
