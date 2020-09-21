@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
 {
-    public class ProviderRegistrationFeedbackRatingRepository
+    public class ProviderRegistrationFeedbackRatingRepository : IProviderRegistrationFeedbackRatingRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
 

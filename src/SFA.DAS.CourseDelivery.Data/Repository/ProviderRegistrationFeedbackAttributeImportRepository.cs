@@ -3,10 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
 {
-    public class ProviderRegistrationFeedbackAttributeImportRepository
+    public class ProviderRegistrationFeedbackAttributeImportRepository : IProviderRegistrationFeedbackAttributeImportRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
 
