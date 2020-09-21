@@ -117,6 +117,40 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
         }
 
         [Test, RecursiveMoqAutoData]
+        public async Task Then_Null_Provider_Feedback_Data_Is_Ignored(
+            ProviderRegistration providerRegistrationFromRoatp,
+            List<ProviderRegistrationFeedbackRatingImport> feedbackRatingImports,
+            List<ProviderRegistrationFeedbackAttributeImport> feedbackAttributeImports,
+            [Frozen] Mock<IRoatpApiService> mockRoatpApiService,
+            [Frozen] Mock<IProviderRegistrationImportRepository> mockImportRepository,
+            [Frozen] Mock<IProviderRegistrationRepository> mockRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackAttributeRepository> mockFeedbackAttributeRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackAttributeImportRepository> mockFeedbackAttributeImportRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackRatingRepository> mockFeedbackRatingRepository,
+            [Frozen] Mock<IProviderRegistrationFeedbackRatingImportRepository> mockFeedbackRatingImportRepository,
+            ProviderRegistrationImportService importService)
+        {
+            providerRegistrationFromRoatp.Feedback.FeedbackRating = null;
+            providerRegistrationFromRoatp.Feedback.ProviderAttributes = null;
+            var apiData = new List<ProviderRegistration> {providerRegistrationFromRoatp};
+            mockRoatpApiService
+                .Setup(service => service.GetProviderRegistrations())
+                .ReturnsAsync(apiData);
+            
+            await importService.ImportData();
+            
+            mockFeedbackAttributeImportRepository.Verify(
+                repository =>
+                    repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackAttributeImport>>(c=>
+                        c.Count().Equals(0))),
+                Times.Once);
+            mockFeedbackRatingImportRepository.Verify(
+                repository => repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackRatingImport>>(s=>
+                    s.Count().Equals(0))),
+                Times.Once);
+        }
+
+        [Test, RecursiveMoqAutoData]
         public async Task Then_An_Audit_Record_Is_Added_After_Successful_Import(
             List<ProviderRegistration> providerRegistrationsFromRoatp,
             [Frozen] Mock<IRoatpApiService> mockRoatpApiService,

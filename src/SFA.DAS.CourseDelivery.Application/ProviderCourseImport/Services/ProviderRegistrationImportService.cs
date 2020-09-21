@@ -101,10 +101,16 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
             foreach (var providerRegistration in providerRegistrationsFromRoatp)
             {
-                feedbackRatings.AddRange(providerRegistration.Feedback.FeedbackRating.Select(c =>
-                    new ProviderRegistrationFeedbackRatingImport().Map(providerRegistration.Ukprn, c)));
-                feedbackAttributes.AddRange(providerRegistration.Feedback.ProviderAttributes.Select(c =>
-                    new ProviderRegistrationFeedbackAttributeImport().Map(providerRegistration.Ukprn, c)));
+                if (providerRegistration.Feedback.FeedbackRating != null)
+                {
+                    feedbackRatings.AddRange(providerRegistration.Feedback.FeedbackRating.Select(c =>
+                        new ProviderRegistrationFeedbackRatingImport().Map(providerRegistration.Ukprn, c)));    
+                }
+                if (providerRegistration.Feedback.ProviderAttributes != null)
+                {
+                    feedbackAttributes.AddRange(providerRegistration.Feedback.ProviderAttributes.Select(c =>
+                        new ProviderRegistrationFeedbackAttributeImport().Map(providerRegistration.Ukprn, c)));    
+                }
             }
 
             var providerRegistrationInsertTask = _providerRegistrationImportRepository.InsertMany(providerRegistrationImports);

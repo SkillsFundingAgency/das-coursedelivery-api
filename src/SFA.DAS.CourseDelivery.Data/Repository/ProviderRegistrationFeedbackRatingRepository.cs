@@ -17,7 +17,8 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public void DeleteAll()
         {
-            _dataContext.ProviderRegistrationFeedbackRatings.RemoveRange(_dataContext.ProviderRegistrationFeedbackRatings.ToList());
+            var providerRegistrationFeedbackRatings = _dataContext.ProviderRegistrationFeedbackRatings.ToList();
+            _dataContext.ProviderRegistrationFeedbackRatings.RemoveRange(providerRegistrationFeedbackRatings);
             _dataContext.SaveChanges();
         }
 
