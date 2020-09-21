@@ -5,7 +5,7 @@
     [StatusId] INT NOT NULL, 
 	[ProviderTypeId] INT NOT NULL,
 	[OrganisationTypeId] int NOT NULL,
-	[FeedbackTotal] int NOT NULL DEFAULT 0
+	[FeedbackTotal] INT NOT NULL DEFAULT 0
 )
 GO
  
