@@ -22,7 +22,7 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
     public class Feedback
     {
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public int Total { get; set; }
 
         [JsonProperty("feedbackRating")]
         public List<FeedbackRating> FeedbackRating { get; set; }
@@ -37,7 +37,7 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public string Key { get; set; }
 
         [JsonProperty("value")]
-        public long Value { get; set; }
+        public int Value { get; set; }
     }
 
     public class ProviderAttribute
@@ -46,10 +46,10 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public string Name { get; set; }
 
         [JsonProperty("strengths")]
-        public long Strengths { get; set; }
+        public int Strengths { get; set; }
 
         [JsonProperty("weaknesses")]
-        public long Weaknesses { get; set; }
+        public int Weaknesses { get; set; }
     }
     public class RoatpTypeConstants
     {
