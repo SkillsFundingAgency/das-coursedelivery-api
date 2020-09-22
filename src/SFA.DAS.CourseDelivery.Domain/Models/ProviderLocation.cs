@@ -62,8 +62,9 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Phone = provider.Phone,
                 ContactUrl = provider.ContactUrl,
                 AchievementRates = provider.NationalAchievementRate.Select(c => (AchievementRate) c).ToList(),
-                DeliveryTypes = new List<DeliveryType>()
-                    
+                DeliveryTypes = new List<DeliveryType>(),
+                FeedbackRating = provider.Provider.ProviderRegistrationFeedbackRating.Select(c => (ProviderFeedbackRating) c).ToList(),
+                FeedbackAttributes = provider.Provider.ProviderRegistrationFeedbackAttributes.Select(c => (ProviderFeedbackAttribute) c).ToList()
             };
         }
 
