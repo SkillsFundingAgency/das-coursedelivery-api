@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,18 @@ namespace SFA.DAS.CourseDelivery.Domain.Validation
         public Dictionary<string, string> ValidationDictionary { get; }
         private IEnumerable<string> ErrorList => ValidationDictionary.Select(c => c.Key + "|" + c.Value).ToList();
         
+        public System.ComponentModel.DataAnnotations.ValidationResult DataAnnotationResult 
+        {
+            get
+            {
+                var errorMessages = ErrorList.Aggregate((x, y) => $"{x}{Environment.NewLine}{y}");
 
+                return new System.ComponentModel.DataAnnotations.ValidationResult(
+                    $"The following parameters have failed validation{Environment.NewLine}{errorMessages}",
+                    ErrorList);
+            }
+        }
+        
         public ValidationResult()
         {
             ValidationDictionary = new Dictionary<string, string>();
