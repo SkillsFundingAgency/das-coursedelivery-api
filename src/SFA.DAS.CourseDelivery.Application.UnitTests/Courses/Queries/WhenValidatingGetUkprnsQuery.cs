@@ -50,6 +50,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             
             //Assert
             actual.IsValid().Should().BeFalse();
+            actual.ValidationDictionary.ContainsKey("StandardId").Should().BeTrue();
         }
     }
 }

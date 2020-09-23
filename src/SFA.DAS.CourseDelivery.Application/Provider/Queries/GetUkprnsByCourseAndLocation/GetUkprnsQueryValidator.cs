@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.GetUkprnsByCourseA
             var validationResult= new ValidationResult();
             if (item.StandardId == 0)
             {
-                validationResult.AddError(nameof(item));
+                validationResult.AddError(nameof(item.StandardId));
             }
 
             return Task.FromResult(validationResult);
