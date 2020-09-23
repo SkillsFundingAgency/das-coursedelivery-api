@@ -150,7 +150,7 @@ and l.DistanceInMiles <= psl.Radius";
         private FormattableString GetProvidersAtLocationForStandard(int standardId, double lat, double lon)
         {
             return $@"
-select
+select distinct 
     P.*
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
