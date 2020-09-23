@@ -20,9 +20,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public void DeleteAll()
         {
+            _dataContext.TrackChanges(false);
             var toDelete = _dataContext.ProviderRegistrations.ToList();
             _dataContext.ProviderRegistrations.RemoveRange(toDelete);
             _dataContext.SaveChanges();
+            _dataContext.TrackChanges();
         }
     }
 }
