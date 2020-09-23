@@ -55,7 +55,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                     It.IsAny<CancellationToken>()))
                 .Throws<ValidationException>();
 
-            var controllerResult = await controller.GetProviderIdsByStandardAndLocation(standardId,lat,lon) as StatusCodeResult;
+            var controllerResult = await controller.GetProviderIdsByStandardAndLocation(standardId,lat,lon) as BadRequestObjectResult;
 
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
