@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiRequests;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.GetUkprnsByCourseAndLocation;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
 using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
@@ -25,6 +27,31 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet]
+        [Route("{id}/ukprns")]
+        public async Task<IActionResult> GetProviderIdsByStandardAndLocation(int id, double lat, double lon)
+        {
+            try
+            {
+                var queryResult = await _mediator.Send(new GetUkprnsQuery
+                {
+                    StandardId = id,
+                    Lat = lat,
+                    Lon = lon
+                });
+                var response = new GetProvidersByCourseAndLocationResponse
+                {
+                    Ukprns = queryResult.Ukprns
+                };
+                return Ok(response);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
         
         [HttpGet]
