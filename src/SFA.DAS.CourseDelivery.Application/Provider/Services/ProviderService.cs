@@ -81,5 +81,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
             return provider;
         }
+
+        public async Task<IEnumerable<int>> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon)
+        {
+            var providerIds = await _providerRepository.GetUkprnsForStandardAndLocation(standardId, lat, lon);
+
+            return providerIds;
+        }
     }
 }
