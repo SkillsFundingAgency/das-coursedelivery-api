@@ -84,6 +84,20 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return provider;
         }
 
+        public async Task<IEnumerable<int>> GetProvidersForStandardAndLocation(int standardId, double lat, double lon)
+        {
+            _dataContext.TrackChanges(false);
+
+            var providers = await _dataContext.Providers
+                .FromSqlInterpolated(GetProvidersAtLocationForStandard(standardId, lat, lon))
+                .Select(c => c.Ukprn)
+                .ToListAsync();
+            
+            _dataContext.TrackChanges();
+
+            return providers;
+        }
+
         private static Expression<Func<ProviderWithStandardAndLocation, object>> OrderProviderStandards(short sortOrder)
         {
             if (sortOrder == 0)
@@ -131,6 +145,28 @@ left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
 where psl.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius";
+        }
+
+        private FormattableString GetProvidersAtLocationForStandard(int standardId, double lat, double lon)
+        {
+            return $@"
+select
+    P.*
+from Provider P
+inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
+inner join (select
+		LocationId
+		,[Name]
+		,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
+            .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
+	from [StandardLocation] l) l on l.LocationId = psl.LocationId
+inner join StandardLocation SL on sl.LocationId = psl.LocationId
+inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
+where psl.StandardId = {standardId}
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1
+and l.DistanceInMiles <= psl.Radius
+";
         }
     }
 }
