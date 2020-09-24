@@ -13,7 +13,8 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Entities
         {
             var result = (ProviderRegistrationImport) source;
 
-            result.Should().BeEquivalentTo(source);
+            result.Should().BeEquivalentTo(source, options=>options.Excluding(c=>c.Feedback));
+            result.FeedbackTotal.Should().Be(source.Feedback.Total);
         }
     }
 }

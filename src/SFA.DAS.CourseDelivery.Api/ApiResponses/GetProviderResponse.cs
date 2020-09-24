@@ -16,6 +16,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
+        public List<GetFeedbackAttributeResponse> FeedbackAttributes { get; set; }
+        public List<GetFeedbackRatingResponse> FeedbackRatings { get; set; }
 
         public GetProviderResponse Map(ProviderLocation provider, short age = 0, short apprenticeshipLevel = 0)
         {
@@ -40,7 +42,9 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Phone = provider.Phone,
                 AchievementRates = nationalAchievementRates
                     .Select(c=>(GetNationalAchievementRateResponse)c).ToList(),
-                DeliveryTypes = provider.DeliveryTypes.Select(c=>(GetDeliveryTypesResponse)c).ToList()
+                DeliveryTypes = provider.DeliveryTypes.Select(c=>(GetDeliveryTypesResponse)c).ToList(),
+                FeedbackAttributes = provider.FeedbackAttributes.Select(x=>(GetFeedbackAttributeResponse)x).ToList(),
+                FeedbackRatings = provider.FeedbackRating.Select(x=>(GetFeedbackRatingResponse)x).ToList()
             };
         }
     }

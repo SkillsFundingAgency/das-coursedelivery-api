@@ -4,7 +4,8 @@
 	[StatusDate] [datetime] NOT NULL,
     [StatusId] INT NOT NULL, 
 	[ProviderTypeId] INT NOT NULL,
-	[OrganisationTypeId] int NOT NULL
+	[OrganisationTypeId] int NOT NULL,
+	[FeedbackTotal] INT NOT NULL DEFAULT 0
 )
 GO
 

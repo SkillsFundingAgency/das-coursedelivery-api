@@ -61,6 +61,11 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<INationalAchievementRateOverallImportRepository, NationalAchievementRateOverallImportRepository>();
             services.AddTransient<IProviderRegistrationImportRepository, ProviderRegistrationImportRepository>();
             services.AddTransient<IProviderRegistrationRepository, ProviderRegistrationRepository>();
+            services.AddTransient<IProviderRegistrationFeedbackAttributeRepository, ProviderRegistrationFeedbackAttributeRepository>();
+            services.AddTransient<IProviderRegistrationFeedbackAttributeImportRepository, ProviderRegistrationFeedbackAttributeImportRepository>();
+            services.AddTransient<IProviderRegistrationFeedbackRatingRepository, ProviderRegistrationFeedbackRatingRepository>();
+            services.AddTransient<IProviderRegistrationFeedbackRatingImportRepository, ProviderRegistrationFeedbackRatingImportRepository>();
+            
             services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
             services.AddTransient<IAzureClientCredentialHelper, AzureClientCredentialHelper>();
         }

@@ -38,7 +38,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providers = await _dataContext
                 .ProviderStandards
                 .Include(c => c.Provider)
+                .ThenInclude(c=>c.ProviderRegistrationFeedbackAttributes)
+                .Include(c=>c.Provider)
                 .ThenInclude(c=>c.NationalAchievementRates)
+                .Include(c=>c.Provider)
+                .ThenInclude(c=>c.ProviderRegistrationFeedbackRating)
                 .Where(c => c.StandardId.Equals(standardId))
                 .Select(c=>c.Provider)
                 .FilterRegisteredProviders()
@@ -115,7 +119,12 @@ select
     NAR.SectorSubjectArea, 
     NAR.ApprenticeshipLevel,
     NAR.OverallCohort, 
-    NAR.OverallAchievementRate
+    NAR.OverallAchievementRate,
+    PRFA.AttributeName, 
+    PRFA.Strength, 
+    PRFA.Weakness,
+    PRFR.FeedbackCount, 
+    PRFR.FeedbackName
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -128,6 +137,8 @@ inner join (select
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
+left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
+left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where psl.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius";

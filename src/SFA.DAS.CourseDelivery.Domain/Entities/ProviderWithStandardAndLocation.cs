@@ -22,6 +22,11 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public ApprenticeshipLevel? ApprenticeshipLevel { get; set; }
         public int? OverallCohort { get; set; }
         public decimal? OverallAchievementRate { get; set; }
+        public string AttributeName { get; set; }
+        public int? Strength { get; set; }
+        public int? Weakness { get; set; }
+        public string FeedbackName { get; set; }
+        public int? FeedbackCount { get; set; }
     }
 
 }

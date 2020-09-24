@@ -17,6 +17,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.StatusId).HasColumnName("StatusId").HasColumnType("int").IsRequired();
             builder.Property(x => x.ProviderTypeId).HasColumnName("ProviderTypeId").HasColumnType("int").IsRequired();
             builder.Property(x => x.OrganisationTypeId).HasColumnName("OrganisationTypeId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.FeedbackTotal).HasColumnName("FeedbackTotal").HasColumnType("int").IsRequired();
 
             builder.HasIndex(x => x.Ukprn).IsUnique();
         }

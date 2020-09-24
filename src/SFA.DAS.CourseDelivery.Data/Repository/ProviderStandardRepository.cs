@@ -32,6 +32,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providerStandard = await _dataContext
                 .ProviderStandards
                 .Include(c => c.Provider)
+                .ThenInclude(c=>c.ProviderRegistrationFeedbackAttributes)
+                .Include(c => c.Provider)
+                .ThenInclude(c=>c.ProviderRegistrationFeedbackRating)
                 .Include(c=>c.NationalAchievementRate)
                 .SingleOrDefaultAsync(c => c.StandardId.Equals(standardId) && c.Ukprn.Equals(ukPrn));
 
