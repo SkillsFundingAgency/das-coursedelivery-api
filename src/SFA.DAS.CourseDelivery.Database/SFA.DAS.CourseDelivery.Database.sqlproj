@@ -65,6 +65,10 @@
     <Build Include="Tables\NationalAchievementRateOverall_Import.sql" />
     <Build Include="Tables\NationalAchievementRate_Import.sql" />
     <Build Include="Tables\Provider.sql" />
+    <Build Include="Tables\ProviderRegistrationFeedbackAttribute.sql" />
+    <Build Include="Tables\ProviderRegistrationFeedbackAttribute_Import.sql" />
+    <Build Include="Tables\ProviderRegistrationFeedbackRating.sql" />
+    <Build Include="Tables\ProviderRegistrationFeedbackRating_Import.sql" />
     <Build Include="Tables\Provider_Import.sql" />
     <Build Include="Tables\ProviderStandard.sql" />
     <Build Include="Tables\ProviderStandard_Import.sql" />

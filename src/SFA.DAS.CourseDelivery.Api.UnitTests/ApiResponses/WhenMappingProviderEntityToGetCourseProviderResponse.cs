@@ -58,5 +58,14 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             //Assert
             actual.AchievementRates.Count.Should().Be(1);
         }
+
+        [Test, RecursiveMoqAutoData]
+        public void Then_Maps_Feedback_Ratings_And_Attributes(ProviderLocation providerLocation)
+        {
+            var actual = new GetProviderResponse().Map(providerLocation);
+
+            actual.FeedbackRatings.Count.Should().Be(providerLocation.FeedbackRating.Count);
+            actual.FeedbackAttributes.Count.Should().Be(providerLocation.FeedbackAttributes.Count);
+        }
     }
 }

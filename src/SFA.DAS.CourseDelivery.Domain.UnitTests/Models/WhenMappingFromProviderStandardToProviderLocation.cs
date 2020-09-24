@@ -20,6 +20,8 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Ukprn.Should().Be(source.Provider.Ukprn);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().BeEmpty();
+            actual.FeedbackRating.Should().NotBeEmpty();
+            actual.FeedbackAttributes.Should().NotBeEmpty();
         }
         
     }

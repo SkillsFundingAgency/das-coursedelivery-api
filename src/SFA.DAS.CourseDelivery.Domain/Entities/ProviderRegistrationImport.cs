@@ -10,7 +10,8 @@
                 StatusDate = source.StatusDate,
                 StatusId = source.StatusId,
                 ProviderTypeId = source.ProviderTypeId,
-                OrganisationTypeId = source.OrganisationTypeId
+                OrganisationTypeId = source.OrganisationTypeId,
+                FeedbackTotal = source.Feedback.Total
             };
         }
     }

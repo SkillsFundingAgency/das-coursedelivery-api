@@ -5,10 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
-using ProviderImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderImport;
-using StandardLocationImport = SFA.DAS.CourseDelivery.Data.Configuration.StandardLocationImport;
-using ProviderStandardImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandardImport;
-using ProviderStandardLocationImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandardLocationImport;
 
 namespace SFA.DAS.CourseDelivery.Data
 {
@@ -30,6 +26,10 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
         int SaveChanges();
         void TrackChanges(bool enable = true);
         Task<int> ExecuteRawSql(string sql);
@@ -53,6 +53,10 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         public DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
+        public DbSet<Domain.Entities.ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get; set; }
+        public DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
+        public DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
+        public DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
 
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -125,8 +129,11 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverallImport());
             modelBuilder.ApplyConfiguration(new ProviderRegistration());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationImport());
-
             modelBuilder.ApplyConfiguration(new ProviderWithStandardAndLocation());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttributeImport());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRatingImport());
             
             base.OnModelCreating(modelBuilder);
         }
