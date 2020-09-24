@@ -43,7 +43,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 });
                 var response = new GetProvidersByCourseAndLocationResponse
                 {
-                    Ukprns = queryResult.UkprnsByStandardAndLocation
+                    UkprnsByStandardAndLocation = queryResult.UkprnsByStandardAndLocation,
+                    UkprnsByStandard = queryResult.UkprnsByStandard
                 };
                 return Ok(response);
             }

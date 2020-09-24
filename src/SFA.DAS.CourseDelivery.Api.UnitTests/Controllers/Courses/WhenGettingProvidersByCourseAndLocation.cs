@@ -38,7 +38,8 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
             
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
             var actualModel = controllerResult.Value as GetProvidersByCourseAndLocationResponse;
-            actualModel.Ukprns.Should().BeEquivalentTo(result.UkprnsByStandardAndLocation);
+            actualModel.UkprnsByStandardAndLocation.Should().BeEquivalentTo(result.UkprnsByStandardAndLocation);
+            actualModel.UkprnsByStandard.Should().BeEquivalentTo(result.UkprnsByStandard);
         }
         
         [Test, RecursiveMoqAutoData]
