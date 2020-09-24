@@ -4,6 +4,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.GetUkprnsByCourseA
 {
     public class GetUkprnsQueryResult
     {
-        public IEnumerable<int> Ukprns { get ; set ; }
+        public IEnumerable<int> UkprnsByStandardAndLocation { get ; set ; }
+        public IEnumerable<int> UkprnsByStandard { get ; set ; }
     }
 }

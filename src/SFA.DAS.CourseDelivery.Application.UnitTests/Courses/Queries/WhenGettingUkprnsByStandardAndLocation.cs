@@ -8,6 +8,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.GetUkprnsByCourseAndLocation;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
+using SFA.DAS.CourseDelivery.Domain.Models;
 using SFA.DAS.Testing.AutoFixture;
 using ValidationResult = SFA.DAS.CourseDelivery.Domain.Validation.ValidationResult;
 
@@ -32,7 +33,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
 
         [Test, MoqAutoData]
         public async Task Then_If_Valid_Calls_Repository_And_Returns_Data(
-            List<int> ukprns,
+            UkprnsForStandard ukprns,
             GetUkprnsQuery query,
             [Frozen] Mock<IValidator<GetUkprnsQuery>> validator,
             [Frozen] Mock<IProviderService> service,
@@ -47,7 +48,8 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             var actual = await handler.Handle(query, CancellationToken.None);
             
             //Assert
-            actual.Ukprns.Should().BeEquivalentTo(ukprns);
+            actual.UkprnsByStandardAndLocation.Should().BeEquivalentTo(ukprns.UkprnsFilteredByStandardAndLocation);
+            actual.UkprnsByStandard.Should().BeEquivalentTo(ukprns.UkprnsFilteredByStandard);
         }
     }
 }

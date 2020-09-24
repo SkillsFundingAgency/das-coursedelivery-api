@@ -29,7 +29,8 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.GetUkprnsByCourseA
             
             return new GetUkprnsQueryResult
             {
-                Ukprns = ukprns
+                UkprnsByStandardAndLocation = ukprns.UkprnsFilteredByStandardAndLocation,
+                UkprnsByStandard = ukprns.UkprnsFilteredByStandard
             };
         }
     }
