@@ -30,7 +30,26 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             var actual = await service.GetUkprnsForStandardAndLocation(standardId, lat, lon);
             
             //Assert
-            actual.Should().BeEquivalentTo(providerIds);
+            actual.UkprnsFilteredByStandardAndLocation.Should().BeEquivalentTo(providerIds);
+        }
+
+        [Test, MoqAutoData]
+        public async Task Then_Providers_Not_With_Location_Are_Returned(
+            int standardId,
+            double lat,
+            double lon,
+            List<int> providerIds,
+            [Frozen] Mock<IProviderStandardRepository> repository,
+            ProviderService service)
+        {
+            //Arrange
+            repository.Setup(x => x.GetUkprnsByStandard(standardId)).ReturnsAsync(providerIds);
+            
+            //Act
+            var actual = await service.GetUkprnsForStandardAndLocation(standardId, lat, lon);
+            
+            //Assert
+            actual.UkprnsFilteredByStandard.Should().BeEquivalentTo(providerIds);
         }
     }
 }
