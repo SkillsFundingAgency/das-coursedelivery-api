@@ -50,5 +50,14 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
             return courses;
         }
+
+        public async Task<IEnumerable<int>> GetUkprnsByStandard(int standardId)
+        {
+            var providers = await _dataContext.ProviderStandards
+                .Where(c => c.StandardId.Equals(standardId))
+                .Select(c => c.Ukprn).Distinct().ToListAsync();
+
+            return providers;
+        }
     }
 }
