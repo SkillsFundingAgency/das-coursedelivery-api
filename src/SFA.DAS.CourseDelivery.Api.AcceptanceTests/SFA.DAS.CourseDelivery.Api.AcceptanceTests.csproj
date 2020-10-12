@@ -23,5 +23,19 @@
     <ProjectReference Include="..\SFA.DAS.CourseDelivery.Application\SFA.DAS.CourseDelivery.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.CourseDelivery.Data\SFA.DAS.CourseDelivery.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="Features\CourseProvider.feature">
+      <LastGenOutput>CourseProvider.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\CourseProviders.feature">
+      <LastGenOutput>CourseProviders.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\ProviderCourses.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ProviderCourses.feature.cs</LastGenOutput>
+    </SpecFlowFeatureFiles>
+  </ItemGroup>
 
 </Project>
