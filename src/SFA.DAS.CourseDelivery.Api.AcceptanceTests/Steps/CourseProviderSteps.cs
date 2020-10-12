@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using System.Linq;
+using FluentAssertions;
+using SFA.DAS.CourseDelivery.Api.ApiResponses;
 
 namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
 {
@@ -21,17 +23,17 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
             _context = context;
         }
 
-        //[Then("course provider is returned")]
-        //public async Task ThenCourseProviderIsReturned()
-        //{
-        //    if (!_context.TryGetValue<HttpResponseMessage>(ContextKeys.HttpResponse, out var result))
-        //    {
-        //        Assert.Fail($"scenario context does not contain value for key [{ContextKeys.HttpResponse}]");
-        //    }
+        [Then("specific course provider is returned")]
+        public async Task ThenCourseProviderIsReturned()
+        {
+            if (!_context.TryGetValue<HttpResponseMessage>(ContextKeys.HttpResponse, out var result))
+            {
+                Assert.Fail($"scenario context does not contain value for key [{ContextKeys.HttpResponse}]");
+            }
 
-        //    var model = await HttpUtilities.ReadContent<GetCourseProviderQueryResponse>(result.Content);
-
-        //    model.ProviderStandardLocation.DeliveryTypes.Select(x => x.DeliveryModes).S BeEquivalentTo(LevelsConstant.Levels);
-        //}
+            var model = await HttpUtilities.ReadContent<GetCourseProviderQueryResponse>(result.Content);
+            var resp = new GetProviderResponse().Map(model.ProviderStandardLocation);
+            resp.Should().NotBeNull();
+        }
     }
 }
