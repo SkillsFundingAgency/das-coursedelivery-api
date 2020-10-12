@@ -23,17 +23,18 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
             _context = context;
         }
 
-        [Then("specific course provider is returned")]
-        public async Task ThenCourseProviderIsReturned()
+        [Then("specific course provider (.*) is returned")]
+        public async Task ThenCourseProviderIsReturned(int ukprn)
         {
             if (!_context.TryGetValue<HttpResponseMessage>(ContextKeys.HttpResponse, out var result))
             {
                 Assert.Fail($"scenario context does not contain value for key [{ContextKeys.HttpResponse}]");
             }
 
-            var model = await HttpUtilities.ReadContent<GetCourseProviderQueryResponse>(result.Content);
-            var resp = new GetProviderResponse().Map(model.ProviderStandardLocation);
-            resp.Should().NotBeNull();
+            var model = await HttpUtilities.ReadContent<GetProviderResponse>(result.Content);
+            
+            model.Should().NotBeNull();
+            model.Ukprn.Should().Be(ukprn);
         }
     }
 }
