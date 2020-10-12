@@ -1,11 +1,11 @@
 ﻿Feature: CourseProvider
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+	As a CourseDelivery API consumer
+    I want to retrieve a single Provider for a specific Course
+    So that I can use them in my own application
 
 @mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+Scenario: Get Course Provider
+	Given I have an http client
+    When I GET the following url: /api/providers/
+    Then an http status code of 200 is returned
+    And all levels are returned
