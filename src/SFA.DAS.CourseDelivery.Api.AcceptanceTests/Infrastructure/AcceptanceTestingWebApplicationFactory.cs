@@ -56,7 +56,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
 
                     try
                     {
-                        //DbUtilities.LoadTestData(db);
+                        DbUtilities.LoadTestData(db);
                     }
                     catch (Exception ex)
                     {
