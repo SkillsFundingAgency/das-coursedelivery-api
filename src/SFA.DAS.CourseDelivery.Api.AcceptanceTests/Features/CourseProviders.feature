@@ -5,6 +5,6 @@
 
 Scenario: Get Course Providers
 	Given I have an http client
-    When I GET the following url: /api/100/providers
+    When I GET the following url: /api/courses/10/providers
     Then an http status code of 200 is returned
-    And all course providers are returned
+    And  course providers are returned

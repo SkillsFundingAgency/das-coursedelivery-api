@@ -31,8 +31,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
             }
 
             var model = await HttpUtilities.ReadContent<GetCourseProvidersListResponse>(result.Content);
-
-            model.Providers.ToList().Count().Equals(0);
+            model.Should().NotBeNull();
         }
     }
 }
