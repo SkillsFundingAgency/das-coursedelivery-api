@@ -14,19 +14,24 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             if (environmentName.Equals("DEV", StringComparison.CurrentCultureIgnoreCase))
             {
                 services.AddDbContext<CourseDeliveryDataContext>(options => options.UseInMemoryDatabase("SFA.DAS.CourseDelivery"), ServiceLifetime.Transient);
+                services.AddDbContext<CourseDeliveryReadonlyDataContext>(options => options.UseInMemoryDatabase("SFA.DAS.CourseDelivery"), ServiceLifetime.Transient);
             }
             else if (environmentName.Equals("LOCAL", StringComparison.CurrentCultureIgnoreCase))
             {
                 services.AddDbContext<CourseDeliveryDataContext>(options=>options.UseSqlServer(config.ConnectionString).EnableSensitiveDataLogging(),ServiceLifetime.Transient);
+                services.AddDbContext<CourseDeliveryReadonlyDataContext>(options=>options.UseSqlServer(config.ConnectionString).EnableSensitiveDataLogging(),ServiceLifetime.Transient);
             }
             else
             {
                 services.AddSingleton(new AzureServiceTokenProvider());
                 services.AddDbContext<CourseDeliveryDataContext>(ServiceLifetime.Transient);    
+                services.AddDbContext<CourseDeliveryReadonlyDataContext>(ServiceLifetime.Transient);    
             }
             
             services.AddTransient<ICourseDeliveryDataContext, CourseDeliveryDataContext>(provider => provider.GetService<CourseDeliveryDataContext>());
+            services.AddTransient<ICourseDeliveryReadonlyDataContext, CourseDeliveryReadonlyDataContext>(provider => provider.GetService<CourseDeliveryReadonlyDataContext>());
             services.AddTransient(provider => new Lazy<CourseDeliveryDataContext>(provider.GetService<CourseDeliveryDataContext>()));
+            services.AddTransient(provider => new Lazy<CourseDeliveryReadonlyDataContext>(provider.GetService<CourseDeliveryReadonlyDataContext>()));
             
         }
     }
