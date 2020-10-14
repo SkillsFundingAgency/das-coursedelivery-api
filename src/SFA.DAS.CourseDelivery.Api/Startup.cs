@@ -34,14 +34,16 @@ namespace SFA.DAS.CourseDelivery.Api
             var config = new ConfigurationBuilder()
                 .AddConfiguration(configuration)
                 .SetBasePath(Directory.GetCurrentDirectory())
-#if DEBUG
-                .AddJsonFile("appsettings.json", true)
-                .AddJsonFile("appsettings.Development.json", true)
-#endif
                 .AddEnvironmentVariables();
 
             if (!configuration["Environment"].Equals("DEV", StringComparison.CurrentCultureIgnoreCase))
             {
+#if DEBUG
+                config
+                    .AddJsonFile("appsettings.json", true)
+                    .AddJsonFile("appsettings.Development.json", true);
+#endif
+                
                 config.AddAzureTableStorage(options =>
                     {
                         options.ConfigurationKeys = configuration["ConfigNames"].Split(",");

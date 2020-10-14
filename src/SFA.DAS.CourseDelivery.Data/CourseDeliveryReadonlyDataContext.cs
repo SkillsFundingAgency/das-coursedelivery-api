@@ -34,11 +34,11 @@ namespace SFA.DAS.CourseDelivery.Data
             
         }
         
-        public CourseDeliveryReadonlyDataContext(DbContextOptions options) : base(options)
+        public CourseDeliveryReadonlyDataContext(DbContextOptions<CourseDeliveryReadonlyDataContext> options) : base(options)
         {
         }
         
-        public CourseDeliveryReadonlyDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
+        public CourseDeliveryReadonlyDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions<CourseDeliveryReadonlyDataContext> options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
         {
             _configuration = config.Value;
             _azureServiceTokenProvider = azureServiceTokenProvider;

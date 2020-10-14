@@ -73,7 +73,7 @@ namespace SFA.DAS.CourseDelivery.Data
         {
         }
 
-        public CourseDeliveryDataContext(DbContextOptions options) : base(options)
+        public CourseDeliveryDataContext(DbContextOptions<CourseDeliveryDataContext> options) : base(options)
         {
         }
 
@@ -84,7 +84,7 @@ namespace SFA.DAS.CourseDelivery.Data
         }
 
 
-        public CourseDeliveryDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
+        public CourseDeliveryDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions<CourseDeliveryDataContext> options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
         {
             _configuration = config.Value;
             _azureServiceTokenProvider = azureServiceTokenProvider;
