@@ -107,15 +107,7 @@ namespace SFA.DAS.CourseDelivery.Data
 
         public void TrackChanges(bool enable = true)
         {
-            if (enable)
-            {
-                base.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-            }
-            else
-            {
-                base.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;    
-            }
-            
+            base.ChangeTracker.QueryTrackingBehavior = enable ? QueryTrackingBehavior.TrackAll : QueryTrackingBehavior.NoTracking;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -124,18 +116,17 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new StandardLocationImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardLocationImport());
-            modelBuilder.ApplyConfiguration(new Provider());
+            modelBuilder.ApplyConfiguration(new Provider(false));
             modelBuilder.ApplyConfiguration(new StandardLocation());
-            modelBuilder.ApplyConfiguration(new ProviderStandard());
-            modelBuilder.ApplyConfiguration(new ProviderStandardLocation());
+            modelBuilder.ApplyConfiguration(new ProviderStandard(false));
+            modelBuilder.ApplyConfiguration(new ProviderStandardLocation(false));
             modelBuilder.ApplyConfiguration(new ImportAudit());
-            modelBuilder.ApplyConfiguration(new NationalAchievementRate());
+            modelBuilder.ApplyConfiguration(new NationalAchievementRate(false));
             modelBuilder.ApplyConfiguration(new NationalAchievementRateImport());
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverall());
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverallImport());
-            modelBuilder.ApplyConfiguration(new ProviderRegistration());
+            modelBuilder.ApplyConfiguration(new ProviderRegistration(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationImport());
-            modelBuilder.ApplyConfiguration(new ProviderWithStandardAndLocation());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttributeImport());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
