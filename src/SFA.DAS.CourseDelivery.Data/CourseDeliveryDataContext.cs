@@ -8,31 +8,37 @@ using SFA.DAS.CourseDelivery.Domain.Configuration;
 
 namespace SFA.DAS.CourseDelivery.Data
 {
-    public interface ICourseDeliveryDataContext
+    public interface IDataContext
     {
-        DbSet<Domain.Entities.ProviderImport> ProviderImports { get; set; }
-        DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
-        DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
-        DbSet<Domain.Entities.StandardLocationImport> StandardLocationImports { get; set; }
         DbSet<Domain.Entities.Provider> Providers { get; set; }
         DbSet<Domain.Entities.ProviderStandard> ProviderStandards { get; set; }
         DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
         DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
         DbSet<Domain.Entities.ImportAudit> ImportAudit { get; set; }
         DbSet<Domain.Entities.NationalAchievementRate> NationalAchievementRates { get; set; }
-        DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
         DbSet<Domain.Entities.NationalAchievementRateOverall> NationalAchievementRateOverall { get; set; }
-        DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
         DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
-        DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
+        
+    }
+    
+    public interface ICourseDeliveryDataContext : IDataContext
+    {
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
+        DbSet<Domain.Entities.ProviderImport> ProviderImports { get; set; }
+        DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
+        DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
+        DbSet<Domain.Entities.StandardLocationImport> StandardLocationImports { get; set; }
+        DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
+        DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
-        DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
-        DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
         int SaveChanges();
         void TrackChanges(bool enable = true);
         Task<int> ExecuteRawSql(string sql);
+        
     }
 
     public class CourseDeliveryDataContext: DbContext, ICourseDeliveryDataContext
