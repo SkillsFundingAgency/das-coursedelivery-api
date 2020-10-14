@@ -34,13 +34,13 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                     .AddEntityFrameworkProxies()
                     .BuildServiceProvider();
 
-                services.AddDbContext<CourseDeliveryDataContext>(options =>
+                services.AddDbContext<CourseDeliveryReadonlyDataContext>(options =>
                 {
                     options.UseInMemoryDatabase("SFA.DAS.CourseDelivery");
                     options.UseInternalServiceProvider(serviceProvider);
                     options.EnableSensitiveDataLogging();
                 });
-                services.AddTransient(provider => new Lazy<CourseDeliveryDataContext>(provider.GetService<CourseDeliveryDataContext>()));
+                services.AddTransient(provider => new Lazy<CourseDeliveryReadonlyDataContext>(provider.GetService<CourseDeliveryReadonlyDataContext>()));
 
 
                 var sp = services.BuildServiceProvider();
@@ -48,7 +48,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<CourseDeliveryDataContext>();
+                    var db = scopedServices.GetRequiredService<CourseDeliveryReadonlyDataContext>();
                     var logger = scopedServices
                         .GetRequiredService<ILogger<AcceptanceTestingWebApplicationFactory<TStartup>>>();
 

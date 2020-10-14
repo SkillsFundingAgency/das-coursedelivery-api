@@ -32,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.Providers).ReturnsDbSet(_providers);
-            _providerImportRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object);
+            _providerImportRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
         }
 
         [Test]

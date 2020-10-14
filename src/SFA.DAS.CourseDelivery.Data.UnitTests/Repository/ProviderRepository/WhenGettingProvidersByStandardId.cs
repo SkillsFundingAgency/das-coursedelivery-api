@@ -14,7 +14,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 {
     public class WhenGettingProvidersByStandardId
     {
-        private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
+        private Mock<ICourseDeliveryReadonlyDataContext> _courseDeliveryDataContext;
         private Data.Repository.ProviderRepository _providerStandardImportRepository;
         private List<ProviderStandard> _providerStandards;
         private const int ExpectedStandardId = 2;
@@ -72,10 +72,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             };
             
             
-            _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
+            _courseDeliveryDataContext = new Mock<ICourseDeliveryReadonlyDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ProviderStandards).ReturnsDbSet(_providerStandards);
             
-            _providerStandardImportRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object);
+            _providerStandardImportRepository = new Data.Repository.ProviderRepository(Mock.Of<ICourseDeliveryDataContext>(), _courseDeliveryDataContext.Object);
         }
 
         [Test]
@@ -88,8 +88,6 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             Assert.IsNotNull(actual);
             actual.Count().Should().Be(2);
             actual.Should().BeInAscendingOrder(c=>c.Name);
-            _courseDeliveryDataContext.Verify(x=>x.TrackChanges(false), Times.Once);
-            _courseDeliveryDataContext.Verify(x=>x.TrackChanges(true), Times.Once);
         }
     }
 }

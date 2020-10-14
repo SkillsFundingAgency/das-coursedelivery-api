@@ -11,10 +11,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
     public class NationalAchievementRateOverallRepository : INationalAchievementRateOverallRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
+        private readonly ICourseDeliveryReadonlyDataContext _readonlyDataContext;
 
-        public NationalAchievementRateOverallRepository (ICourseDeliveryDataContext dataContext)
+        public NationalAchievementRateOverallRepository (ICourseDeliveryDataContext dataContext, ICourseDeliveryReadonlyDataContext readonlyDataContext)
         {
             _dataContext = dataContext;
+            _readonlyDataContext = readonlyDataContext;
         }
 
         public void DeleteAll()
@@ -31,7 +33,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<IEnumerable<NationalAchievementRateOverall>> GetBySectorSubjectArea(string expectedSectorSubjectArea)
         {
-            var results = await _dataContext.NationalAchievementRateOverall.Where(c =>
+            var results = await _readonlyDataContext.NationalAchievementRateOverall.Where(c =>
                     c.SectorSubjectArea.Equals(expectedSectorSubjectArea))
                 .ToListAsync();
 

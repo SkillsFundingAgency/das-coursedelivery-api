@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
 {
     public class WhenGettingCoursesByStandardIdAndUkprn
     {
-        private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
+        private Mock<ICourseDeliveryReadonlyDataContext> _courseDeliveryDataContext;
         private Data.Repository.ProviderStandardRepository _providerStandardImportRepository;
         private List<ProviderStandard> _providerStandards;
         private List<int> _expectedCourses;
@@ -56,10 +56,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
 
             _expectedCourses = new List<int> {StandardId};
 
-            _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
+            _courseDeliveryDataContext = new Mock<ICourseDeliveryReadonlyDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ProviderStandards).ReturnsDbSet(_providerStandards);
 
-            _providerStandardImportRepository = new Data.Repository.ProviderStandardRepository(_courseDeliveryDataContext.Object);
+            _providerStandardImportRepository = new Data.Repository.ProviderStandardRepository(Mock.Of<ICourseDeliveryDataContext>(), _courseDeliveryDataContext.Object);
         }
 
         [Test]

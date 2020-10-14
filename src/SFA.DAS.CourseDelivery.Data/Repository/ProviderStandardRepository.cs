@@ -10,10 +10,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
     public class ProviderStandardRepository : IProviderStandardRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
+        private readonly ICourseDeliveryReadonlyDataContext _readonlyDataContext;
 
-        public ProviderStandardRepository(ICourseDeliveryDataContext dataContext)
+        public ProviderStandardRepository(ICourseDeliveryDataContext dataContext, ICourseDeliveryReadonlyDataContext readonlyDataContext)
         {
             _dataContext = dataContext;
+            _readonlyDataContext = readonlyDataContext;
         }
 
         public void DeleteAll()
@@ -29,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         
         public async Task<ProviderStandard> GetByUkprnAndStandard(int ukPrn, int standardId)
         {
-            var providerStandard = await _dataContext
+            var providerStandard = await _readonlyDataContext
                 .ProviderStandards
                 .Include(c => c.Provider)
                 .ThenInclude(c=>c.ProviderRegistrationFeedbackAttributes)
@@ -43,7 +45,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<IEnumerable<int>> GetCoursesByUkprn(int ukPrn)
         {
-            var courses = await _dataContext
+            var courses = await _readonlyDataContext
                 .ProviderStandards
                 .Where(c => c.Ukprn == ukPrn)
                 .Select(c => c.StandardId).ToListAsync();
@@ -53,7 +55,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<IEnumerable<int>> GetUkprnsByStandard(int standardId)
         {
-            var providers = await _dataContext.ProviderStandards
+            var providers = await _readonlyDataContext.ProviderStandards
                 .Where(c => c.StandardId.Equals(standardId))
                 .Select(c => c.Ukprn).Distinct().ToListAsync();
 

@@ -8,7 +8,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
 {
     public class DbUtilities
     {
-        public static void LoadTestData(CourseDeliveryDataContext context)
+        public static void LoadTestData(CourseDeliveryReadonlyDataContext context)
         {
             context.Providers.Add(new Provider
             {
