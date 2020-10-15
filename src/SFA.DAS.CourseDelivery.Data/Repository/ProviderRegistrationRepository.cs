@@ -15,11 +15,6 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext = dataContext;
         }
 
-        public async Task InsertFromImportTable()
-        {
-            await _dataContext.ExecuteRawSql(SqlQueries.InsertProviderRegistrationsFromImport);
-        }
-
         public async Task InsertMany(IEnumerable<ProviderRegistration> providerRegistrations)
         {
             await _dataContext.ProviderRegistrations.AddRangeAsync(providerRegistrations);

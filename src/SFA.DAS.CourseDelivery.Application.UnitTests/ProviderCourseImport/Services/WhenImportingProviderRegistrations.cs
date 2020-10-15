@@ -45,7 +45,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             mockImportRepository.Verify(repository => repository.DeleteAll(), Times.Never);
             mockImportRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationImport>>()), Times.Never);
             mockRepository.Verify(repository => repository.DeleteAll(), Times.Never);
-            mockRepository.Verify(repository => repository.InsertFromImportTable(), Times.Never);
+            mockRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<Domain.Entities.ProviderRegistration>>()), Times.Never);
             mockFeedbackAttributeRepository.Verify(repository => repository.DeleteAll(), Times.Never);
             mockFeedbackAttributeRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationFeedbackAttribute>>()), Times.Never);
             mockFeedbackAttributeImportRepository.Verify(repository => repository.DeleteAll(), Times.Never);
