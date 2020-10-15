@@ -36,7 +36,6 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
         int SaveChanges();
-        void TrackChanges(bool enable = true);
         Task<int> ExecuteRawSql(string sql);
         
     }
@@ -105,11 +104,6 @@ namespace SFA.DAS.CourseDelivery.Data
             optionsBuilder.UseSqlServer(connection);
         }
 
-        public void TrackChanges(bool enable = true)
-        {
-            base.ChangeTracker.QueryTrackingBehavior = enable ? QueryTrackingBehavior.TrackAll : QueryTrackingBehavior.NoTracking;
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProviderImport());
@@ -117,7 +111,7 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderStandardImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardLocationImport());
             modelBuilder.ApplyConfiguration(new Provider(false));
-            modelBuilder.ApplyConfiguration(new StandardLocation());
+            modelBuilder.ApplyConfiguration(new StandardLocation(false));
             modelBuilder.ApplyConfiguration(new ProviderStandard(false));
             modelBuilder.ApplyConfiguration(new ProviderStandardLocation(false));
             modelBuilder.ApplyConfiguration(new ImportAudit());
@@ -127,9 +121,9 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverallImport());
             modelBuilder.ApplyConfiguration(new ProviderRegistration(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationImport());
-            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttributeImport());
-            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRatingImport());
             
             base.OnModelCreating(modelBuilder);

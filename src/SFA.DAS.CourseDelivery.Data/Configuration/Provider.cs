@@ -50,6 +50,14 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
                     .HasForeignKey(c => c.Ukprn)
                     .HasPrincipalKey(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
             }
+            else
+            {
+                builder.Ignore(c => c.ProviderStandards);
+                builder.Ignore(c => c.NationalAchievementRates);
+                builder.Ignore(c => c.ProviderRegistrationFeedbackAttributes);
+                builder.Ignore(c => c.ProviderRegistrationFeedbackRating);
+                builder.Ignore(c => c.ProviderRegistration);
+            }
             
             
             builder.HasIndex(x => x.Id).IsUnique();

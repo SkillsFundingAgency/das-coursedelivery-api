@@ -30,6 +30,11 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
                     .HasForeignKey<Domain.Entities.ProviderStandardLocation>(c => c.LocationId).Metadata
                     .DeleteBehavior = DeleteBehavior.Restrict;
             }
+            else
+            {
+                builder.Ignore(c => c.Location);
+                builder.Ignore(c => c.ProviderStandard);
+            }
 
             builder.HasIndex(x => new { x.Ukprn , x.StandardId, x.LocationId }).IsUnique();
         }
