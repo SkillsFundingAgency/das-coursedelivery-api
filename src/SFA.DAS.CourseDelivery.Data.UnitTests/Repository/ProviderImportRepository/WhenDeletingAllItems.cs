@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -41,7 +42,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderImportReposit
             _providerImportRepository.DeleteAll();
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>x.ProviderImports.RemoveRange(_courseDeliveryDataContext.Object.ProviderImports), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.ProviderImports.RemoveRange(It.Is<List<ProviderImport>>(c=>
+                c.ToList().Count.Equals(_providerImports.Count))), Times.Once);
             _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }
