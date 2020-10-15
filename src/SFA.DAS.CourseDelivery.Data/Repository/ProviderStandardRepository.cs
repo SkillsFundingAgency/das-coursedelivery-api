@@ -24,9 +24,10 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task InsertFromImportTable()
+        public async Task InsertMany(IEnumerable<ProviderStandard> providerStandards)
         {
-            await _dataContext.ExecuteRawSql("INSERT INTO dbo.ProviderStandard SELECT * FROM dbo.ProviderStandard_Import");
+            await _dataContext.ProviderStandards.AddRangeAsync(providerStandards);
+            _dataContext.SaveChanges();
         }
         
         public async Task<ProviderStandard> GetByUkprnAndStandard(int ukPrn, int standardId)

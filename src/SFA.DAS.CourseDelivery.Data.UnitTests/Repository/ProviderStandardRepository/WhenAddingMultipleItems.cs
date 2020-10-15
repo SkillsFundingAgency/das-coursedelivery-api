@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -38,14 +37,14 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
         }
 
         [Test]
-        public async Task Then_The_ProviderStandard_Items_Are_Added_From_The_Import_Table()
+        public async Task Then_The_ProviderStandard_Items_Are_Added()
         {
             //Act
-            await _providerStandardRepository.InsertFromImportTable();
+            await _providerStandardRepository.InsertMany(_providerStandards);
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>
-                x.ExecuteRawSql(@"INSERT INTO dbo.ProviderStandard SELECT * FROM dbo.ProviderStandard_Import"), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.ProviderStandards.AddRangeAsync(_providerStandards, It.IsAny<CancellationToken>()), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }
 }

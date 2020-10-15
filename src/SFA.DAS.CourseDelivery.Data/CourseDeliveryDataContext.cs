@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;

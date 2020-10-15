@@ -21,9 +21,10 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _readonlyDataContext = readonlyDataContext;
         }
 
-        public async Task InsertFromImportTable()
+        public async Task InsertMany(IEnumerable<Provider> providers)
         {
-            await _dataContext.ExecuteRawSql(@"INSERT INTO dbo.Provider SELECT * FROM dbo.Provider_Import");
+            await _dataContext.Providers.AddRangeAsync(providers);
+            _dataContext.SaveChanges();
         }
 
         public void DeleteAll()
