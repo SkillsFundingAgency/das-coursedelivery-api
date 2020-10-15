@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
@@ -16,6 +18,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         public async Task InsertFromImportTable()
         {
             await _dataContext.ExecuteRawSql(SqlQueries.InsertProviderRegistrationsFromImport);
+        }
+
+        public async Task InsertMany(IEnumerable<ProviderRegistration> providerRegistrations)
+        {
+            await _dataContext.ProviderRegistrations.AddRangeAsync(providerRegistrations);
+            _dataContext.SaveChanges();
         }
 
         public void DeleteAll()

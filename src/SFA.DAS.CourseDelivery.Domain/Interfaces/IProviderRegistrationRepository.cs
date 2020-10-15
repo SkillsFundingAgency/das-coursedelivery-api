@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using SFA.DAS.CourseDelivery.Domain.Entities;
 
 namespace SFA.DAS.CourseDelivery.Domain.Interfaces
 {
@@ -6,5 +8,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     {
         Task InsertFromImportTable();
         void DeleteAll();
+        Task InsertMany(IEnumerable<ProviderRegistration> providerRegistrations);
     }
 }
