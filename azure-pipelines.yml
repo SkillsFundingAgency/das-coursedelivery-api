@@ -52,7 +52,7 @@ jobs:
       arguments: '--configuration $(buildConfiguration) --no-build'
 
   - task: DotNetCoreCLI@2
-    displayName: 'Acceptance Tests Trigger Test'
+    displayName: 'Acceptance Tests'
     inputs:
       command: test
       projects: '**/*.AcceptanceTests.csproj'
