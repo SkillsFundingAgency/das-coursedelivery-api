@@ -32,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.Providers).ReturnsDbSet(_providers);
-            _providerImportRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object);
+            _providerImportRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             _courseDeliveryDataContext.Verify(x=>x.Providers
                 .RemoveRange(It.Is<List<Provider>>(c=>
                     c.ToList().Count.Equals(_providers.Count))), Times.Once);
-            
+            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }
 }

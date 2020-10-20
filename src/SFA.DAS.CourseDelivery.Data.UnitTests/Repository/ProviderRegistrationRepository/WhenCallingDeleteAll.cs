@@ -24,8 +24,6 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationR
 
             mockContext.Verify(context => context.ProviderRegistrations.RemoveRange(providerRegistrationsInDb), Times.Once);
             mockContext.Verify(context => context.SaveChanges(), Times.Once);
-            mockContext.Verify(context => context.TrackChanges(true), Times.Once);
-            mockContext.Verify(context => context.TrackChanges(false), Times.Once);
         }
     }
 }

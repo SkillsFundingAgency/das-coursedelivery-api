@@ -2,37 +2,43 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
 
 namespace SFA.DAS.CourseDelivery.Data
 {
-    public interface ICourseDeliveryDataContext
+    public interface IDataContext
     {
-        DbSet<Domain.Entities.ProviderImport> ProviderImports { get; set; }
-        DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
-        DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
-        DbSet<Domain.Entities.StandardLocationImport> StandardLocationImports { get; set; }
         DbSet<Domain.Entities.Provider> Providers { get; set; }
         DbSet<Domain.Entities.ProviderStandard> ProviderStandards { get; set; }
         DbSet<Domain.Entities.ProviderStandardLocation> ProviderStandardLocations { get; set; }
         DbSet<Domain.Entities.StandardLocation> StandardLocations { get; set; }
         DbSet<Domain.Entities.ImportAudit> ImportAudit { get; set; }
         DbSet<Domain.Entities.NationalAchievementRate> NationalAchievementRates { get; set; }
-        DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
         DbSet<Domain.Entities.NationalAchievementRateOverall> NationalAchievementRateOverall { get; set; }
-        DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
         DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
-        DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
+        
+    }
+    
+    public interface ICourseDeliveryDataContext : IDataContext
+    {
+        DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
+        DbSet<Domain.Entities.ProviderImport> ProviderImports { get; set; }
+        DbSet<Domain.Entities.ProviderStandardImport> ProviderStandardImports { get; set; }
+        DbSet<Domain.Entities.ProviderStandardLocationImport> ProviderStandardLocationImports { get; set; }
+        DbSet<Domain.Entities.StandardLocationImport> StandardLocationImports { get; set; }
+        DbSet<Domain.Entities.NationalAchievementRateImport> NationalAchievementRateImports { get; set; }
+        DbSet<Domain.Entities.NationalAchievementRateOverallImport> NationalAchievementRateOverallImports { get; set; }
+        DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
-        DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
-        DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
         int SaveChanges();
-        void TrackChanges(bool enable = true);
         Task<int> ExecuteRawSql(string sql);
+        
     }
 
     public class CourseDeliveryDataContext: DbContext, ICourseDeliveryDataContext
@@ -67,7 +73,7 @@ namespace SFA.DAS.CourseDelivery.Data
         {
         }
 
-        public CourseDeliveryDataContext(DbContextOptions options) : base(options)
+        public CourseDeliveryDataContext(DbContextOptions<CourseDeliveryDataContext> options) : base(options)
         {
         }
 
@@ -78,7 +84,7 @@ namespace SFA.DAS.CourseDelivery.Data
         }
 
 
-        public CourseDeliveryDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
+        public CourseDeliveryDataContext(IOptions<CourseDeliveryConfiguration> config, DbContextOptions<CourseDeliveryDataContext> options, AzureServiceTokenProvider azureServiceTokenProvider) :base(options)
         {
             _configuration = config.Value;
             _azureServiceTokenProvider = azureServiceTokenProvider;
@@ -99,40 +105,26 @@ namespace SFA.DAS.CourseDelivery.Data
             optionsBuilder.UseSqlServer(connection);
         }
 
-        public void TrackChanges(bool enable = true)
-        {
-            if (enable)
-            {
-                base.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-            }
-            else
-            {
-                base.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;    
-            }
-            
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProviderImport());
             modelBuilder.ApplyConfiguration(new StandardLocationImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardImport());
             modelBuilder.ApplyConfiguration(new ProviderStandardLocationImport());
-            modelBuilder.ApplyConfiguration(new Provider());
-            modelBuilder.ApplyConfiguration(new StandardLocation());
-            modelBuilder.ApplyConfiguration(new ProviderStandard());
-            modelBuilder.ApplyConfiguration(new ProviderStandardLocation());
+            modelBuilder.ApplyConfiguration(new Provider(false));
+            modelBuilder.ApplyConfiguration(new StandardLocation(false));
+            modelBuilder.ApplyConfiguration(new ProviderStandard(false));
+            modelBuilder.ApplyConfiguration(new ProviderStandardLocation(false));
             modelBuilder.ApplyConfiguration(new ImportAudit());
-            modelBuilder.ApplyConfiguration(new NationalAchievementRate());
+            modelBuilder.ApplyConfiguration(new NationalAchievementRate(false));
             modelBuilder.ApplyConfiguration(new NationalAchievementRateImport());
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverall());
             modelBuilder.ApplyConfiguration(new NationalAchievementRateOverallImport());
-            modelBuilder.ApplyConfiguration(new ProviderRegistration());
+            modelBuilder.ApplyConfiguration(new ProviderRegistration(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationImport());
-            modelBuilder.ApplyConfiguration(new ProviderWithStandardAndLocation());
-            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttributeImport());
-            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
+            modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRatingImport());
             
             base.OnModelCreating(modelBuilder);

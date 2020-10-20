@@ -13,7 +13,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 {
     public class WhenGettingAProviderByUkprn
     {
-        private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
+        private Mock<ICourseDeliveryReadonlyDataContext> _courseDeliveryDataContext;
         private Data.Repository.ProviderRepository _providerRepository;
         private List<Provider> _providers;
         private Provider _expectedProvider;
@@ -55,10 +55,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             };
             
             
-            _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
+            _courseDeliveryDataContext = new Mock<ICourseDeliveryReadonlyDataContext>();
             _courseDeliveryDataContext.Setup(x => x.Providers).ReturnsDbSet(_providers);
             
-            _providerRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object);
+            _providerRepository = new Data.Repository.ProviderRepository(Mock.Of<ICourseDeliveryDataContext>(), _courseDeliveryDataContext.Object);
         }
 
         [Test]

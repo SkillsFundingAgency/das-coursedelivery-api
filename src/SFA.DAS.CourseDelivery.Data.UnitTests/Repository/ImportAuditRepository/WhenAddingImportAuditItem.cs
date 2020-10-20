@@ -24,7 +24,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ImportAuditRepository
             
             _dataContext = new Mock<ICourseDeliveryDataContext>();
             _dataContext.Setup(x => x.ImportAudit).ReturnsDbSet(new List<ImportAudit>());
-            _importAuditRepository = new Data.Repository.ImportAuditRepository(_dataContext.Object);
+            _importAuditRepository = new Data.Repository.ImportAuditRepository(_dataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
         }
 
         [Test]

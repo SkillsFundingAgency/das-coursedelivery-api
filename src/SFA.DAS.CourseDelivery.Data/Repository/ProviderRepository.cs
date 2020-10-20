@@ -7,22 +7,24 @@ using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Data.Extensions;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
-using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
 {
     public class ProviderRepository : IProviderRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
+        private readonly ICourseDeliveryReadonlyDataContext _readonlyDataContext;
 
-        public ProviderRepository(ICourseDeliveryDataContext dataContext)
+        public ProviderRepository(ICourseDeliveryDataContext dataContext, ICourseDeliveryReadonlyDataContext readonlyDataContext)
         {
             _dataContext = dataContext;
+            _readonlyDataContext = readonlyDataContext;
         }
 
-        public async Task InsertFromImportTable()
+        public async Task InsertMany(IEnumerable<Provider> providers)
         {
-            await _dataContext.ExecuteRawSql(@"INSERT INTO dbo.Provider SELECT * FROM dbo.Provider_Import");
+            await _dataContext.Providers.AddRangeAsync(providers);
+            _dataContext.SaveChanges();
         }
 
         public void DeleteAll()
@@ -33,9 +35,8 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<IEnumerable<Provider>> GetByStandardId(int standardId)
         {
-            _dataContext.TrackChanges(false);
             
-            var providers = await _dataContext
+            var providers = await _readonlyDataContext
                 .ProviderStandards
                 .Include(c => c.Provider)
                 .ThenInclude(c=>c.ProviderRegistrationFeedbackAttributes)
@@ -48,13 +49,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .FilterRegisteredProviders()
                 .OrderBy(c=>c.Name).ToListAsync();
             
-            _dataContext.TrackChanges();
             return providers;
         }
 
         public async Task<Provider> GetByUkprn(int ukPrn)
         {
-            var provider = await _dataContext.Providers
+            var provider = await _readonlyDataContext.Providers
                 .FilterRegisteredProviders()
                 .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukPrn));
 
@@ -64,40 +64,34 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId,
             double lat, double lon, short sortOrder)
         {
-            _dataContext.TrackChanges(false);
-            var providers = await _dataContext.ProviderWithStandardAndLocations
+            var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
                 .FromSqlInterpolated(GetProviderQuery(standardId, lat, lon))
                 .OrderBy(OrderProviderStandards(sortOrder))
                 .ToListAsync();
-            _dataContext.TrackChanges();
+            
             return providers;
         }
 
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(int ukprn, int standardId,
             double lat = 0, double lon = 0)
         {
-            _dataContext.TrackChanges(false);
-
-            var provider = await _dataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon))
+            
+            var provider = await _readonlyDataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon))
                 .Where(c=>c.Ukprn.Equals(ukprn))
                 .OrderBy(c=>c.DistanceInMiles)
                 .ToListAsync();
             
-            _dataContext.TrackChanges();
-
+            
             return provider;
         }
 
         public async Task<IEnumerable<int>> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon)
         {
-            _dataContext.TrackChanges(false);
 
-            var providers = await _dataContext.Providers
+            var providers = await _readonlyDataContext.Providers
                 .FromSqlInterpolated(GetProvidersAtLocationForStandard(standardId, lat, lon))
                 .Select(c => c.Ukprn)
                 .ToListAsync();
-            
-            _dataContext.TrackChanges();
 
             return providers;
         }

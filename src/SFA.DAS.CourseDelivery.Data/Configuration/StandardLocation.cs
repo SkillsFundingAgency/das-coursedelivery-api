@@ -5,6 +5,12 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
 {
     public class StandardLocation : IEntityTypeConfiguration<Domain.Entities.StandardLocation>
     {
+        private readonly bool _buildRelations;
+
+        public StandardLocation (bool buildRelations = true)
+        {
+            _buildRelations = buildRelations;
+        }
         public void Configure(EntityTypeBuilder<Domain.Entities.StandardLocation> builder)
         {
             builder.ToTable("StandardLocation");
@@ -22,6 +28,12 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(c => c.Postcode).HasColumnName("Postcode").HasColumnType("varchar").HasMaxLength(25).IsRequired(false);
             builder.Property(c => c.Lat).HasColumnName("Lat").HasColumnType("float").IsRequired();
             builder.Property(c => c.Long).HasColumnName("Long").HasColumnType("float").IsRequired();
+
+            if (!_buildRelations)
+            {
+                builder.Ignore(c => c.ProviderStandardLocation);    
+            }
+            
             
             builder.HasIndex(x => x.LocationId).IsUnique();
         }

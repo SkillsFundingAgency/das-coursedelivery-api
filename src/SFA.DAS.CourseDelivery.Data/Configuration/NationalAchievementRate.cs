@@ -5,6 +5,12 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
 {
     public class NationalAchievementRate : IEntityTypeConfiguration<Domain.Entities.NationalAchievementRate>
     {
+        private readonly bool _buildRelations;
+
+        public NationalAchievementRate (bool buildRelations = true)
+        {
+            _buildRelations = buildRelations;
+        }
         public void Configure(EntityTypeBuilder<Domain.Entities.NationalAchievementRate> builder)
         {
             builder.ToTable("NationalAchievementRate");
@@ -18,10 +24,18 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.OverallCohort).HasColumnName("OverallCohort").HasColumnType("int").IsRequired(false);
             builder.Property(x => x.OverallAchievementRate).HasColumnName("OverallAchievementRate").HasColumnType("decimal").IsRequired(false);
 
-            builder.HasOne(c => c.Provider)
+            if(_buildRelations)
+            {
+                builder.HasOne(c => c.Provider)
                 .WithMany(c => c.NationalAchievementRates)
                 .HasForeignKey(c => c.Ukprn)
                 .HasPrincipalKey(c => c.Ukprn).Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+            else
+            {
+                builder.Ignore(c => c.Provider);
+                builder.Ignore(c => c.ProviderStandard);
+            }
             
             builder.HasIndex(x => x.Id).IsUnique();
         }

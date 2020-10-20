@@ -77,10 +77,12 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         {
             var feedbackRating = _providerRegistrationFeedbackRatingImportRepository.GetAll();
             var feedbackAttributes = _providerRegistrationFeedbackAttributeImportRepository.GetAll();
+            var providerRegistrations = _providerRegistrationImportRepository.GetAll();
 
-            await Task.WhenAll(feedbackRating, feedbackAttributes);
+            await Task.WhenAll(feedbackRating, feedbackAttributes, providerRegistrations);
 
-            var insertProviderTask = _providerRegistrationRepository.InsertFromImportTable();
+            var insertProviderTask = _providerRegistrationRepository.InsertMany(providerRegistrations.Result
+                .Select(c=>(Domain.Entities.ProviderRegistration)c).ToList());
             var insertProviderRatingTask =
                 _providerRegistrationFeedbackRatingRepository.InsertMany(feedbackRating.Result
                     .Select(c => (ProviderRegistrationFeedbackRating) c).ToList());

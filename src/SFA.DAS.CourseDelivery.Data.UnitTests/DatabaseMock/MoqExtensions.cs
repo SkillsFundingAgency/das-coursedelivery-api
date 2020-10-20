@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +39,13 @@ using Moq.Language.Flow;
             IEnumerable<TEntity> entities) where TEntity : class
         {
             return setupResult.Returns(entities.BuildDbSet());
+        }
+        
+        public static IReturnsResult<ICourseDeliveryReadonlyDataContext> ReturnsDbSet<TEntity>(
+	        this ISetup<ICourseDeliveryReadonlyDataContext, DbSet<TEntity>> setupResult,
+	        IEnumerable<TEntity> entities) where TEntity : class
+        {
+	        return setupResult.Returns(entities.BuildDbSet());
         }
 
 		private static void ConfigureDbSetCalls<TEntity>(this Mock<DbSet<TEntity>> mock) 

@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
 {
     public class WhenGettingAllByDescription
     {
-        private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
+        private Mock<ICourseDeliveryReadonlyDataContext> _courseDeliveryDataContext;
         private Data.Repository.NationalAchievementRateOverallRepository _repository;
         private List<NationalAchievementRateOverall> _items;
         private  const string ExpectedSectorSubjectArea = "TestSubjectArea";
@@ -37,9 +37,9 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
                 }
             };
 
-            _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
+            _courseDeliveryDataContext = new Mock<ICourseDeliveryReadonlyDataContext>();
             _courseDeliveryDataContext.Setup(x => x.NationalAchievementRateOverall).ReturnsDbSet(_items);
-            _repository = new Data.Repository.NationalAchievementRateOverallRepository(_courseDeliveryDataContext.Object);
+            _repository = new Data.Repository.NationalAchievementRateOverallRepository(Mock.Of<ICourseDeliveryDataContext>(), _courseDeliveryDataContext.Object);
         }
 
         [Test]

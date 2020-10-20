@@ -31,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.NationalAchievementRateOverall).ReturnsDbSet(new List<NationalAchievementRateOverall>());
-            _repository = new Data.Repository.NationalAchievementRateOverallRepository(_courseDeliveryDataContext.Object);
+            _repository = new Data.Repository.NationalAchievementRateOverallRepository(_courseDeliveryDataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
         }
 
         [Test]

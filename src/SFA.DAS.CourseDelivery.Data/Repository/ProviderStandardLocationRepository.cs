@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
@@ -13,11 +15,10 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext = dataContext;
         }
 
-        public async Task InsertFromImportTable()
+        public async Task InsertMany(IEnumerable<ProviderStandardLocation> providerStandardLocations)
         {
-            await _dataContext.ExecuteRawSql(
-                @"INSERT INTO dbo.ProviderStandardLocation SELECT * FROM dbo.ProviderStandardLocation_Import");
-            
+            await _dataContext.ProviderStandardLocations.AddRangeAsync(providerStandardLocations);
+            _dataContext.SaveChanges();
         }
 
         public void DeleteAll()

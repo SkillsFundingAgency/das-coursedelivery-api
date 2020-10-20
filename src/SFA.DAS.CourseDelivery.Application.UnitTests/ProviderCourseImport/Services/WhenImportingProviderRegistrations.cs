@@ -45,7 +45,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             mockImportRepository.Verify(repository => repository.DeleteAll(), Times.Never);
             mockImportRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationImport>>()), Times.Never);
             mockRepository.Verify(repository => repository.DeleteAll(), Times.Never);
-            mockRepository.Verify(repository => repository.InsertFromImportTable(), Times.Never);
+            mockRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<Domain.Entities.ProviderRegistration>>()), Times.Never);
             mockFeedbackAttributeRepository.Verify(repository => repository.DeleteAll(), Times.Never);
             mockFeedbackAttributeRepository.Verify(repository => repository.InsertMany(It.IsAny<IEnumerable<ProviderRegistrationFeedbackAttribute>>()), Times.Never);
             mockFeedbackAttributeImportRepository.Verify(repository => repository.DeleteAll(), Times.Never);
@@ -59,6 +59,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
         [Test, MoqAutoData]
         public async Task Then_Adds_Roatp_Data_To_Import_Table(
             List<ProviderRegistration> providerRegistrationsFromRoatp,
+            List<Domain.Entities.ProviderRegistrationImport> providerRegistrationImports,
             List<ProviderRegistrationFeedbackRatingImport> feedbackRatingImports,
             List<ProviderRegistrationFeedbackAttributeImport> feedbackAttributeImports,
             [Frozen] Mock<IRoatpApiService> mockRoatpApiService,
@@ -77,6 +78,9 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
                 .ReturnsAsync(feedbackAttributeImports);
             mockFeedbackRatingImportRepository.Setup(x => x.GetAll())
                 .ReturnsAsync(feedbackRatingImports);
+            mockImportRepository.Setup(x => x.GetAll())
+                .ReturnsAsync(providerRegistrationImports);
+                
             var expectedProviderRegistrationImports = providerRegistrationsFromRoatp
                 .Select(registration => (ProviderRegistrationImport) registration)
                 .ToList();
@@ -109,7 +113,8 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             mockRepository.Verify(repository => repository.DeleteAll(), Times.Once);
             mockFeedbackAttributeRepository.Verify(repository => repository.DeleteAll(), Times.Once);
             mockFeedbackRatingRepository.Verify(repository => repository.DeleteAll(), Times.Once);
-            mockRepository.Verify(repository => repository.InsertFromImportTable(), Times.Once);
+            mockRepository.Verify(repository => repository.InsertMany(It.Is<IEnumerable<Domain.Entities.ProviderRegistration>>
+                (c=> c.Count().Equals(providerRegistrationImports.Count))), Times.Once);
             mockFeedbackAttributeRepository.Verify(repository => repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackAttribute>>
                 (c=> c.Count().Equals(feedbackAttributeImports.Count))), Times.Once);
             mockFeedbackRatingRepository.Verify(repository => repository.InsertMany(It.Is<IEnumerable<ProviderRegistrationFeedbackRating>>

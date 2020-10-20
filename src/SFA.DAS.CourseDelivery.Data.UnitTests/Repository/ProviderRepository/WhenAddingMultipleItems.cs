@@ -33,18 +33,18 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.Providers).ReturnsDbSet(new List<Provider>());
-            _providerRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object);
+            _providerRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
         }
 
         [Test]
-        public async Task Then_The_Providers_Are_Added_From_The_Import_Table()
+        public async Task Then_The_Providers_Are_Added()
         {
             //Act
-            await _providerRepository.InsertFromImportTable();
+            await _providerRepository.InsertMany(_providers);
             
             //Assert
-            _courseDeliveryDataContext.Verify(x=>
-                x.ExecuteRawSql(@"INSERT INTO dbo.Provider SELECT * FROM dbo.Provider_Import"), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.Providers.AddRangeAsync(_providers, It.IsAny<CancellationToken>()), Times.Once);
+            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Once);
         }
     }
 }

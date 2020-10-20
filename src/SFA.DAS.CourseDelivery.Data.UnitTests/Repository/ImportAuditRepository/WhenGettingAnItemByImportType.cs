@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ImportAuditRepository
 {
     public class WhenGettingAnItemByImportType
     {
-        private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
+        private Mock<ICourseDeliveryReadonlyDataContext> _courseDeliveryDataContext;
         private List<ImportAudit> _importAudits;
         private Data.Repository.ImportAuditRepository _importAuditRepository;
         private  const string ExpectedFileName = "TestFile1";
@@ -26,11 +26,11 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ImportAuditRepository
                 new ImportAudit(new DateTime(2020,10,01), 101, ImportType.NationalAchievementRates, ExpectedFileName)
             };
             
-            _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
+            _courseDeliveryDataContext = new Mock<ICourseDeliveryReadonlyDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ImportAudit).ReturnsDbSet(_importAudits);
             
 
-            _importAuditRepository = new Data.Repository.ImportAuditRepository(_courseDeliveryDataContext.Object);
+            _importAuditRepository = new Data.Repository.ImportAuditRepository(Mock.Of<ICourseDeliveryDataContext>(), _courseDeliveryDataContext.Object);
         }
 
         [Test]
@@ -53,9 +53,9 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ImportAuditRepository
                 new ImportAudit(new DateTime(2020,10,01), 100)
             };
             
-            _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
+            _courseDeliveryDataContext = new Mock<ICourseDeliveryReadonlyDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ImportAudit).ReturnsDbSet(_importAudits);
-            _importAuditRepository = new Data.Repository.ImportAuditRepository(_courseDeliveryDataContext.Object);
+            _importAuditRepository = new Data.Repository.ImportAuditRepository(Mock.Of<ICourseDeliveryDataContext>(), _courseDeliveryDataContext.Object);
             
             //Act
             var auditRecord = await _importAuditRepository.GetLastImportByType(ImportType.NationalAchievementRates);
