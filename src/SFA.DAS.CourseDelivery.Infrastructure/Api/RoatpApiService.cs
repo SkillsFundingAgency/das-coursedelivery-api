@@ -47,7 +47,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
             return JsonConvert.DeserializeObject<List<ProviderRegistration>>(jsonResponse);
         }
 
-        public async Task<IEnumerable<ProviderRegistrationLookup>> GetProviderRegistrationLookupData(List<int> ukprns)
+        public async Task<IEnumerable<ProviderRegistrationLookup>> GetProviderRegistrationLookupData(IEnumerable<int> ukprns)
         {
             await AddAuthenticationHeader();
             

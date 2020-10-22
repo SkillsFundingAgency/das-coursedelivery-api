@@ -19,5 +19,10 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
                 return items.ToList();
             }
         }
+
+        public Task<IEnumerable<ProviderRegistrationLookup>> GetProviderRegistrationLookupData(IEnumerable<int> ukprns)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
