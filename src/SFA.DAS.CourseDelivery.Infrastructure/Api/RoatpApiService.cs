@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
             IAzureClientCredentialHelper azureClientCredentialHelper)
         {
             _client = httpClientFactory.CreateClient();
+            _client.BaseAddress = new Uri(configuration.Value.Url);
             _hostingEnvironment = hostingEnvironment;
             _azureClientCredentialHelper = azureClientCredentialHelper;
             _configuration = configuration.Value;
@@ -36,13 +38,26 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
         {
             await AddAuthenticationHeader();
             
-            var response = await _client.GetAsync(_configuration.Url);
+            var response = await _client.GetAsync("v1/fat-data-export");
             
             response.EnsureSuccessStatusCode();
             
             var jsonResponse = await response.Content.ReadAsStringAsync();
             
             return JsonConvert.DeserializeObject<List<ProviderRegistration>>(jsonResponse);
+        }
+
+        public async Task<IEnumerable<ProviderRegistrationLookup>> GetProviderRegistrationLookupData(List<int> ukprns)
+        {
+            await AddAuthenticationHeader();
+            
+            var response = await _client.GetAsync($"v1/ukrlp/lookup/many?ukprns={string.Join("&ukprns=", ukprns)}");
+            
+            response.EnsureSuccessStatusCode();
+            
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            
+            return JsonConvert.DeserializeObject<List<ProviderRegistrationLookup>>(jsonResponse);
         }
 
         private async Task AddAuthenticationHeader()
