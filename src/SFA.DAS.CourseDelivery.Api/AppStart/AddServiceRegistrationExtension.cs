@@ -37,6 +37,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             }
 
             services.AddHttpClient<IDataDownloadService, DataDownloadService>();
+            services.AddHttpClient<IPostcodeApiService, PostcodeApiService>();
             
             services.AddTransient<IProviderCourseImportService, ProviderCourseImportService>();
             services.AddTransient<IProviderService, ProviderService>();
