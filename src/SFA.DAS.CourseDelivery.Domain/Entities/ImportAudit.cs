@@ -26,6 +26,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         CourseDirectory = 0,
         NationalAchievementRates = 1,
         NationalAchievementRatesOverall = 2,
-        ProviderRegistrations = 3
+        ProviderRegistrations = 3,
+        ProviderAddressData = 4
     }
 }

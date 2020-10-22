@@ -40,6 +40,14 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
                     Lat = ExpectedLat,
                     Long = ExpectedLong,
                     Postcode = ExpectedPostcode
+                },
+                new ProviderImport
+                {
+                    Id = 12345,
+                    Ukprn = 12345,
+                    Lat = 0,
+                    Long = 0,
+                    Postcode = string.Empty
                 }
             };
             
@@ -57,7 +65,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
         {
             await _providerRepository.UpdateAddressesFromImportTable();
             
-            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Exactly(2));
+            _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Exactly(1));
+            _courseDeliveryDataContext.Verify(x=>x.Providers.FindAsync(It.IsAny<long>()), Times.Exactly(2));
         }
     }
 }

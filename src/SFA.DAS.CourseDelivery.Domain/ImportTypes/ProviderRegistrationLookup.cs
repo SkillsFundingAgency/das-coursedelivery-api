@@ -10,10 +10,10 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public bool Success { get; set; }
 
         [JsonProperty("results")]
-        public List<Result> Results { get; set; }
+        public List<ProviderResult> Results { get; set; }
     }
 
-    public class Result
+    public class ProviderResult
     {
         [JsonProperty("ukprn")]
         public int Ukprn { get; set; }

@@ -46,7 +46,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<INationalAchievementRatesImportService, NationalAchievementRatesImportService>();
             services.AddTransient<INationalAchievementRatesOverallImportService, NationalAchievementRatesOverallImportService>();
             services.AddTransient<IOverallNationalAchievementRateService, OverallNationalAchievementRateService>();
-
+            services.AddTransient<IProviderRegistrationAddressImportService, ProviderRegistrationAddressImportService>();
+            
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
             services.AddTransient<IProviderStandardLocationImportRepository, ProviderStandardLocationImportRepository>();
