@@ -69,6 +69,20 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return providers;
         }
 
+        public async Task UpdateAddressesFromImportTable()
+        {
+            var providerImports = await _dataContext.ProviderImports.ToListAsync();
+
+            foreach (var providerImport in providerImports)
+            {
+                var provider = await _dataContext.Providers.FindAsync(providerImport.Id);
+                provider.Postcode = providerImport.Postcode;
+                provider.Lat = providerImport.Lat;
+                provider.Long = providerImport.Long;
+                _dataContext.SaveChanges();
+            }
+        }
+
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId,
             double lat, double lon, short sortOrder)
         {

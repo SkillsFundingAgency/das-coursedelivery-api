@@ -18,5 +18,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
 
         Task<IEnumerable<int>> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon);
         Task<List<Provider>> GetAllRegistered();
+        Task UpdateAddressesFromImportTable();
     }
 }
