@@ -34,7 +34,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                 Content = new StringContent(JsonConvert.SerializeObject(importProviderRegistrations)),
                 StatusCode = HttpStatusCode.Accepted
             };
-            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+$"v1/ukrlp/lookup/many?ukprns={string.Join("&ukprns=", ukprns)}"));
+            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+$"v1/ukrlp/lookup/many?ukprns={string.Join("&ukprns=", ukprns)}"), HttpMethod.Get);
             var mockHttpClientFactory = fixture.Freeze<Mock<IHttpClientFactory>>();
             mockHttpClientFactory
                 .Setup(factory => factory.CreateClient(It.IsAny<string>()))
@@ -62,7 +62,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                 Content = new StringContent(""),
                 StatusCode = HttpStatusCode.BadRequest
             };
-            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+$"v1/ukrlp/lookup/many?ukprns={string.Join("&ukprns=", ukprns)}"));
+            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+$"v1/ukrlp/lookup/many?ukprns={string.Join("&ukprns=", ukprns)}"), HttpMethod.Get);
             var mockHttpClientFactory = fixture.Freeze<Mock<IHttpClientFactory>>();
             mockHttpClientFactory
                 .Setup(factory => factory.CreateClient(It.IsAny<string>()))
@@ -89,7 +89,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                 Content = new StringContent(JsonConvert.SerializeObject(importProviderRegistrations)),
                 StatusCode = HttpStatusCode.Accepted
             };
-            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+"v1/fat-data-export"));
+            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+"v1/fat-data-export"), HttpMethod.Get);
             var mockHttpClientFactory = fixture.Freeze<Mock<IHttpClientFactory>>();
             mockHttpClientFactory
                 .Setup(factory => factory.CreateClient(It.IsAny<string>()))
@@ -116,7 +116,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                 Content = new StringContent(""),
                 StatusCode = HttpStatusCode.BadRequest
             };
-            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+"v1/fat-data-export"));
+            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(config.Url+"v1/fat-data-export"), HttpMethod.Get);
             var mockHttpClientFactory = fixture.Freeze<Mock<IHttpClientFactory>>();
             mockHttpClientFactory
                 .Setup(factory => factory.CreateClient(It.IsAny<string>()))
