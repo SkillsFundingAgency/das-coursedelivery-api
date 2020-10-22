@@ -17,5 +17,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
             double lat = 0, double lon = 0);
 
         Task<IEnumerable<int>> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon);
+        Task<List<Provider>> GetAllRegistered();
     }
 }
