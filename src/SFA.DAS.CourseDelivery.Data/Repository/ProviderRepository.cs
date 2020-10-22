@@ -157,7 +157,8 @@ select
     PRFA.Strength, 
     PRFA.Weakness,
     PRFR.FeedbackCount, 
-    PRFR.FeedbackName
+    PRFR.FeedbackName,
+    pdist.DistanceInMiles as ProviderDistanceInMiles
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -167,6 +168,8 @@ inner join (select
 		,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
+inner join (select id, geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
+            .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles from [Provider]) pdist on pdist.id = P.id
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
