@@ -25,7 +25,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
         {
             //Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization{ConfigureMembers = true});
-            var importProviderRegistrations = fixture.Create<List<ProviderRegistrationLookup>>();
+            var importProviderRegistrations = fixture.Create<ProviderRegistrationLookup>();
             var config = fixture.Freeze<RoatpConfiguration>();
             config.Url = "https://test.local/api/";
             var ukprns = fixture.CreateMany<int>().ToList();

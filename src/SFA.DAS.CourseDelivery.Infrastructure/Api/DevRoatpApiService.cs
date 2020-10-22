@@ -20,7 +20,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
             }
         }
 
-        public Task<IEnumerable<ProviderRegistrationLookup>> GetProviderRegistrationLookupData(IEnumerable<int> ukprns)
+        public Task<ProviderRegistrationLookup> GetProviderRegistrationLookupData(IEnumerable<int> ukprns)
         {
             throw new System.NotImplementedException();
         }
