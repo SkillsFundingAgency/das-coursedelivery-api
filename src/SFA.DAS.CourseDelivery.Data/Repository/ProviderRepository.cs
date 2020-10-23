@@ -33,21 +33,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task<IEnumerable<Provider>> GetByStandardId(int standardId)
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId(int standardId)
         {
             
-            var providers = await _readonlyDataContext
-                .ProviderStandards
-                .Include(c => c.Provider)
-                .ThenInclude(c=>c.ProviderRegistrationFeedbackAttributes)
-                .Include(c=>c.Provider)
-                .ThenInclude(c=>c.NationalAchievementRates)
-                .Include(c=>c.Provider)
-                .ThenInclude(c=>c.ProviderRegistrationFeedbackRating)
-                .Where(c => c.StandardId.Equals(standardId))
-                .Select(c=>c.Provider)
-                .FilterRegisteredProviders()
-                .OrderBy(c=>c.Name).ToListAsync();
+            var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
+                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId))
+                .ToListAsync();
             
             return providers;
         }
@@ -103,6 +94,48 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 return c => c.DistanceInMiles;
             }
             return c=>c.Name;
+        }
+
+        private FormattableString GetProviderNoLocationQuery(int standardId)
+        {
+            return $@"
+select
+    P.Ukprn,
+    P.Name,
+    ps.ContactUrl,
+    ps.Email,
+    ps.Phone,
+    sl.LocationId,
+    sl.Address1,
+    sl.Address2,
+    sl.Town,
+    sl.Postcode,
+    sl.County,
+    psl.DeliveryModes,
+    psl.[National],
+    CAST(0.0 as float) as DistanceInMiles,
+    NAR.Id,
+    NAR.Age, 
+    NAR.SectorSubjectArea, 
+    NAR.ApprenticeshipLevel,
+    NAR.OverallCohort, 
+    NAR.OverallAchievementRate,
+    PRFA.AttributeName, 
+    PRFA.Strength, 
+    PRFA.Weakness,
+    PRFR.FeedbackCount, 
+    PRFR.FeedbackName
+from Provider P
+inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
+inner join StandardLocation SL on sl.LocationId = psl.LocationId
+inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
+left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
+left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
+left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
+where psl.StandardId = {standardId}
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1 
+order by p.Name, p.NationalProvider desc";
         }
 
         private FormattableString GetProviderQuery(int standardId, double lat, double lon)

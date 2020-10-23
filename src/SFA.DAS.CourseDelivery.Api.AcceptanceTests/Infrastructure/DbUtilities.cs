@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
 {
@@ -27,6 +28,10 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
             {
                 Ukprn = 20002451,
                 StandardId = 10
+            });
+            context.ProviderStandardLocations.Add(new ProviderStandardLocation
+            {
+                Ukprn = 20002451,
             });
             context.NationalAchievementRates.Add(new NationalAchievementRate
             {
