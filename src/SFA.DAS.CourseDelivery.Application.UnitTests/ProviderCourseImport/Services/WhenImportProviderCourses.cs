@@ -9,6 +9,7 @@ using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.Testing.AutoFixture;
+using StandardLocation = SFA.DAS.CourseDelivery.Domain.ImportTypes.StandardLocation;
 
 namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Services
 {
@@ -120,7 +121,41 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
                 x.InsertMany(It.Is<List<StandardLocationImport>>(c=>
                     c.Count.Equals(providerImport.Sum(d=>d.Locations.Count)-1))), Times.Once);
         }
-        
+
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_The_National_Flag_Is_Populated_From_Location_And_Provider_Standard_Information(
+            [Frozen] Mock<IProviderStandardImportRepository> providerStandardImportRepository,
+            [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderStandardLocationImportRepository> providerStandardLocationImportRepository,
+            [Frozen] Mock<IStandardLocationImportRepository> standardLocationImportRepository,
+            [Frozen] Mock<ICourseDirectoryService> service,
+            long locationId,
+            Domain.ImportTypes.Provider providerImport,
+            CourseStandard standardImport,
+            CourseLocation locationImport,
+            ProviderCourseImportService providerCourseImportService)
+        {
+            //Arrange
+            locationImport.Address.Lat =  52.564269;
+            locationImport.Address.Long = -1.466056 ;
+            locationImport.Id = locationId;
+            standardImport.Locations = new List<StandardLocation>{new StandardLocation
+            {
+                Radius = 500,
+                Id = locationId,
+                DeliveryModes = new List<string>{"100PercentEmployer"}
+            }};
+            providerImport.Locations = new List<CourseLocation>{locationImport};
+            providerImport.Standards = new List<CourseStandard>{standardImport};
+            service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(new List<Domain.ImportTypes.Provider>{providerImport});
+            
+            //Act
+            await providerCourseImportService.ImportProviderCourses();
+            
+            //Assert
+            providerStandardLocationImportRepository.Verify(x =>
+                x.InsertMany(It.Is<List<ProviderStandardLocationImport>>(c => c.TrueForAll(ps => ps.National))));
+        }
         
         [Test, RecursiveMoqAutoData]
         public async Task Then_The_Distinct_ProviderStandards_Are_Loaded_Into_The_Import_Table(
