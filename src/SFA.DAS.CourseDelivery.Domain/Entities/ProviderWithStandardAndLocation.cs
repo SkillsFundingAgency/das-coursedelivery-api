@@ -15,6 +15,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public int LocationId { get ; set ; }
         
         public string DeliveryModes { get; set; }
+        public bool National { get; set; }
         public float DistanceInMiles { get; set; }
         public long? Id { get; set; }
         public Age? Age { get; set; }

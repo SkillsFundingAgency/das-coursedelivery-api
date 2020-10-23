@@ -121,6 +121,7 @@ select
     sl.Postcode,
     sl.County,
     psl.DeliveryModes,
+    psl.[National],
     l.DistanceInMiles,
     NAR.Id,
     NAR.Age, 

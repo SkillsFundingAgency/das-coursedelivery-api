@@ -15,9 +15,13 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Address2 = source.Address2,
                 Town = source.Town,
                 Postcode = source.Postcode,
-                County = source.County
+                County = source.County,
+                National = source.National
             };
         }
+
+        public bool National { get ; set ; }
+
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Town { get; set; }
