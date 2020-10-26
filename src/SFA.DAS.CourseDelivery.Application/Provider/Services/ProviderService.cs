@@ -26,8 +26,8 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             var providers = (await _providerRepository.GetByStandardId(standardId)).ToList();
 
             var providerLocations = providers
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.ToList()))
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email,  group.Key.ProviderDistanceInMiles,group.ToList()))
                 .ToList();
             
             return providerLocations;
