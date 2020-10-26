@@ -34,5 +34,18 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providerImports = await _dataContext.ProviderImports.ToListAsync();
             return providerImports;
         }
+
+        public async Task UpdateAddress(int ukprn, string postcode, double lat, double lon)
+        {
+            var providerImport = await _dataContext
+                .ProviderImports
+                .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
+
+            providerImport.Lat = lat;
+            providerImport.Long = lon;
+            providerImport.Postcode = postcode;
+
+            _dataContext.SaveChanges();
+        }
     }
 }

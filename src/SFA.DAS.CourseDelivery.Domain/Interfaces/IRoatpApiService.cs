@@ -7,5 +7,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     public interface IRoatpApiService
     {
         Task<IEnumerable<ProviderRegistration>> GetProviderRegistrations();
+        Task<ProviderRegistrationLookup> GetProviderRegistrationLookupData(IEnumerable<int> ukprns);
     }
 }

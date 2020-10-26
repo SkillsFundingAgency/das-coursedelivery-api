@@ -14,6 +14,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string Email { get ; set ; }
         public string Phone { get ; set ; }
 
+        public double ProviderDistance { get ; set ; }
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
         public List<GetFeedbackAttributeResponse> FeedbackAttributes { get; set; }
@@ -40,6 +41,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Email = provider.Email,
                 ContactUrl = provider.ContactUrl,
                 Phone = provider.Phone,
+                ProviderDistance = provider.ProviderDistanceInMiles,
                 AchievementRates = nationalAchievementRates
                     .Select(c=>(GetNationalAchievementRateResponse)c).ToList(),
                 DeliveryTypes = provider.DeliveryTypes.Select(c=>(GetDeliveryTypesResponse)c).ToList(),

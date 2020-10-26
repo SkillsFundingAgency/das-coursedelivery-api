@@ -10,9 +10,9 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
     public class WhenMappingFromProviderStandardAndLocationToProviderLocation
     {
         [Test, AutoData]
-        public void Then_The_Fields_Are_Correctly_Mapped(string name, int ukprn, string contactUrl, string email, string phone, List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
+        public void Then_The_Fields_Are_Correctly_Mapped(string name, int ukprn, string contactUrl, string email, string phone, double providerDistanceInMiles, List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
-            var actual = new ProviderLocation(ukprn, name,contactUrl, phone, email, providerWithStandardAndLocations);
+            var actual = new ProviderLocation(ukprn, name,contactUrl, phone, email, providerDistanceInMiles, providerWithStandardAndLocations);
 
             actual.Name.Should().Be(name);
             actual.Ukprn.Should().Be(ukprn);
@@ -21,6 +21,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Phone.Should().Be(phone);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().NotBeEmpty();
+            actual.ProviderDistanceInMiles.Should().Be(providerDistanceInMiles);
         }
         
     }

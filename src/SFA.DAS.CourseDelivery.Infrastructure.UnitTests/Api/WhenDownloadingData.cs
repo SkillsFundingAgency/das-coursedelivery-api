@@ -23,7 +23,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                 StatusCode = HttpStatusCode.Accepted
             };
             var downloadUrl = "https://test";
-            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(downloadUrl));
+            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(downloadUrl), HttpMethod.Get);
             var client = new HttpClient(httpMessageHandler.Object);
             var larsDataDownloadService = new DataDownloadService(client);
 
@@ -46,7 +46,7 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.UnitTests.Api
                 StatusCode = HttpStatusCode.BadRequest
             };
             var downloadUrl = "https://test.zip";
-            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(downloadUrl));
+            var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, new Uri(downloadUrl), HttpMethod.Get);
             var client = new HttpClient(httpMessageHandler.Object);
             var larsDataDownloadService = new DataDownloadService(client);
 

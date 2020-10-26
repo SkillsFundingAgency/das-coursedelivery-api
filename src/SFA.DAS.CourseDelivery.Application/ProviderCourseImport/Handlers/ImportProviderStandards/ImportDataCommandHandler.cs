@@ -11,16 +11,19 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.Impor
         private readonly INationalAchievementRatesImportService _nationalAchievementRatesImportService;
         private readonly INationalAchievementRatesOverallImportService _nationalAchievementRatesOverallImportService;
         private readonly IProviderRegistrationImportService _providerRegistrationImportService;
+        private readonly IProviderRegistrationAddressImportService _providerRegistrationAddressImportService;
 
         public ImportDataCommandHandler (IProviderCourseImportService providerCourseImportService, 
             INationalAchievementRatesImportService nationalAchievementRatesImportService,
             INationalAchievementRatesOverallImportService nationalAchievementRatesOverallImportService,
-            IProviderRegistrationImportService providerRegistrationImportService)
+            IProviderRegistrationImportService providerRegistrationImportService,
+            IProviderRegistrationAddressImportService providerRegistrationAddressImportService)
         {
             _providerCourseImportService = providerCourseImportService;
             _nationalAchievementRatesImportService = nationalAchievementRatesImportService;
             _nationalAchievementRatesOverallImportService = nationalAchievementRatesOverallImportService;
             _providerRegistrationImportService = providerRegistrationImportService;
+            _providerRegistrationAddressImportService = providerRegistrationAddressImportService;
         }
         public async Task<Unit> Handle(ImportDataCommand request, CancellationToken cancellationToken)
         {
@@ -28,8 +31,10 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.Impor
             var achievementRatesImportTask = _nationalAchievementRatesImportService.ImportData();
             var achievementRatesAllImportTask = _nationalAchievementRatesOverallImportService.ImportData();
             var providerRegistrationImportTask = _providerRegistrationImportService.ImportData();
-
+            
             await Task.WhenAll(providerImportTask, achievementRatesImportTask, achievementRatesAllImportTask, providerRegistrationImportTask);
+
+            await _providerRegistrationAddressImportService.ImportAddressData();
             
             return Unit.Value;
         }

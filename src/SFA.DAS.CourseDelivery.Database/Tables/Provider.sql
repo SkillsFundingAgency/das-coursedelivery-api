@@ -10,9 +10,12 @@
 	[Email] VARCHAR(256) NULL,
 	[Phone] VARCHAR(50) NULL,
 	[Website] VARCHAR(500) NULL,
+	[Postcode] VARCHAR(20) NULL,
+	[Lat] FLOAT NOT NULL DEFAULT 0,
+	[Long] FLOAT NOT NULL DEFAULT 0,
 )
 GO
 
 CREATE NONCLUSTERED INDEX [IDX_Provider_Ukprn] ON [dbo].[Provider] (Ukprn) 
-INCLUDE (Id, [Name], TradingName,  NationalProvider, EmployerSatisfaction, LearnerSatisfaction, Email, Phone, Website) WITH (ONLINE = ON) 
+INCLUDE (Id, [Name], TradingName,  NationalProvider, EmployerSatisfaction, LearnerSatisfaction, Email, Phone, Website, PostCode, Lat, Long) WITH (ONLINE = ON) 
 GO 

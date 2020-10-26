@@ -42,8 +42,8 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             
             var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
             var providerLocation = provider
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.ToList()))
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.Key.ProviderDistanceInMiles, group.ToList()))
                 .FirstOrDefault();
             
             return providerLocation;
@@ -68,8 +68,8 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder);
 
             var providerLocations = providers
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.ToList()))
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email,group.Key.ProviderDistanceInMiles, group.ToList()))
                 .ToList();
             
             return providerLocations;
