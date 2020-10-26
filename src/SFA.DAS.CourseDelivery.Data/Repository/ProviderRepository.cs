@@ -149,7 +149,8 @@ select
     PRFA.Strength, 
     PRFA.Weakness,
     PRFR.FeedbackCount, 
-    PRFR.FeedbackName
+    PRFR.FeedbackName,
+    CAST(0.0 as float) as ProviderDistanceInMiles
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
