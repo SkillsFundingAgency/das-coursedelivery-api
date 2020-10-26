@@ -23,7 +23,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 EmployerSatisfaction = providerImport.EmployerSatisfaction,
                 LearnerSatisfaction = providerImport.LearnerSatisfaction,
                 NationalProvider = providerImport.NationalProvider,
-                TradingName = providerImport.TradingName
+                TradingName = providerImport.TradingName,
+                Postcode = providerImport.Postcode,
+                Lat = providerImport.Lat,
+                Long = providerImport.Long
             };
         }
     }

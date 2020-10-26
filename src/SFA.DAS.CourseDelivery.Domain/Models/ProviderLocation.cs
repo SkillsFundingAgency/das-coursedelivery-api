@@ -10,13 +10,14 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         {
             
         }
-        public ProviderLocation(int ukPrn, string name, string contactUrl, string phone, string email,  IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
+        public ProviderLocation(int ukPrn, string name, string contactUrl, string phone, string email, double providerDistanceInMiles, IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
             Ukprn = ukPrn;
             Name = name;
             ContactUrl = contactUrl;
             Email = email;
             Phone = phone;
+            ProviderDistanceInMiles = providerDistanceInMiles;
             
             DeliveryTypes = providerWithStandardAndLocations.GroupBy(x=>new {x.DeliveryModes, x.LocationId,x.DistanceInMiles, x.National})
                 .Select(p=>p.FirstOrDefault())
@@ -73,6 +74,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string ContactUrl { get ; private set ; }
         public string Email { get ; private set ; }
         public string Phone { get ; private set ; }
+        public double ProviderDistanceInMiles { get ; set ; }
         public List<DeliveryType> DeliveryTypes { get; set; }
         public List<AchievementRate> AchievementRates { get; set; }
         public List<ProviderFeedbackRating> FeedbackRating { get; set; }

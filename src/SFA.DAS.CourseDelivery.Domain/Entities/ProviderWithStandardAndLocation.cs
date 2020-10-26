@@ -28,6 +28,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public int? Weakness { get; set; }
         public string FeedbackName { get; set; }
         public int? FeedbackCount { get; set; }
+        public float ProviderDistanceInMiles { get; set; }
     }
 
 }
