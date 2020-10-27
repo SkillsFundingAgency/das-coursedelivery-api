@@ -18,7 +18,15 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.ProviderTypeId).HasColumnName("ProviderTypeId").HasColumnType("int").IsRequired();
             builder.Property(x => x.OrganisationTypeId).HasColumnName("OrganisationTypeId").HasColumnType("int").IsRequired();
             builder.Property(x => x.FeedbackTotal).HasColumnName("FeedbackTotal").HasColumnType("int").IsRequired();
-
+            builder.Property(x => x.Address1).HasColumnName("Address1").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
+            builder.Property(x => x.Address2).HasColumnName("Address2").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
+            builder.Property(x => x.Address3).HasColumnName("Address3").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
+            builder.Property(x => x.Address4).HasColumnName("Address4").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
+            builder.Property(x => x.Town).HasColumnName("Town").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
+            builder.Property(x => x.Postcode).HasColumnName("Postcode").HasColumnType("varchar").HasMaxLength(20).IsRequired(false);
+            builder.Property(x => x.Lat).HasColumnName("Lat").HasColumnType("float").IsRequired();
+            builder.Property(x => x.Long).HasColumnName("Long").HasColumnType("float").IsRequired();
+            
             builder.HasIndex(x => x.Ukprn).IsUnique();
         }
     }
