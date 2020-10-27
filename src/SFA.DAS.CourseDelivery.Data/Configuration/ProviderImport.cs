@@ -13,16 +13,12 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.Id).HasColumnName("Id").HasColumnType("bigint").IsRequired();
             builder.Property(x => x.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();
             builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("varchar").HasMaxLength(1000).IsRequired();
-            builder.Property(x => x.NationalProvider).HasColumnName("NationalProvider").HasColumnType("bit").IsRequired();
             builder.Property(x => x.EmployerSatisfaction).HasColumnName("EmployerSatisfaction").HasColumnType("decimal").IsRequired(false);
             builder.Property(x => x.LearnerSatisfaction).HasColumnName("LearnerSatisfaction").HasColumnType("decimal").IsRequired(false);
             builder.Property(x => x.TradingName).HasColumnName("TradingName").HasColumnType("varchar").HasMaxLength(1000).IsRequired(false);
             builder.Property(x => x.Email).HasColumnName("Email").HasColumnType("varchar").HasMaxLength(256).IsRequired(false);
             builder.Property(x => x.Phone).HasColumnName("Phone").HasColumnType("varchar").HasMaxLength(50).IsRequired(false);
             builder.Property(x => x.Website).HasColumnName("Website").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
-            builder.Property(x => x.Postcode).HasColumnName("Postcode").HasColumnType("varchar").HasMaxLength(20).IsRequired(false);
-            builder.Property(x => x.Lat).HasColumnName("Lat").HasColumnType("float").IsRequired();
-            builder.Property(x => x.Long).HasColumnName("Long").HasColumnType("float").IsRequired();
             
             builder.HasIndex(x => x.Id).IsUnique();
         }

@@ -5,7 +5,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public long Id { get; set; }
         public int Ukprn { get; set; }
         public string Name { get; set; }
-        public bool NationalProvider { get; set; }
         public decimal? LearnerSatisfaction { get; set; }
         public decimal? EmployerSatisfaction { get; set; }
         public string TradingName { get; set; }
