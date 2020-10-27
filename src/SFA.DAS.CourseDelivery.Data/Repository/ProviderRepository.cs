@@ -83,6 +83,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
                 .FromSqlInterpolated(GetProviderQuery(standardId, lat, lon))
                 .OrderBy(OrderProviderStandards(sortOrder))
+                .ThenByDescending(c=>c.National)
                 .ToListAsync();
             
             return providers;
@@ -95,6 +96,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var provider = await _readonlyDataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon))
                 .Where(c=>c.Ukprn.Equals(ukprn))
                 .OrderBy(c=>c.DistanceInMiles)
+                .ThenByDescending(c=>c.National)
                 .ToListAsync();
             
             
