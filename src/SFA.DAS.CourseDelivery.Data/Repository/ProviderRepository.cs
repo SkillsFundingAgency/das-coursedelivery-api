@@ -161,7 +161,7 @@ left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where psl.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1 
-order by p.Name, p.NationalProvider desc";
+order by p.Name, psl.[National] desc";
         }
 
         private FormattableString GetProviderQuery(int standardId, double lat, double lon)
