@@ -12,20 +12,23 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         private readonly IRoatpApiService _roatpApiService;
         private readonly IPostcodeApiService _postcodeApiService;
         private readonly IProviderRepository _providerRepository;
-        private readonly IProviderImportRepository _providerImportRepository;
+        private readonly IProviderRegistrationRepository _providerRegistrationRepository;
+        private readonly IProviderRegistrationImportRepository _providerRegistrationImportRepository;
         private readonly IImportAuditRepository _importAuditRepository;
 
         public ProviderRegistrationAddressImportService (
             IRoatpApiService roatpApiService, 
             IPostcodeApiService postcodeApiService, 
             IProviderRepository providerRepository, 
-            IProviderImportRepository providerImportRepository,
+            IProviderRegistrationRepository providerRegistrationRepository,
+            IProviderRegistrationImportRepository providerRegistrationImportRepository,
             IImportAuditRepository importAuditRepository)
         {
             _roatpApiService = roatpApiService;
             _postcodeApiService = postcodeApiService;
             _providerRepository = providerRepository;
-            _providerImportRepository = providerImportRepository;
+            _providerRegistrationRepository = providerRegistrationRepository;
+            _providerRegistrationImportRepository = providerRegistrationImportRepository;
             _importAuditRepository = importAuditRepository;
         }
 
@@ -60,7 +63,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
                         if (providerAddressData?.Result != null)
                         {
-                            await _providerImportRepository.UpdateAddress(provider.Ukprn,
+                            await _providerRegistrationImportRepository.UpdateAddress(provider.Ukprn,
                                 providerAddressData.Result.Postcode,
                                 providerAddressData.Result.Latitude, providerAddressData.Result.Longitude);
                         }
@@ -72,7 +75,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 providersToProcess = providers.Skip(skip).Take(100).ToList();
             }
 
-            await _providerRepository.UpdateAddressesFromImportTable();
+            await _providerRegistrationRepository.UpdateAddressesFromImportTable();
             
             await _importAuditRepository.Insert(new ImportAudit(
                 importStartTime,

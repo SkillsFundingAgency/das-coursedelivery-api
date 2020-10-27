@@ -1,20 +1,18 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.Courses.Data.UnitTests.DatabaseMock;
 
-namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
+namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationRepository
 {
     public class WhenUpdatingAddresses
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.ProviderRepository _providerRepository;
-        private List<ProviderImport> _providerImports;
-        private Provider _expectedProvider;
+        private Data.Repository.ProviderRegistrationRepository _providerRegistrationRepository;
+        private List<ProviderRegistrationImport> _providerRegistrationImports;
+        private ProviderRegistration _expectedProviderRegistration;
         private const double ExpectedLat = 2.1;
         private const double ExpectedLong = -2.1;
         private const string ExpectedPostcode = "TE 3T";
@@ -22,28 +20,25 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
         [SetUp]
         public void Arrange()
         {
-            _expectedProvider = new Provider();
-            _providerImports = new List<ProviderImport>
+            _expectedProviderRegistration = new ProviderRegistration();
+            _providerRegistrationImports = new List<ProviderRegistrationImport>
             {
-                new ProviderImport
+                new ProviderRegistrationImport
                 {
-                    Id = 123,
                     Ukprn = 123,
                     Lat = ExpectedLat,
                     Long = ExpectedLong,
                     Postcode = ExpectedPostcode
                 },
-                new ProviderImport
+                new ProviderRegistrationImport
                 {
-                    Id = 1234,
                     Ukprn = 1234,
                     Lat = ExpectedLat,
                     Long = ExpectedLong,
                     Postcode = ExpectedPostcode
                 },
-                new ProviderImport
+                new ProviderRegistrationImport
                 {
-                    Id = 12345,
                     Ukprn = 12345,
                     Lat = 0,
                     Long = 0,
@@ -53,20 +48,20 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             
             
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
-            _courseDeliveryDataContext.Setup(x => x.ProviderImports).ReturnsDbSet(_providerImports);
-            _courseDeliveryDataContext.Setup(x => x.Providers.FindAsync(It.IsAny<long>()))
-                .ReturnsAsync(_expectedProvider);
+            _courseDeliveryDataContext.Setup(x => x.ProviderRegistrationImports).ReturnsDbSet(_providerRegistrationImports);
+            _courseDeliveryDataContext.Setup(x => x.ProviderRegistrations.FindAsync(It.IsAny<int>()))
+                .ReturnsAsync(_expectedProviderRegistration);
             
-            _providerRepository = new Data.Repository.ProviderRepository(_courseDeliveryDataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
+            _providerRegistrationRepository = new Data.Repository.ProviderRegistrationRepository(_courseDeliveryDataContext.Object);
         }
 
         [Test]
         public async Task Then_The_Provider_Records_Are_Updated()
         {
-            await _providerRepository.UpdateAddressesFromImportTable();
+            await _providerRegistrationRepository.UpdateAddressesFromImportTable();
             
             _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Exactly(1));
-            _courseDeliveryDataContext.Verify(x=>x.Providers.FindAsync(It.IsAny<long>()), Times.Exactly(2));
+            _courseDeliveryDataContext.Verify(x=>x.ProviderRegistrations.FindAsync(It.IsAny<int>()), Times.Exactly(2));
         }
     }
 }

@@ -60,23 +60,6 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return providers;
         }
 
-        public async Task UpdateAddressesFromImportTable()
-        {
-            var providerImports = await _dataContext
-                .ProviderImports
-                .Where(c=>!string.IsNullOrEmpty(c.Postcode))
-                .ToListAsync();
-
-            foreach (var providerImport in providerImports)
-            {
-                var provider = await _dataContext.Providers.FindAsync(providerImport.Id);
-                provider.Postcode = providerImport.Postcode;
-                provider.Lat = providerImport.Lat;
-                provider.Long = providerImport.Long;
-            }
-            _dataContext.SaveChanges();
-        }
-
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId,
             double lat, double lon, short sortOrder)
         {
@@ -209,7 +192,7 @@ inner join (select id,
                    case when isnull(Lat,0) <> 0 and isnull(Long,0) <> 0 then
                         geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
                             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 
-                    else -1 end as DistanceInMiles from [Provider]) pdist on pdist.id = P.id
+                    else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.id = P.id
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn

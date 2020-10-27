@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -28,6 +29,23 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.ProviderRegistrations.RemoveRange(toDelete);
             _dataContext.SaveChanges();
             
+        }
+        
+        public async Task UpdateAddressesFromImportTable()
+        {
+            var providerRegistrationImports = await _dataContext
+                .ProviderRegistrationImports
+                .Where(c=>!string.IsNullOrEmpty(c.Postcode))
+                .ToListAsync();
+
+            foreach (var providerRegistrationImport in providerRegistrationImports)
+            {
+                var providerRegistration = await _dataContext.ProviderRegistrations.FindAsync(providerRegistrationImport.Ukprn);
+                providerRegistration.Postcode = providerRegistrationImport.Postcode;
+                providerRegistration.Lat = providerRegistrationImport.Lat;
+                providerRegistration.Long = providerRegistrationImport.Long;
+            }
+            _dataContext.SaveChanges();
         }
     }
 }

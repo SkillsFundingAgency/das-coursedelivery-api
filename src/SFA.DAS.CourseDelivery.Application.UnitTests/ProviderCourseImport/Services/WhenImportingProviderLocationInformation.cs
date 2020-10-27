@@ -22,7 +22,8 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             List<ContactDetail> contactDetails,
             [Frozen] Mock<IRoatpApiService> roatpApiService,
             [Frozen] Mock<IProviderRepository> providerRepository,
-            [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderRegistrationRepository> providerRegistrationRepository,
+            [Frozen] Mock<IProviderRegistrationImportRepository> providerRegistrationImportRepository,
             [Frozen] Mock<IPostcodeApiService> postcodeApiService,
             ProviderRegistrationAddressImportService service)
         {
@@ -64,9 +65,9 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             //Assert
             foreach (var provider in providerRegistrationLookup.Results)
             {
-                providerImportRepository.Verify(x=>x.UpdateAddress(provider.Ukprn, expectedPostcode, It.IsAny<double>(), It.IsAny<double>()), Times.Once());    
+                providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(provider.Ukprn, expectedPostcode, It.IsAny<double>(), It.IsAny<double>()), Times.Once());    
             }
-            providerRepository.Verify(x=>x.UpdateAddressesFromImportTable(), Times.Once);
+            providerRegistrationRepository.Verify(x=>x.UpdateAddressesFromImportTable(), Times.Once);
         }
 
         [Test, RecursiveMoqAutoData]
@@ -78,6 +79,8 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             [Frozen] Mock<IRoatpApiService> roatpApiService,
             [Frozen] Mock<IProviderRepository> providerRepository,
             [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderRegistrationImportRepository> providerRegistrationImportRepository,
+            [Frozen] Mock<IProviderRegistrationRepository> providerRegistrationRepository,
             [Frozen] Mock<IPostcodeApiService> postcodeApiService,
             ProviderRegistrationAddressImportService service)
         {
@@ -117,7 +120,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             await service.ImportAddressData();
             
             //Assert
-            providerImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
+            providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
         }
 
         [Test, RecursiveMoqAutoData]
@@ -129,6 +132,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             [Frozen] Mock<IRoatpApiService> roatpApiService,
             [Frozen] Mock<IProviderRepository> providerRepository,
             [Frozen] Mock<IProviderImportRepository> providerImportRepository,
+            [Frozen] Mock<IProviderRegistrationImportRepository> providerRegistrationImportRepository,
             [Frozen] Mock<IPostcodeApiService> postcodeApiService,
             ProviderRegistrationAddressImportService service)
         {
@@ -168,7 +172,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             await service.ImportAddressData();
             
             //Assert
-            providerImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
+            providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
         }
 
 

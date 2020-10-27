@@ -17,7 +17,15 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 StatusDate = source.StatusDate,
                 StatusId = source.StatusId,
                 OrganisationTypeId = source.OrganisationTypeId,
-                ProviderTypeId = source.ProviderTypeId
+                ProviderTypeId = source.ProviderTypeId,
+                Address1 = source.Address1,
+                Address2 = source.Address2,
+                Address3 = source.Address3,
+                Address4 = source.Address4,
+                Town = source.Town,
+                Postcode = source.Postcode,
+                Lat = source.Lat,
+                Long = source.Long
             };
         }
     }
