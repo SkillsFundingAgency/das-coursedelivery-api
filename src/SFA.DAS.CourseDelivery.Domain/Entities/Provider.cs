@@ -22,7 +22,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 Website = providerImport.Website,
                 EmployerSatisfaction = providerImport.EmployerSatisfaction,
                 LearnerSatisfaction = providerImport.LearnerSatisfaction,
-                NationalProvider = providerImport.NationalProvider,
                 TradingName = providerImport.TradingName,
                 Postcode = providerImport.Postcode,
                 Lat = providerImport.Lat,
