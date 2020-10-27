@@ -13,7 +13,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 Ukprn = providerStandardLocationImport.Ukprn,
                 DeliveryModes = providerStandardLocationImport.DeliveryModes,
                 LocationId = providerStandardLocationImport.LocationId,
-                StandardId = providerStandardLocationImport.StandardId
+                StandardId = providerStandardLocationImport.StandardId,
+                National = providerStandardLocationImport.National
             };
         }
     }

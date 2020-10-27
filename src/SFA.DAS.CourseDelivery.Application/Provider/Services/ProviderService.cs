@@ -25,10 +25,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         {
             var providers = (await _providerRepository.GetByStandardId(standardId)).ToList();
 
-
-            var providerLocation = providers.Select(c => new ProviderLocation(c)).ToList();
+            var providerLocations = providers
+                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
+                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email,  group.Key.ProviderDistanceInMiles,group.ToList()))
+                .ToList();
             
-            return providerLocation;
+            return providerLocations;
         }
 
         public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon)

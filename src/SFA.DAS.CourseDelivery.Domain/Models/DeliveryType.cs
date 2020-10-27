@@ -12,6 +12,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string Town { get; set; }
         public string Postcode { get; set; }
         public string County { get; set; }
+        public bool National { get ; set ; }
+
         public static implicit operator DeliveryType(ProviderWithStandardAndLocation source)
         {
             return new DeliveryType
@@ -23,7 +25,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Address2 = source.Address2,
                 Town = source.Town,
                 Postcode = source.Postcode,
-                County = source.County
+                County = source.County,
+                National = source.National
             };
         }
     }

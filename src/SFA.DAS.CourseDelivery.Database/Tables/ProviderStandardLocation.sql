@@ -5,6 +5,7 @@
 	[LocationId] INT NOT NULL,
 	[DeliveryModes] VARCHAR(256) NOT NULL,
 	[Radius] DECIMAL NOT NULL DEFAULT 0,
+	[National] BIT NOT NULL DEFAULT 0,
 	CONSTRAINT PK_ProviderStandardLocation PRIMARY KEY CLUSTERED ([StandardId], [Ukprn], [LocationId])
 )
 GO

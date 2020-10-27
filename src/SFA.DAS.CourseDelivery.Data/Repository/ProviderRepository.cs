@@ -33,21 +33,12 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task<IEnumerable<Provider>> GetByStandardId(int standardId)
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId(int standardId)
         {
             
-            var providers = await _readonlyDataContext
-                .ProviderStandards
-                .Include(c => c.Provider)
-                .ThenInclude(c=>c.ProviderRegistrationFeedbackAttributes)
-                .Include(c=>c.Provider)
-                .ThenInclude(c=>c.NationalAchievementRates)
-                .Include(c=>c.Provider)
-                .ThenInclude(c=>c.ProviderRegistrationFeedbackRating)
-                .Where(c => c.StandardId.Equals(standardId))
-                .Select(c=>c.Provider)
-                .FilterRegisteredProviders()
-                .OrderBy(c=>c.Name).ToListAsync();
+            var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
+                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId))
+                .ToListAsync();
             
             return providers;
         }
@@ -92,6 +83,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
                 .FromSqlInterpolated(GetProviderQuery(standardId, lat, lon))
                 .OrderBy(OrderProviderStandards(sortOrder))
+                .ThenByDescending(c=>c.National)
                 .ToListAsync();
             
             return providers;
@@ -104,6 +96,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var provider = await _readonlyDataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon))
                 .Where(c=>c.Ukprn.Equals(ukprn))
                 .OrderBy(c=>c.DistanceInMiles)
+                .ThenByDescending(c=>c.National)
                 .ToListAsync();
             
             
@@ -130,6 +123,49 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return c=>c.Name;
         }
 
+        private FormattableString GetProviderNoLocationQuery(int standardId)
+        {
+            return $@"
+select
+    P.Ukprn,
+    P.Name,
+    ps.ContactUrl,
+    ps.Email,
+    ps.Phone,
+    sl.LocationId,
+    sl.Address1,
+    sl.Address2,
+    sl.Town,
+    sl.Postcode,
+    sl.County,
+    psl.DeliveryModes,
+    psl.[National],
+    CAST(0.0 as float) as DistanceInMiles,
+    NAR.Id,
+    NAR.Age, 
+    NAR.SectorSubjectArea, 
+    NAR.ApprenticeshipLevel,
+    NAR.OverallCohort, 
+    NAR.OverallAchievementRate,
+    PRFA.AttributeName, 
+    PRFA.Strength, 
+    PRFA.Weakness,
+    PRFR.FeedbackCount, 
+    PRFR.FeedbackName,
+    CAST(0.0 as float) as ProviderDistanceInMiles
+from Provider P
+inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
+inner join StandardLocation SL on sl.LocationId = psl.LocationId
+inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
+left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
+left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
+left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
+where psl.StandardId = {standardId}
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1 
+order by p.Name, psl.[National] desc";
+        }
+
         private FormattableString GetProviderQuery(int standardId, double lat, double lon)
         {
             return $@"
@@ -146,6 +182,7 @@ select
     sl.Postcode,
     sl.County,
     psl.DeliveryModes,
+    psl.[National],
     l.DistanceInMiles,
     NAR.Id,
     NAR.Age, 
@@ -168,8 +205,11 @@ inner join (select
 		,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
-inner join (select id, geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
-            .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles from [Provider]) pdist on pdist.id = P.id
+inner join (select id,
+                   case when isnull(Lat,0) <> 0 and isnull(Long,0) <> 0 then
+                        geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
+                            .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 
+                    else -1 end as DistanceInMiles from [Provider]) pdist on pdist.id = P.id
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn

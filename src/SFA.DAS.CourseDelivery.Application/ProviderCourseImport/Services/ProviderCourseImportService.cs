@@ -65,7 +65,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
 
             var providers = GetProviderImports(providerCourseInformation).ToList();
             var standardLocationImports = GetStandardLocationImports(providerCourseInformation).ToList();
-            var providerStandardLocationImport = GetProviderStandardLocationImport(providerCourseInformation).ToList();
+            var providerStandardLocationImport = GetProviderStandardLocationImport(providerCourseInformation, standardLocationImports).ToList();
             var providerStandardImport = GetProviderStandardImport(providerCourseInformation).ToList();
             
             var providerImportTask = _providerImportRepository.InsertMany(providers);
@@ -121,7 +121,9 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 .Select(item => item.First());
         }
 
-        private static IEnumerable<ProviderStandardLocationImport> GetProviderStandardLocationImport(IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation)
+        private static IEnumerable<ProviderStandardLocationImport> GetProviderStandardLocationImport(
+            IEnumerable<Domain.ImportTypes.Provider> providerCourseInformation,
+            List<StandardLocationImport> standardLocationImports)
         {
             var providerStandardLocationImport = new List<ProviderStandardLocationImport>();
             foreach (var provider in providerCourseInformation)
@@ -131,8 +133,13 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 
                     providerStandardLocationImport.AddRange(courseStandard
                         .Locations
-                        .Select(standardLocation => 
-                            new ProviderStandardLocationImport().Map(standardLocation, provider.Ukprn, courseStandard.StandardCode)));
+                        .Select(standardLocation =>
+                        {
+                            var location = standardLocationImports.FirstOrDefault(c => c.LocationId.Equals(standardLocation.Id));
+                            
+                            return new ProviderStandardLocationImport().Map(standardLocation, provider.Ukprn,
+                                    courseStandard.StandardCode, location?.Lat ?? 0, location?.Long ?? 0);
+                        }));
                 }
             }
 

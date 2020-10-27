@@ -15,6 +15,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(c => c.LocationId).HasColumnName("LocationId").HasColumnType("int").IsRequired();
             builder.Property(c => c.DeliveryModes).HasColumnName("DeliveryModes").HasColumnType("varchar").HasMaxLength(256).IsRequired();
             builder.Property(c => c.Radius).HasColumnName("Radius").HasColumnType("decimal").IsRequired();
+            builder.Property(c => c.National).HasColumnName("National").HasColumnType("bit").IsRequired();
 
             builder.HasIndex(x => new { x.Ukprn , x.StandardId, x.LocationId }).IsUnique();
         }
