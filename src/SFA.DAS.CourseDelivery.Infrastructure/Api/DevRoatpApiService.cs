@@ -20,9 +20,14 @@ namespace SFA.DAS.CourseDelivery.Infrastructure.Api
             }
         }
 
-        public Task<ProviderRegistrationLookup> GetProviderRegistrationLookupData(IEnumerable<int> ukprns)
+        public async Task<ProviderRegistrationLookup> GetProviderRegistrationLookupData(IEnumerable<int> ukprns)
         {
-            throw new System.NotImplementedException();
+            using (var r = new StreamReader("roatp-address.json"))
+            {
+                var json = await r.ReadToEndAsync();
+                var items = JsonConvert.DeserializeObject<ProviderRegistrationLookup>(json);
+                return items;
+            }
         }
     }
 }

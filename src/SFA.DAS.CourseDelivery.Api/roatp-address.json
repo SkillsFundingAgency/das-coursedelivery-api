@@ -1,0 +1,95 @@
+{
+  "success": true,
+  "results": [
+    {
+      "ukprn": "14045667",
+      "providerName": "Provider 1",
+      "providerStatus": "Active",
+      "contactDetails": [
+        {
+          "contactType": "P",
+          "contactAddress": {
+            "address1": "5 Quinton Rd",
+            "address2": null,
+            "address3": "Quinton Rd",
+            "address4": null,
+            "town": "Coventry",
+            "postCode": "CV1 2WT"
+          },
+          "contactPersonalDetails": {
+            "personNameTitle": null,
+            "personGivenName": null,
+            "personFamilyName": null,
+            "personNameSuffix": null
+          },
+          "contactRole": "Principal",
+          "contactTelephone1": "0000 1111111",
+          "contactTelephone2": null,
+          "contactWebsiteAddress": null,
+          "contactEmail": null,
+          "lastUpdated": "2014-11-06T14:14:20.898+00:00"
+        }
+      ]
+    },
+    {
+      "ukprn": "10049431",
+      "providerName": "Provider 2",
+      "providerStatus": "Active",
+      "contactDetails": [
+        {
+          "contactType": "P",
+          "contactAddress": {
+            "address1": "5 Quinton Rd",
+            "address2": null,
+            "address3": "Quinton Rd",
+            "address4": null,
+            "town": "Coventry",
+            "postCode": "CV1 2WT"
+          },
+          "contactPersonalDetails": {
+            "personNameTitle": null,
+            "personGivenName": null,
+            "personFamilyName": null,
+            "personNameSuffix": null
+          },
+          "contactRole": "Principal",
+          "contactTelephone1": "0000 1111111",
+          "contactTelephone2": null,
+          "contactWebsiteAddress": null,
+          "contactEmail": null,
+          "lastUpdated": "2014-11-06T14:14:20.898+00:00"
+        }
+      ]
+    },
+    {
+      "ukprn": "10046498",
+      "providerName": "Provider 3",
+      "providerStatus": "Active",
+      "contactDetails": [
+        {
+          "contactType": "P",
+          "contactAddress": {
+            "address1": "5 Quinton Rd",
+            "address2": null,
+            "address3": "Quinton Rd",
+            "address4": null,
+            "town": "Coventry",
+            "postCode": "CV1 2WT"
+          },
+          "contactPersonalDetails": {
+            "personNameTitle": null,
+            "personGivenName": null,
+            "personFamilyName": null,
+            "personNameSuffix": null
+          },
+          "contactRole": "Principal",
+          "contactTelephone1": "0000 1111111",
+          "contactTelephone2": null,
+          "contactWebsiteAddress": null,
+          "contactEmail": null,
+          "lastUpdated": "2014-11-06T14:14:20.898+00:00"
+        }
+      ]
+    }
+  ]
+}
