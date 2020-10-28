@@ -61,7 +61,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationR
             await _providerRegistrationRepository.UpdateAddressesFromImportTable();
             
             _courseDeliveryDataContext.Verify(x=>x.SaveChanges(), Times.Exactly(1));
-            _courseDeliveryDataContext.Verify(x=>x.ProviderRegistrations.FindAsync(It.IsAny<int>()), Times.Exactly(2));
+            _courseDeliveryDataContext.Verify(x=>x.ProviderRegistrations.FindAsync(It.IsAny<int>()), Times.Exactly(3));
         }
     }
 }

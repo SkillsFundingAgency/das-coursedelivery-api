@@ -10,14 +10,34 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         {
             
         }
-        public ProviderLocation(int ukPrn, string name, string contactUrl, string phone, string email, double providerDistanceInMiles, IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
+        public ProviderLocation(int ukPrn, string name, string contactUrl, 
+            string phone, 
+            string email, 
+            double providerDistanceInMiles,
+            string providerHeadOfficeAddress1,
+            string providerHeadOfficeAddress2,
+            string providerHeadOfficeAddress3,
+            string providerHeadOfficeAddress4,
+            string providerHeadOfficeTown,
+            string providerHeadOfficePostcode,
+            IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
             Ukprn = ukPrn;
             Name = name;
             ContactUrl = contactUrl;
             Email = email;
             Phone = phone;
-            ProviderDistanceInMiles = providerDistanceInMiles;
+            Address = new ProviderHeadOfficeAddress
+            {
+                Address1 = providerHeadOfficeAddress1,
+                Address2 = providerHeadOfficeAddress2,
+                Address3 = providerHeadOfficeAddress3,
+                Address4 = providerHeadOfficeAddress4,
+                Town = providerHeadOfficeTown,
+                Postcode = providerHeadOfficePostcode,
+                DistanceInMiles = providerDistanceInMiles,
+            };
+            
             
             DeliveryTypes = providerWithStandardAndLocations.GroupBy(x=>new {x.DeliveryModes, x.LocationId,x.DistanceInMiles, x.National})
                 .Select(p=>p.FirstOrDefault())
@@ -74,7 +94,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string ContactUrl { get ; private set ; }
         public string Email { get ; private set ; }
         public string Phone { get ; private set ; }
-        public double ProviderDistanceInMiles { get ; set ; }
+        
+        public ProviderHeadOfficeAddress Address { get; set; }
         public List<DeliveryType> DeliveryTypes { get; set; }
         public List<AchievementRate> AchievementRates { get; set; }
         public List<ProviderFeedbackRating> FeedbackRating { get; set; }

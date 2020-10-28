@@ -135,7 +135,13 @@ select
     PRFA.Weakness,
     PRFR.FeedbackCount, 
     PRFR.FeedbackName,
-    CAST(0.0 as float) as ProviderDistanceInMiles
+    CAST(0.0 as float) as ProviderDistanceInMiles,
+    pr.Address1 ProviderHeadOfficeAddress1,
+    pr.Address2 ProviderHeadOfficeAddress2,
+    pr.Address3 ProviderHeadOfficeAddress3,
+    pr.Address4 ProviderHeadOfficeAddress4,
+    pr.Town ProviderHeadOfficeTown,
+    pr.PostCode ProviderHeadOfficePostcode
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -178,7 +184,13 @@ select
     PRFA.Weakness,
     PRFR.FeedbackCount, 
     PRFR.FeedbackName,
-    pdist.DistanceInMiles as ProviderDistanceInMiles
+    pdist.DistanceInMiles as ProviderDistanceInMiles,
+    pr.Address1 ProviderHeadOfficeAddress1,
+    pr.Address2 ProviderHeadOfficeAddress2,
+    pr.Address3 ProviderHeadOfficeAddress3,
+    pr.Address4 ProviderHeadOfficeAddress4,
+    pr.Town ProviderHeadOfficeTown,
+    pr.PostCode ProviderHeadOfficePostcode
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -188,11 +200,11 @@ inner join (select
 		,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
-inner join (select id,
+inner join (select ukprn,
                    case when isnull(Lat,0) <> 0 and isnull(Long,0) <> 0 then
                         geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
                             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 
-                    else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.id = P.id
+                    else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn

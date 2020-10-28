@@ -10,9 +10,26 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
     public class WhenMappingFromProviderStandardAndLocationToProviderLocation
     {
         [Test, AutoData]
-        public void Then_The_Fields_Are_Correctly_Mapped(string name, int ukprn, string contactUrl, string email, string phone, double providerDistanceInMiles, List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
+        public void Then_The_Fields_Are_Correctly_Mapped(string name, int ukprn, string contactUrl,
+            string email, 
+            string phone, 
+            double providerDistanceInMiles, 
+            string providerHeadOfficeAddress1,
+            string providerHeadOfficeAddress2,
+            string providerHeadOfficeAddress3,
+            string providerHeadOfficeAddress4,
+            string providerHeadOfficeAddressTown,
+            string providerHeadOfficeAddressPostcode,
+            List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
-            var actual = new ProviderLocation(ukprn, name,contactUrl, phone, email, providerDistanceInMiles, providerWithStandardAndLocations);
+            var actual = new ProviderLocation(ukprn, name,contactUrl, phone, email, 
+                providerDistanceInMiles,
+                providerHeadOfficeAddress1,
+                providerHeadOfficeAddress2, 
+                providerHeadOfficeAddress3, 
+                providerHeadOfficeAddress4, 
+                providerHeadOfficeAddressTown, 
+                providerHeadOfficeAddressPostcode, providerWithStandardAndLocations);
 
             actual.Name.Should().Be(name);
             actual.Ukprn.Should().Be(ukprn);
@@ -21,7 +38,13 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Phone.Should().Be(phone);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().NotBeEmpty();
-            actual.ProviderDistanceInMiles.Should().Be(providerDistanceInMiles);
+            actual.Address.Address1.Should().Be(providerHeadOfficeAddress1);
+            actual.Address.Address2.Should().Be(providerHeadOfficeAddress2);
+            actual.Address.Address3.Should().Be(providerHeadOfficeAddress3);
+            actual.Address.Address4.Should().Be(providerHeadOfficeAddress4);
+            actual.Address.Town.Should().Be(providerHeadOfficeAddressTown);
+            actual.Address.Postcode.Should().Be(providerHeadOfficeAddressPostcode);
+            actual.Address.DistanceInMiles.Should().Be(providerDistanceInMiles);
         }
         
     }
