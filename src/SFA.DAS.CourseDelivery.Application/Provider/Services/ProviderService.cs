@@ -35,13 +35,15 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         {
             if (lat ==null && lon == null)
             {
-                var providerResult = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
-                return providerResult;
+                var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId);
+
+                return BuildProviderLocations(providerResult).FirstOrDefault();
             }
             
             var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
-            var providerLocation = BuildProviderLocations(provider).FirstOrDefault();
-            return providerLocation;
+            
+            return BuildProviderLocations(provider).FirstOrDefault();
+            
         }
 
         public async Task<IEnumerable<Domain.Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description)

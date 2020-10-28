@@ -40,22 +40,21 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_The_Provider_From_The_Repository_Without_Location_Information(int ukPrn,
             int standardId,
-            Domain.Entities.ProviderStandard provider,
-            [Frozen]Mock<IProviderStandardRepository> repository,
+            Domain.Entities.ProviderWithStandardAndLocation provider,
+            [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
         {
             //Arrange
-            repository.Setup(x => x.GetByUkprnAndStandard(ukPrn, standardId)).ReturnsAsync(provider);
+            repository.Setup(x => x.GetByUkprnAndStandardId(ukPrn, standardId)).ReturnsAsync(new List<Domain.Entities.ProviderWithStandardAndLocation>{provider});
             
             //Act
             var actual = await service.GetProviderByUkprnAndStandard(ukPrn, standardId, null, null);
             
             //Assert
             actual.Should().NotBeNull();
-            actual.Ukprn.Should().Be(provider.Provider.Ukprn);
-            actual.Name.Should().Be(provider.Provider.Name);
-            actual.TradingName.Should().Be(provider.Provider.TradingName);
-
+            actual.Ukprn.Should().Be(provider.Ukprn);
+            actual.Name.Should().Be(provider.Name);
+            actual.TradingName.Should().Be(provider.TradingName);
         }
     }
 }
