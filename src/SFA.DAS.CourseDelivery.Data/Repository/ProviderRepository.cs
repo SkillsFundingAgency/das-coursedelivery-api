@@ -109,6 +109,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 select
     P.Ukprn,
     P.Name,
+    p.TradingName,
     ps.ContactUrl,
     ps.Email,
     ps.Phone,
