@@ -65,13 +65,13 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             //Assert
             foreach (var provider in providerRegistrationLookup.Results)
             {
-                providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(provider.Ukprn, expectedPostcode, It.IsAny<double>(), It.IsAny<double>()), Times.Once());    
+                providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(provider.Ukprn, It.Is<ContactAddress>(c=>c.PostCode == expectedPostcode), It.IsAny<double>(), It.IsAny<double>()), Times.Once());    
             }
             providerRegistrationRepository.Verify(x=>x.UpdateAddressesFromImportTable(), Times.Once);
         }
 
         [Test, RecursiveMoqAutoData]
-        public async Task Then_If_No_Postcode_Data_Then_Not_Updated(
+        public async Task Then_If_No_Postcode_Data_Then_Lat_Lon_Are_Not_Updated(
             List<Domain.Entities.Provider> providerEntities,
             string expectedPostcode,
             PostcodeLookup postcodeLookup,
@@ -120,11 +120,11 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             await service.ImportAddressData();
             
             //Assert
-            providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
+            providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.Is<ContactAddress>(c=>c.PostCode == expectedPostcode), 0, 0), Times.Exactly(providerEntities.Count));
         }
 
         [Test, RecursiveMoqAutoData]
-        public async Task Then_If_No_ProviderPostcode_Then_Not_Updated(
+        public async Task Then_If_No_ProviderAdress_Then_Not_Updated(
             List<Domain.Entities.Provider> providerEntities,
             string expectedPostcode,
             PostcodeLookup postcodeLookup,
@@ -140,7 +140,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             contactDetails = contactDetails.Select(c =>
             {
                 c.ContactType = "P";
-                c.ContactAddress.PostCode = null;
+                c.ContactAddress = null;
                 return c;
             }).ToList();
             postcodeLookup.Result = postcodeLookup.Result.Select(c =>
@@ -172,7 +172,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             await service.ImportAddressData();
             
             //Assert
-            providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
+            providerRegistrationImportRepository.Verify(x=>x.UpdateAddress(It.IsAny<int>(), It.IsAny<ContactAddress>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never());
         }
 
 

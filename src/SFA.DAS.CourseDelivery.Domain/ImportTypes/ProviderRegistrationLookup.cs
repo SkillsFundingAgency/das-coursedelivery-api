@@ -66,7 +66,7 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public string Address3 { get; set; }
 
         [JsonProperty("address4")]
-        public object Address4 { get; set; }
+        public string Address4 { get; set; }
 
         [JsonProperty("town")]
         public string Town { get; set; }

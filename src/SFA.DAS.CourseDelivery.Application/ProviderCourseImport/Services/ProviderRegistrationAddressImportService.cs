@@ -48,26 +48,28 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 var postCodeData = (await _postcodeApiService.GetPostcodeData(new PostcodeLookupRequest
                 {
                     Postcodes = registrationData.Results.SelectMany(c => c.ContactDetails)
-                        .Where(c => c.ContactType == "P").Select(x => x.ContactAddress.PostCode).ToList()
+                        .Where(c => c.ContactType == "P" && c.ContactAddress!=null).Select(x => x.ContactAddress.PostCode).ToList()
                 })).Result.ToList();
 
                 foreach (var provider in registrationData.Results.Where(c=>c.ContactDetails!=null))
                 {
-                    var providerPostcode = provider.ContactDetails.Where(x => x.ContactType.Equals("P"))
-                        .Select(c => c.ContactAddress.PostCode).FirstOrDefault();
-
-                    if (!string.IsNullOrEmpty(providerPostcode))
+                    var providerAddress = provider.ContactDetails.Where(x => x.ContactType.Equals("P"))
+                        .Select(c => c.ContactAddress).FirstOrDefault();
+                    if (providerAddress == null)
                     {
-                        var providerAddressData = postCodeData
-                            .FirstOrDefault(x => x.Query == providerPostcode);
-
-                        if (providerAddressData?.Result != null)
-                        {
-                            await _providerRegistrationImportRepository.UpdateAddress(provider.Ukprn,
-                                providerAddressData.Result.Postcode,
-                                providerAddressData.Result.Latitude, providerAddressData.Result.Longitude);
-                        }
+                        continue;
                     }
+                    
+                    var providerAddressData = postCodeData
+                        .FirstOrDefault(x => x.Query == providerAddress?.PostCode);
+                    
+                    var lat = providerAddressData?.Result?.Latitude ?? 0;
+                    var lon = providerAddressData?.Result?.Longitude ?? 0;
+                    
+                    await _providerRegistrationImportRepository.UpdateAddress(provider.Ukprn,
+                        providerAddress,
+                        lat, lon);
+            
                 }
                 
                 
