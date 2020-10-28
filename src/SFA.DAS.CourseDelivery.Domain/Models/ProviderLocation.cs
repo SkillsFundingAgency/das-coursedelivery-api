@@ -10,8 +10,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         {
             
         }
-        public ProviderLocation(int ukPrn, string name, string contactUrl, 
-            string tradingName,
+        public ProviderLocation(int ukPrn, string name, string tradingName, 
+            string contactUrl, 
             string phone, 
             string email, 
             double providerDistanceInMiles,
