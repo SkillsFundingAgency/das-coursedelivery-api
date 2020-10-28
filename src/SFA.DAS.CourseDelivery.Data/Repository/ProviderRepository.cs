@@ -68,7 +68,6 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .OrderBy(OrderProviderStandards(sortOrder))
                 .ThenByDescending(c=>c.National)
                 .ToListAsync();
-            
             return providers;
         }
 
@@ -81,8 +80,6 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .OrderBy(c=>c.DistanceInMiles)
                 .ThenByDescending(c=>c.National)
                 .ToListAsync();
-            
-            
             return provider;
         }
 
@@ -161,6 +158,7 @@ order by p.Name, psl.[National] desc";
 select
     P.Ukprn,
     P.Name,
+    p.TradingName,
     ps.ContactUrl,
     ps.Email,
     ps.Phone,
