@@ -36,13 +36,11 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             if (lat ==null && lon == null)
             {
                 var providerResult = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
-
                 return providerResult;
             }
             
             var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
             var providerLocation = BuildProviderLocations(provider).FirstOrDefault();
-            
             return providerLocation;
         }
 
