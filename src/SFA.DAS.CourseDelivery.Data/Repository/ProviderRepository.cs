@@ -38,6 +38,21 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
                 .FromSqlInterpolated(GetProviderNoLocationQuery(standardId))
+                .OrderBy(p=>p.Name)
+                .ThenByDescending(p=>p.National)
+                .ToListAsync();
+            
+            return providers;
+        }
+        
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(int ukprn, int standardId)
+        {
+            var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
+                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId))
+                .Where(c=>c.Ukprn == ukprn)
+                .OrderBy(p=>p.Name)
+                .ThenByDescending(p=>p.National)
+            
                 .ToListAsync();
             
             return providers;
@@ -151,8 +166,7 @@ left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where psl.StandardId = {standardId}
-and PR.StatusId = 1 AND PR.ProviderTypeId = 1 
-order by p.Name, psl.[National] desc";
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
         }
 
         private FormattableString GetProviderQuery(int standardId, double lat, double lon)
