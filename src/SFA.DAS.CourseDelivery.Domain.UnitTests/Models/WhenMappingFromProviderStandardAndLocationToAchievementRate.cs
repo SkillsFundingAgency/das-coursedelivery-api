@@ -12,7 +12,6 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
         public void Then_The_Fields_Are_Correctly_Mapped(ProviderWithStandardAndLocation source)
         {
             var actual = (AchievementRate) source;
-            
             actual.Should().BeEquivalentTo(source, options=> options.ExcludingMissingMembers());
         }
     }

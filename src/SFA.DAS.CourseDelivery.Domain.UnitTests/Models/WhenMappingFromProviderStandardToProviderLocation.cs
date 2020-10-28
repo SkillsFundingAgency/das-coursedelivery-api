@@ -17,6 +17,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Phone.Should().Be(source.Phone);
             actual.ContactUrl.Should().Be(source.ContactUrl);
             actual.Name.Should().Be(source.Provider.Name);
+            actual.TradingName.Should().Be(source.Provider.TradingName);
             actual.Ukprn.Should().Be(source.Provider.Ukprn);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().BeEmpty();

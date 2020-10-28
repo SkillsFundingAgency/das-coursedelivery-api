@@ -18,6 +18,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
+            actual.TradingName.Should().Be(provider.TradingName);
             actual.ProviderAddress.Should().BeEquivalentTo(provider.Address);
         }
 

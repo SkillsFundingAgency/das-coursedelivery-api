@@ -13,6 +13,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             var actual = new GetProviderResponse().Map(source.ProviderStandardLocation);
 
             actual.Name.Should().Be(source.ProviderStandardLocation.Name);
+            actual.TradingName.Should().Be(source.ProviderStandardLocation.TradingName);
             actual.Ukprn.Should().Be(source.ProviderStandardLocation.Ukprn);
             actual.ContactUrl.Should().Be(source.ProviderStandardLocation.ContactUrl);
             actual.Email.Should().Be(source.ProviderStandardLocation.Email);

@@ -67,10 +67,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
         {
             //Act
             var actual = await _providerStandardImportRepository.GetByUkprnAndStandard(ExpectedUkprn,ExpectedStandardId);
-            
             //Assert
             Assert.IsNotNull(actual);
             
+            actual.Provider.TradingName.Should().NotBeNullOrEmpty();
             actual.Should().BeEquivalentTo(_expectedProviderStandard);
         }
     }

@@ -13,6 +13,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
         public void Then_The_Fields_Are_Correctly_Mapped(string name, int ukprn, string contactUrl,
             string email, 
             string phone, 
+            string tradingName,
             double providerDistanceInMiles, 
             string providerHeadOfficeAddress1,
             string providerHeadOfficeAddress2,
@@ -22,7 +23,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             string providerHeadOfficeAddressPostcode,
             List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
-            var actual = new ProviderLocation(ukprn, name,contactUrl, phone, email, 
+            var actual = new ProviderLocation(ukprn, name, tradingName, contactUrl, phone, email, 
                 providerDistanceInMiles,
                 providerHeadOfficeAddress1,
                 providerHeadOfficeAddress2, 
@@ -32,6 +33,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
                 providerHeadOfficeAddressPostcode, providerWithStandardAndLocations);
 
             actual.Name.Should().Be(name);
+            actual.TradingName.Should().Be(tradingName);
             actual.Ukprn.Should().Be(ukprn);
             actual.ContactUrl.Should().Be(contactUrl);
             actual.Email.Should().Be(email);
