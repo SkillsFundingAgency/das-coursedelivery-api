@@ -11,8 +11,5 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public string Email { get; set; }
         public string Website { get; set; }
         public string Phone { get; set; }
-        public string Postcode { get ; set ; }
-        public double Lat { get ; set ; }
-        public double Long { get ; set ; }
     }
 }

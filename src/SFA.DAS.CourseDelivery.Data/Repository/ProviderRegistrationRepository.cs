@@ -35,12 +35,16 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             var providerRegistrationImports = await _dataContext
                 .ProviderRegistrationImports
-                .Where(c=>!string.IsNullOrEmpty(c.Postcode))
                 .ToListAsync();
 
             foreach (var providerRegistrationImport in providerRegistrationImports)
             {
                 var providerRegistration = await _dataContext.ProviderRegistrations.FindAsync(providerRegistrationImport.Ukprn);
+                providerRegistration.Address1 = providerRegistrationImport.Address1;
+                providerRegistration.Address2 = providerRegistrationImport.Address2;
+                providerRegistration.Address3 = providerRegistrationImport.Address3;
+                providerRegistration.Address4 = providerRegistrationImport.Address4;
+                providerRegistration.Town = providerRegistrationImport.Town;
                 providerRegistration.Postcode = providerRegistrationImport.Postcode;
                 providerRegistration.Lat = providerRegistrationImport.Lat;
                 providerRegistration.Long = providerRegistrationImport.Long;
