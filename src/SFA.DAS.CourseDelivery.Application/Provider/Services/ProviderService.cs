@@ -74,6 +74,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
                 {
                     UkPrn = item.Ukprn, 
                     item.Name, 
+                    item.TradingName,
                     item.ContactUrl, 
                     item.Email, 
                     item.Phone, 
@@ -88,6 +89,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
                 .Select(group => new ProviderLocation(
                     group.Key.UkPrn, 
                     group.Key.Name,
+                    group.Key.TradingName,
                     group.Key.ContactUrl, 
                     group.Key.Phone, 
                     group.Key.Email, 
