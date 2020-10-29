@@ -31,16 +31,16 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             return providerLocations;
         }
 
-        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon)
+        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon, string sectorSubjectArea)
         {
             if (lat ==null && lon == null)
             {
-                var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId);
+                var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId, sectorSubjectArea);
 
                 return BuildProviderLocations(providerResult).FirstOrDefault();
             }
             
-            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
+            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value, sectorSubjectArea);
             
             return BuildProviderLocations(provider).FirstOrDefault();
             

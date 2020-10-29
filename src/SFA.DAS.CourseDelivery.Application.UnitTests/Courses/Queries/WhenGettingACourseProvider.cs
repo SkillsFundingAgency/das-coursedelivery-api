@@ -31,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
                 c.SectorSubjectArea = sectorSubjectArea;
                 return c;
             }).ToList();
-            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon)).ReturnsAsync(providerStandard);
+            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon, query.SectorSubjectArea)).ReturnsAsync(providerStandard);
             providerService
                 .Setup(x => x.GetOverallAchievementRates(sectorSubjectArea)).ReturnsAsync(overallAchievementRates);
 
@@ -52,7 +52,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
         {
             //Arrange
             providerStandard.AchievementRates = null;
-            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon)).ReturnsAsync(providerStandard);
+            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon, query.SectorSubjectArea)).ReturnsAsync(providerStandard);
             
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());

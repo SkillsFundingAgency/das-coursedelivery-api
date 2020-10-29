@@ -14,10 +14,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
             double lon, short sortOrder, string sectorSubjectArea);
 
         Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(int ukprn, int standardId,
-            double lat = 0, double lon = 0);
+            double lat = 0, double lon = 0, string sectorSubjectArea= "");
 
         Task<IEnumerable<int>> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon);
         Task<List<Provider>> GetAllRegistered();
-        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(int ukprn, int standardId);
+        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(int ukprn, int standardId, string sectorSubjectArea);
     }
 }
