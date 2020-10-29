@@ -23,7 +23,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             //Arrange
             query.Lat = null;
             query.Lon = null;
-            providerService.Setup(x => x.GetProvidersByStandardId(query.StandardId)).ReturnsAsync(providers);
+            providerService.Setup(x => x.GetProvidersByStandardId(query.StandardId, query.SectorSubjectArea)).ReturnsAsync(providers);
 
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
@@ -40,7 +40,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             GetCourseProvidersQueryHandler handler)
         {
             //Arrange
-            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value, query.SortOrder)).ReturnsAsync(providers);
+            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value, query.SortOrder, query.SectorSubjectArea)).ReturnsAsync(providers);
             
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());

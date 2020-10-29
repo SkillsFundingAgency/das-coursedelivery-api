@@ -33,7 +33,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId(int standardId)
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId(int standardId, string sectorSubjectArea)
         {
             
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
@@ -76,7 +76,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         }
 
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId,
-            double lat, double lon, short sortOrder)
+            double lat, double lon, short sortOrder, string sectorSubjectArea)
         {
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
                 .FromSqlInterpolated(GetProviderQuery(standardId, lat, lon))
