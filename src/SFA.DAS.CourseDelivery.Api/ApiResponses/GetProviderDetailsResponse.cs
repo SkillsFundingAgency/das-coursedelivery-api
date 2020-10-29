@@ -7,7 +7,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public long Id { get; set; }
         public int Ukprn { get; set; }
         public string Name { get; set; }
-        public bool NationalProvider { get; set; }
         public decimal? LearnerSatisfaction { get; set; }
         public decimal? EmployerSatisfaction { get; set; }
         public string TradingName { get; set; }
@@ -22,7 +21,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Id = source.Id,
                 Ukprn = source.Ukprn,
                 Name = source.Name,
-                NationalProvider = source.NationalProvider,
                 LearnerSatisfaction = source.LearnerSatisfaction,
                 EmployerSatisfaction = source.EmployerSatisfaction,
                 TradingName = source.TradingName,

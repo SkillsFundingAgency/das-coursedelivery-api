@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Domain.Models;
 
@@ -25,10 +26,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         {
             var providers = (await _providerRepository.GetByStandardId(standardId)).ToList();
 
-            var providerLocations = providers
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email,  group.Key.ProviderDistanceInMiles,group.ToList()))
-                .ToList();
+            var providerLocations = BuildProviderLocations(providers);
             
             return providerLocations;
         }
@@ -37,18 +35,15 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         {
             if (lat ==null && lon == null)
             {
-                var providerResult = await _providerStandardRepository.GetByUkprnAndStandard(ukPrn, standardId);
+                var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId);
 
-                return providerResult;
+                return BuildProviderLocations(providerResult).FirstOrDefault();
             }
             
             var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
-            var providerLocation = provider
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email, group.Key.ProviderDistanceInMiles, group.ToList()))
-                .FirstOrDefault();
             
-            return providerLocation;
+            return BuildProviderLocations(provider).FirstOrDefault();
+            
         }
 
         public async Task<IEnumerable<Domain.Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description)
@@ -69,12 +64,44 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         {
             var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder);
 
-            var providerLocations = providers
-                .GroupBy(item => new { UkPrn = item.Ukprn, item.Name, item.ContactUrl, item.Email, item.Phone, item.ProviderDistanceInMiles})
-                .Select(group => new ProviderLocation(group.Key.UkPrn, group.Key.Name,group.Key.ContactUrl, group.Key.Phone, group.Key.Email,group.Key.ProviderDistanceInMiles, group.ToList()))
-                .ToList();
+            var providerLocations = BuildProviderLocations(providers);
             
             return providerLocations;
+        }
+
+        private static IEnumerable<ProviderLocation> BuildProviderLocations(IEnumerable<ProviderWithStandardAndLocation> providers)
+        {
+            return providers
+                .GroupBy(item => new
+                {
+                    UkPrn = item.Ukprn, 
+                    item.Name, 
+                    item.ContactUrl, 
+                    item.Email, 
+                    item.Phone, 
+                    item.ProviderDistanceInMiles,
+                    item.ProviderHeadOfficeAddress1,
+                    item.ProviderHeadOfficeAddress2,
+                    item.ProviderHeadOfficeAddress3,
+                    item.ProviderHeadOfficeAddress4,
+                    item.ProviderHeadOfficeTown,
+                    item.ProviderHeadOfficePostcode
+                })
+                .Select(group => new ProviderLocation(
+                    group.Key.UkPrn, 
+                    group.Key.Name,
+                    group.Key.ContactUrl, 
+                    group.Key.Phone, 
+                    group.Key.Email, 
+                    group.Key.ProviderDistanceInMiles,
+                    group.Key.ProviderHeadOfficeAddress1,
+                    group.Key.ProviderHeadOfficeAddress2,
+                    group.Key.ProviderHeadOfficeAddress3,
+                    group.Key.ProviderHeadOfficeAddress4,
+                    group.Key.ProviderHeadOfficeTown,
+                    group.Key.ProviderHeadOfficePostcode,
+                    group.ToList()))
+                .ToList();
         }
 
         public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukprn)

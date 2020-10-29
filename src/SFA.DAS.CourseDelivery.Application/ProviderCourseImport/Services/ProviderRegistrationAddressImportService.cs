@@ -12,20 +12,23 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         private readonly IRoatpApiService _roatpApiService;
         private readonly IPostcodeApiService _postcodeApiService;
         private readonly IProviderRepository _providerRepository;
-        private readonly IProviderImportRepository _providerImportRepository;
+        private readonly IProviderRegistrationRepository _providerRegistrationRepository;
+        private readonly IProviderRegistrationImportRepository _providerRegistrationImportRepository;
         private readonly IImportAuditRepository _importAuditRepository;
 
         public ProviderRegistrationAddressImportService (
             IRoatpApiService roatpApiService, 
             IPostcodeApiService postcodeApiService, 
             IProviderRepository providerRepository, 
-            IProviderImportRepository providerImportRepository,
+            IProviderRegistrationRepository providerRegistrationRepository,
+            IProviderRegistrationImportRepository providerRegistrationImportRepository,
             IImportAuditRepository importAuditRepository)
         {
             _roatpApiService = roatpApiService;
             _postcodeApiService = postcodeApiService;
             _providerRepository = providerRepository;
-            _providerImportRepository = providerImportRepository;
+            _providerRegistrationRepository = providerRegistrationRepository;
+            _providerRegistrationImportRepository = providerRegistrationImportRepository;
             _importAuditRepository = importAuditRepository;
         }
 
@@ -45,26 +48,28 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 var postCodeData = (await _postcodeApiService.GetPostcodeData(new PostcodeLookupRequest
                 {
                     Postcodes = registrationData.Results.SelectMany(c => c.ContactDetails)
-                        .Where(c => c.ContactType == "P").Select(x => x.ContactAddress.PostCode).ToList()
+                        .Where(c => c.ContactType == "P" && c.ContactAddress!=null).Select(x => x.ContactAddress.PostCode).ToList()
                 })).Result.ToList();
 
                 foreach (var provider in registrationData.Results.Where(c=>c.ContactDetails!=null))
                 {
-                    var providerPostcode = provider.ContactDetails.Where(x => x.ContactType.Equals("P"))
-                        .Select(c => c.ContactAddress.PostCode).FirstOrDefault();
-
-                    if (!string.IsNullOrEmpty(providerPostcode))
+                    var providerAddress = provider.ContactDetails.Where(x => x.ContactType.Equals("P"))
+                        .Select(c => c.ContactAddress).FirstOrDefault();
+                    if (providerAddress == null)
                     {
-                        var providerAddressData = postCodeData
-                            .FirstOrDefault(x => x.Query == providerPostcode);
-
-                        if (providerAddressData?.Result != null)
-                        {
-                            await _providerImportRepository.UpdateAddress(provider.Ukprn,
-                                providerAddressData.Result.Postcode,
-                                providerAddressData.Result.Latitude, providerAddressData.Result.Longitude);
-                        }
+                        continue;
                     }
+                    
+                    var providerAddressData = postCodeData
+                        .FirstOrDefault(x => x.Query == providerAddress?.PostCode);
+                    
+                    var lat = providerAddressData?.Result?.Latitude ?? 0;
+                    var lon = providerAddressData?.Result?.Longitude ?? 0;
+                    
+                    await _providerRegistrationImportRepository.UpdateAddress(provider.Ukprn,
+                        providerAddress,
+                        lat, lon);
+            
                 }
                 
                 
@@ -72,7 +77,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
                 providersToProcess = providers.Skip(skip).Take(100).ToList();
             }
 
-            await _providerRepository.UpdateAddressesFromImportTable();
+            await _providerRegistrationRepository.UpdateAddressesFromImportTable();
             
             await _importAuditRepository.Insert(new ImportAudit(
                 importStartTime,

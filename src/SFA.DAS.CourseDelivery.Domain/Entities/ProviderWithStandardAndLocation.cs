@@ -29,6 +29,12 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public string FeedbackName { get; set; }
         public int? FeedbackCount { get; set; }
         public float ProviderDistanceInMiles { get; set; }
+        public string ProviderHeadOfficeAddress1 { get; set; }
+        public string ProviderHeadOfficeAddress2 { get; set; }
+        public string ProviderHeadOfficeAddress3 { get; set; }
+        public string ProviderHeadOfficeAddress4 { get; set; }
+        public string ProviderHeadOfficeTown { get; set; }
+        public string ProviderHeadOfficePostcode { get; set; }
     }
 
 }

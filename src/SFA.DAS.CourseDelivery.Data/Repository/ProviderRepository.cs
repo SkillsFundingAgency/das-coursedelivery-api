@@ -38,6 +38,21 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
                 .FromSqlInterpolated(GetProviderNoLocationQuery(standardId))
+                .OrderBy(p=>p.Name)
+                .ThenByDescending(p=>p.National)
+                .ToListAsync();
+            
+            return providers;
+        }
+        
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(int ukprn, int standardId)
+        {
+            var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
+                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId))
+                .Where(c=>c.Ukprn == ukprn)
+                .OrderBy(p=>p.Name)
+                .ThenByDescending(p=>p.National)
+            
                 .ToListAsync();
             
             return providers;
@@ -58,23 +73,6 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .FilterRegisteredProviders().ToListAsync();
 
             return providers;
-        }
-
-        public async Task UpdateAddressesFromImportTable()
-        {
-            var providerImports = await _dataContext
-                .ProviderImports
-                .Where(c=>!string.IsNullOrEmpty(c.Postcode))
-                .ToListAsync();
-
-            foreach (var providerImport in providerImports)
-            {
-                var provider = await _dataContext.Providers.FindAsync(providerImport.Id);
-                provider.Postcode = providerImport.Postcode;
-                provider.Lat = providerImport.Lat;
-                provider.Long = providerImport.Long;
-            }
-            _dataContext.SaveChanges();
         }
 
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(int standardId,
@@ -152,7 +150,13 @@ select
     PRFA.Weakness,
     PRFR.FeedbackCount, 
     PRFR.FeedbackName,
-    CAST(0.0 as float) as ProviderDistanceInMiles
+    CAST(0.0 as float) as ProviderDistanceInMiles,
+    pr.Address1 ProviderHeadOfficeAddress1,
+    pr.Address2 ProviderHeadOfficeAddress2,
+    pr.Address3 ProviderHeadOfficeAddress3,
+    pr.Address4 ProviderHeadOfficeAddress4,
+    pr.Town ProviderHeadOfficeTown,
+    pr.PostCode ProviderHeadOfficePostcode
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -162,8 +166,7 @@ left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where psl.StandardId = {standardId}
-and PR.StatusId = 1 AND PR.ProviderTypeId = 1 
-order by p.Name, psl.[National] desc";
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
         }
 
         private FormattableString GetProviderQuery(int standardId, double lat, double lon)
@@ -195,7 +198,13 @@ select
     PRFA.Weakness,
     PRFR.FeedbackCount, 
     PRFR.FeedbackName,
-    pdist.DistanceInMiles as ProviderDistanceInMiles
+    pdist.DistanceInMiles as ProviderDistanceInMiles,
+    pr.Address1 ProviderHeadOfficeAddress1,
+    pr.Address2 ProviderHeadOfficeAddress2,
+    pr.Address3 ProviderHeadOfficeAddress3,
+    pr.Address4 ProviderHeadOfficeAddress4,
+    pr.Town ProviderHeadOfficeTown,
+    pr.PostCode ProviderHeadOfficePostcode
 from Provider P
 inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -205,11 +214,11 @@ inner join (select
 		,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
-inner join (select id,
+inner join (select ukprn,
                    case when isnull(Lat,0) <> 0 and isnull(Long,0) <> 0 then
                         geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
                             .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 
-                    else -1 end as DistanceInMiles from [Provider]) pdist on pdist.id = P.id
+                    else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn

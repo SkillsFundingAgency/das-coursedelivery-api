@@ -9,6 +9,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         Task InsertMany(IEnumerable<ProviderImport> providerImports);
         void DeleteAll();
         Task<IEnumerable<ProviderImport>> GetAll();
-        Task UpdateAddress(int ukprn, string postcode, double lat, double lon);
+        
     }
 }

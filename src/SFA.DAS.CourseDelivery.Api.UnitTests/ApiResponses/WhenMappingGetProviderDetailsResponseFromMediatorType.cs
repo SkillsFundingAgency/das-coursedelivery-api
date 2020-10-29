@@ -19,9 +19,6 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
                 .Excluding(provider => provider.ProviderRegistration)
                 .Excluding(provider => provider.ProviderRegistrationFeedbackAttributes)
                 .Excluding(provider => provider.ProviderRegistrationFeedbackRating)
-                .Excluding(provider=>provider.Lat)
-                .Excluding(provider=>provider.Long)
-                .Excluding(provider=>provider.Postcode)
             );
         }
 
