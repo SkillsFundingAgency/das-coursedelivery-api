@@ -57,7 +57,9 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers")]
-        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]Age age = 0, [FromQuery]Level level = 0, [FromQuery]double? lat = null, [FromQuery]double? lon = null, [FromQuery]SortOrder sortOrder = SortOrder.Distance)
+        public async Task<IActionResult> GetProvidersByStandardId(     int id, [FromQuery] Age age = 0,
+            [FromQuery] Level level = 0, [FromQuery] double? lat = null, [FromQuery] double? lon = null,
+            [FromQuery] SortOrder sortOrder = SortOrder.Distance, string sectorSubjectArea = "")
         {
             try
             {
@@ -66,7 +68,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                     StandardId = id,
                     Lat = lat,
                     Lon = lon,
-                    SortOrder = (short)sortOrder
+                    SortOrder = (short)sortOrder,
+                    SectorSubjectArea = sectorSubjectArea
                 });
 
                 var getCourseProviderResponses = queryResult
@@ -93,14 +96,15 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         [Route("{id}/providers/{ukprn}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderResponse))]
         [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderResponse))]
-        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, double? lat = null, double? lon = null)
+        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, string sectorSubjectArea, double? lat = null, double? lon = null)
         {
             var queryResult = await _mediator.Send(new GetCourseProviderQuery
             {
                 Ukprn = ukprn, 
                 StandardId = id, 
                 Lat = lat, 
-                Lon = lon
+                Lon = lon,
+                SectorSubjectArea = sectorSubjectArea
             });
 
             if (queryResult.ProviderStandardLocation == null)

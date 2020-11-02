@@ -20,6 +20,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
         public async Task Then_Gets_Providers_List_From_Mediator(
             int standardId,
             int ukPrn,
+            string sectorSubjectArea,
             double lat,
             double lon,
             GetCourseProviderQueryResponse queryResult,
@@ -33,11 +34,12 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                         && query.StandardId == standardId
                         && query.Lat.Equals(lat)
                         && query.Lon.Equals(lon)
+                        && query.SectorSubjectArea.Equals(sectorSubjectArea)
                         ), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn, lat, lon) as ObjectResult;
+            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn,sectorSubjectArea, lat, lon) as ObjectResult;
 
             var model = controllerResult.Value as GetProviderResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
@@ -48,6 +50,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
         public async Task And_Null_Then_Returns_NotFound_Request(
             int standardId,
             int ukPrn,
+            string sectorSubjectArea,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] CoursesController controller)
         {
@@ -57,7 +60,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new GetCourseProviderQueryResponse());
 
-            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn) as StatusCodeResult;
+            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn, sectorSubjectArea) as StatusCodeResult;
 
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
