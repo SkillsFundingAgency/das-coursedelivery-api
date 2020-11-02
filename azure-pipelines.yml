@@ -76,7 +76,7 @@ jobs:
     displayName: 'Run SonarCloud analysis'
       
   - task: SonarCloudPublish@1
-    displayName: 'Publish results on build summary'
+    displayName: 'Publish SonarCloud analysis results on build summary'
     inputs:
       pollingTimeoutSec: '300'      
 
