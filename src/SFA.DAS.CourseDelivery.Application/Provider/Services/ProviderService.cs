@@ -22,25 +22,25 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             _providerStandardRepository = providerStandardRepository;
             _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
         }
-        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId)
+        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId, string sectorSubjectArea)
         {
-            var providers = (await _providerRepository.GetByStandardId(standardId)).ToList();
+            var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea)).ToList();
 
             var providerLocations = BuildProviderLocations(providers);
             
             return providerLocations;
         }
 
-        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon)
+        public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon, string sectorSubjectArea)
         {
             if (lat ==null && lon == null)
             {
-                var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId);
+                var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId, sectorSubjectArea);
 
                 return BuildProviderLocations(providerResult).FirstOrDefault();
             }
             
-            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value);
+            var provider = await _providerRepository.GetProviderByStandardIdAndLocation(ukPrn, standardId, lat.Value, lon.Value, sectorSubjectArea);
             
             return BuildProviderLocations(provider).FirstOrDefault();
             
@@ -60,9 +60,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         }
 
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,
-            double lon, short querySortOrder)
+            double lon, short querySortOrder, string sectorSubjectArea)
         {
-            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder);
+            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder, sectorSubjectArea);
 
             var providerLocations = BuildProviderLocations(providers);
             
@@ -76,6 +76,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
                 {
                     UkPrn = item.Ukprn, 
                     item.Name, 
+                    item.TradingName,
                     item.ContactUrl, 
                     item.Email, 
                     item.Phone, 
@@ -90,6 +91,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
                 .Select(group => new ProviderLocation(
                     group.Key.UkPrn, 
                     group.Key.Name,
+                    group.Key.TradingName,
                     group.Key.ContactUrl, 
                     group.Key.Phone, 
                     group.Key.Email, 

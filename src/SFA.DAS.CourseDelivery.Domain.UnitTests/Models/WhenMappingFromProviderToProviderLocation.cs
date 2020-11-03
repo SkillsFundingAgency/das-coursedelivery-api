@@ -14,6 +14,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             var actual = new ProviderLocation(source);
 
             actual.Name.Should().Be(source.Name);
+            actual.TradingName.Should().Be(source.TradingName);
             actual.Ukprn.Should().Be(source.Ukprn);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().BeEmpty();

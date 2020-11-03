@@ -10,7 +10,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         {
             
         }
-        public ProviderLocation(int ukPrn, string name, string contactUrl, 
+        public ProviderLocation(int ukPrn, string name, string tradingName, 
+            string contactUrl, 
             string phone, 
             string email, 
             double providerDistanceInMiles,
@@ -24,6 +25,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         {
             Ukprn = ukPrn;
             Name = name;
+            TradingName = tradingName; 
             ContactUrl = contactUrl;
             Email = email;
             Phone = phone;
@@ -67,6 +69,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         {
             Ukprn = provider.Ukprn;
             Name = provider.Name;
+            TradingName = provider.TradingName;
             AchievementRates = provider.NationalAchievementRates.Select(c => (AchievementRate) c).ToList();
             FeedbackRating = provider.ProviderRegistrationFeedbackRating.Select(c => (ProviderFeedbackRating) c).ToList();
             FeedbackAttributes = provider.ProviderRegistrationFeedbackAttributes.Select(c => (ProviderFeedbackAttribute) c).ToList();
@@ -79,6 +82,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             {
                 Ukprn = provider.Provider.Ukprn,
                 Name = provider.Provider.Name,
+                TradingName = provider.Provider.TradingName,
                 Email = provider.Email,
                 Phone = provider.Phone,
                 ContactUrl = provider.ContactUrl,
@@ -91,6 +95,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
 
         public int Ukprn { get; private set; }
         public string Name { get; private set; }
+        public string TradingName { get; set; }
         public string ContactUrl { get ; private set ; }
         public string Email { get ; private set ; }
         public string Phone { get ; private set ; }

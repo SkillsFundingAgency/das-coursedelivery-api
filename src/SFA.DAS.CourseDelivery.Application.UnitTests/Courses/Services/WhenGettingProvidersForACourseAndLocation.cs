@@ -18,18 +18,19 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             double lat, 
             double lon,
             short sortOrder,
+            string sectorSubjectArea,
             List<Domain.Entities.ProviderWithStandardAndLocation> providers,
             [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
         {
             //Arrange
-            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder)).ReturnsAsync(providers);
+            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea)).ReturnsAsync(providers);
             
             //Act
-            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder);
+            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder), Times.Once);
+            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea), Times.Once);
             actual.Should().BeEquivalentTo(providers, options=> options.ExcludingMissingMembers());
         }
     }

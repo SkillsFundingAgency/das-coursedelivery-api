@@ -15,7 +15,8 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
             {
                 Ukprn = 20002451,
                 Email = "test@test.com",
-                Name = "Test provider"
+                Name = "Test provider",
+                TradingName = "Test Alternate Trading Name"
             });
             context.ProviderRegistrations.Add(new ProviderRegistration
             {

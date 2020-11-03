@@ -8,5 +8,6 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse
         public int StandardId { get ; set ; }
         public double? Lat { get ; set ; } = 0d;
         public double? Lon { get ; set ; } = 0d;
+        public string SectorSubjectArea { get ; set ; }
     }
 }

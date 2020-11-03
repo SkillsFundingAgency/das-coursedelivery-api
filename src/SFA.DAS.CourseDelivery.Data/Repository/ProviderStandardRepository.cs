@@ -40,7 +40,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .ThenInclude(c=>c.ProviderRegistrationFeedbackRating)
                 .Include(c=>c.NationalAchievementRate)
                 .SingleOrDefaultAsync(c => c.StandardId.Equals(standardId) && c.Ukprn.Equals(ukPrn));
-
+            
             return providerStandard;
         }
 

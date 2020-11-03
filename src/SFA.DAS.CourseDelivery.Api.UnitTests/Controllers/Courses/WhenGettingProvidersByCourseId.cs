@@ -29,6 +29,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
             double? lat,
             double? lon,
             SortOrder sort,
+            string sectorSubjectArea,
             ProviderLocation provider,
             ProviderLocation provider2,
             [Frozen] Mock<IMediator> mockMediator,
@@ -58,12 +59,13 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                         query.StandardId == standardId &&
                         query.Lat.Equals(lat) &&
                         query.Lon.Equals(lon) &&
-                        query.SortOrder.Equals((short)sort)
+                        query.SortOrder.Equals((short)sort) && 
+                        query.SectorSubjectArea.Equals(sectorSubjectArea)
                         ), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProvidersByStandardId(standardId, Age.AllAges, Level.AllLevels, lat, lon, sort) as ObjectResult;
+            var controllerResult = await controller.GetProvidersByStandardId(standardId, Age.AllAges, Level.AllLevels, lat, lon, sort, sectorSubjectArea) as ObjectResult;
 
             var model = controllerResult.Value as GetCourseProvidersListResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
