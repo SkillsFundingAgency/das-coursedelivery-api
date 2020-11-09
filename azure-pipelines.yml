@@ -2,9 +2,7 @@ trigger:
   batch: true
   branches:
     include:
-      - "*"
-
-pr: none
+      - "master"
 
 variables:
   - group: 'Prod Management Resources'
@@ -16,7 +14,7 @@ resources:
   - repository: das-platform-building-blocks
     type: github
     name: SkillsFundingAgency/das-platform-building-blocks
-    ref: refs/heads/master
+    ref: refs/heads/Condition_on_Dependency_Check
     endpoint: "GitHub (SFA)"
 
 jobs:
@@ -25,7 +23,7 @@ jobs:
     name: 'DAS - Continuous Integration'
     demands: Agent.OS -equals Linux
   workspace:
-    clean: all  
+    clean: all
   steps:
   - task: gittools.gitversion-preview.gitversion-task.GitVersion@5
     displayName: GitVersion
@@ -45,14 +43,14 @@ jobs:
     inputs:
       projects: 'src/**/*.csproj'
       arguments: '--configuration $(buildConfiguration) --no-restore'
-      
+
   - task: DotNetCoreCLI@2
     displayName: Test
     inputs:
       command: test
       projects: '**/*.UnitTests.csproj'
       arguments: '--configuration $(buildConfiguration) --no-build'
-      
+
   - task: DotNetCoreCLI@2
     displayName: 'Acceptance Tests'
     inputs:
