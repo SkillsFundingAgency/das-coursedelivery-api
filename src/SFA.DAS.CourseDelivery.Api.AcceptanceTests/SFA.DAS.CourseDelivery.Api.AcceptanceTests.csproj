@@ -1,11 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+    <ProjectGuid>E3E4C3F4-F0C5-44E0-974E-C1E07637DA23</ProjectGuid>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />
@@ -17,7 +15,6 @@
     <PackageReference Include="SpecFlow.NUnit" Version="3.4.14" />
     <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.4.14" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.CourseDelivery.Api\SFA.DAS.CourseDelivery.Api.csproj" />
     <ProjectReference Include="..\SFA.DAS.CourseDelivery.Application\SFA.DAS.CourseDelivery.Application.csproj" />
@@ -37,5 +34,4 @@
       <LastGenOutput>ProviderCourses.feature.cs</LastGenOutput>
     </SpecFlowFeatureFiles>
   </ItemGroup>
-
 </Project>
