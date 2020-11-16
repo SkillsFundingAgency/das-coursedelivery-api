@@ -7,3 +7,7 @@
 )
 GO
  
+  
+CREATE NONCLUSTERED INDEX [IDX_ProviderRegistrationFeedbackRating_Ukprn] ON [dbo].[ProviderRegistrationFeedbackRating] (Ukprn) 
+INCLUDE (FeedbackName, FeedbackCount) WITH (ONLINE = ON) 
+GO 

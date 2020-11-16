@@ -13,3 +13,7 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_NationalAchievementRate_Ukprn] ON [dbo].[NationalAchievementRate] (Ukprn) 
 INCLUDE (Id, [SectorSubjectArea], ApprenticeshipLevel, OverallCohort, OverallAchievementRate) WITH (ONLINE = ON) 
 GO 
+
+CREATE NONCLUSTERED INDEX [IDX_NationalAchievementRate_Ukprn_SectorSubjectArea] ON [dbo].[NationalAchievementRate] (Ukprn, SectorSubjectArea) 
+INCLUDE (Id, ApprenticeshipLevel, OverallCohort, OverallAchievementRate) WITH (ONLINE = ON) 
+GO 

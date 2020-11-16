@@ -37,7 +37,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
-                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId, sectorSubjectArea))
+                .FromSqlInterpolated(GetProvidersListNoLocationQuery(standardId, sectorSubjectArea))
                 .OrderBy(p=>p.Name)
                 .ThenByDescending(p=>p.National)
                 .ToListAsync();
@@ -48,8 +48,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(int ukprn, int standardId, string sectorSubjectArea)
         {
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
-                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId, sectorSubjectArea))
-                .Where(c=>c.Ukprn == ukprn)
+                .FromSqlInterpolated(GetProviderNoLocationQuery(standardId, sectorSubjectArea,ukprn))
                 .OrderBy(p=>p.Name)
                 .ThenByDescending(p=>p.National)
             
@@ -79,7 +78,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             double lat, double lon, short sortOrder, string sectorSubjectArea)
         {
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
-                .FromSqlInterpolated(GetProviderQuery(standardId, lat, lon, sectorSubjectArea))
+                .FromSqlInterpolated(GetProviderListQuery(standardId, lat, lon, sectorSubjectArea))
                 .OrderBy(OrderProviderStandards(sortOrder))
                 .ThenByDescending(c=>c.National)
                 .ToListAsync();
@@ -90,8 +89,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             double lat = 0, double lon = 0, string sectorSubjectArea = "")
         {
             
-            var provider = await _readonlyDataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon, sectorSubjectArea))
-                .Where(c=>c.Ukprn.Equals(ukprn))
+            var provider = await _readonlyDataContext.ProviderWithStandardAndLocations.FromSqlInterpolated(GetProviderQuery(standardId, lat,lon, sectorSubjectArea, ukprn))
                 .OrderBy(c=>c.DistanceInMiles)
                 .ThenByDescending(c=>c.National)
                 .ToListAsync();
@@ -117,8 +115,56 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             }
             return c=>c.Name;
         }
+        
+        private FormattableString GetProvidersListNoLocationQuery(int standardId, string sectorSubjectArea)
+        {
+            return $@"
+select
+    P.Ukprn,
+    P.Name,
+    p.TradingName,
+    ps.ContactUrl,
+    ps.Email,
+    ps.Phone,
+    sl.LocationId,
+    sl.Address1,
+    sl.Address2,
+    sl.Town,
+    sl.Postcode,
+    sl.County,
+    psl.DeliveryModes,
+    psl.[National],
+    CAST(0.0 as float) as DistanceInMiles,
+    NAR.Id,
+    NAR.Age, 
+    NAR.SectorSubjectArea, 
+    NAR.ApprenticeshipLevel,
+    NAR.OverallCohort, 
+    NAR.OverallAchievementRate,
+    null as AttributeName, 
+    null as Strength, 
+    null as Weakness,
+    PRFR.FeedbackCount, 
+    PRFR.FeedbackName,
+    CAST(0.0 as float) as ProviderDistanceInMiles,
+    pr.Address1 ProviderHeadOfficeAddress1,
+    pr.Address2 ProviderHeadOfficeAddress2,
+    pr.Address3 ProviderHeadOfficeAddress3,
+    pr.Address4 ProviderHeadOfficeAddress4,
+    pr.Town ProviderHeadOfficeTown,
+    pr.PostCode ProviderHeadOfficePostcode
+from Provider P
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
+inner join StandardLocation SL on sl.LocationId = psl.LocationId
+inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
+left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
+where ps.StandardId = {standardId}
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
+        }
 
-        private FormattableString GetProviderNoLocationQuery(int standardId, string sectorSubjectArea)
+        private FormattableString GetProviderNoLocationQuery(int standardId, string sectorSubjectArea, int ukprn)
         {
             return $@"
 select
@@ -156,18 +202,79 @@ select
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode
 from Provider P
-inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
-where psl.StandardId = {standardId}
+where ps.StandardId = {standardId}
+and P.UkPrn = {ukprn}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
         }
 
-        private FormattableString GetProviderQuery(int standardId, double lat, double lon, string sectorSubjectArea)
+        private FormattableString GetProviderListQuery(int standardId, double lat, double lon, string sectorSubjectArea)
+        {
+            return $@"
+select
+    P.Ukprn,
+    P.Name,
+    p.TradingName,
+    ps.ContactUrl,
+    ps.Email,
+    ps.Phone,
+    sl.LocationId,
+    sl.Address1,
+    sl.Address2,
+    sl.Town,
+    sl.Postcode,
+    sl.County,
+    psl.DeliveryModes,
+    psl.[National],
+    l.DistanceInMiles,
+    NAR.Id,
+    NAR.Age, 
+    NAR.SectorSubjectArea, 
+    NAR.ApprenticeshipLevel,
+    NAR.OverallCohort, 
+    NAR.OverallAchievementRate,
+    null as AttributeName, 
+    null as Strength, 
+    null as Weakness,
+    PRFR.FeedbackCount, 
+    PRFR.FeedbackName,
+    pdist.DistanceInMiles as ProviderDistanceInMiles,
+    pr.Address1 ProviderHeadOfficeAddress1,
+    pr.Address2 ProviderHeadOfficeAddress2,
+    pr.Address3 ProviderHeadOfficeAddress3,
+    pr.Address4 ProviderHeadOfficeAddress4,
+    pr.Town ProviderHeadOfficeTown,
+    pr.PostCode ProviderHeadOfficePostcode
+from Provider P
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 
+inner join (select
+		LocationId
+		,[Name]
+		,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
+            .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 as DistanceInMiles
+	from [StandardLocation] l) l on l.LocationId = psl.LocationId
+inner join (select ukprn,
+                   case when isnull(Lat,0) <> 0 and isnull(Long,0) <> 0 then
+                        geography::Point(isnull(Lat,0), isnull(Long,0), 4326)
+                            .STDistance(geography::Point({lat}, {lon}, 4326)) * 0.0006213712 
+                    else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
+inner join StandardLocation SL on sl.LocationId = psl.LocationId
+inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea}
+left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
+where ps.StandardId = {standardId}
+and PR.StatusId = 1 AND PR.ProviderTypeId = 1
+and l.DistanceInMiles <= psl.Radius";
+        }
+        
+        private FormattableString GetProviderQuery(int standardId, double lat, double lon, string sectorSubjectArea, int ukprn)
         {
             return $@"
 select
@@ -205,8 +312,8 @@ select
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode
 from Provider P
-inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
-inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 
 inner join (select
 		LocationId
 		,[Name]
@@ -220,10 +327,11 @@ inner join (select ukprn,
                     else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea}
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea}
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
-where psl.StandardId = {standardId}
+where ps.StandardId = {standardId}
+and P.UkPrn = {ukprn}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius";
         }
@@ -234,7 +342,7 @@ and l.DistanceInMiles <= psl.Radius";
 select distinct 
     P.*
 from Provider P
-inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
 inner join (select
 		LocationId
@@ -244,7 +352,7 @@ inner join (select
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-where psl.StandardId = {standardId}
+where ps.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius
 ";
