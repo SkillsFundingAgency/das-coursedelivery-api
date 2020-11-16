@@ -8,3 +8,7 @@
 )
 GO
  
+ 
+CREATE NONCLUSTERED INDEX [IDX_ProviderRegistrationFeedbackAttribute_Ukprn] ON [dbo].[ProviderRegistrationFeedbackAttribute] (Ukprn) 
+INCLUDE (AttributeName, Weakness, Strength) WITH (ONLINE = ON) 
+GO 
