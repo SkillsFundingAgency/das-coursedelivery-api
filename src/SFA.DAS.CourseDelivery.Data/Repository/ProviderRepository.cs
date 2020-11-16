@@ -156,14 +156,14 @@ select
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode
 from Provider P
-inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
-where psl.StandardId = {standardId}
+where ps.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
         }
 
@@ -205,8 +205,8 @@ select
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode
 from Provider P
-inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
-inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
+inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 
 inner join (select
 		LocationId
 		,[Name]
@@ -220,10 +220,10 @@ inner join (select ukprn,
                     else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = psl.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea}
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea}
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
-where psl.StandardId = {standardId}
+where ps.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius";
         }
@@ -234,7 +234,7 @@ and l.DistanceInMiles <= psl.Radius";
 select distinct 
     P.*
 from Provider P
-inner join ProviderStandard PS on P.UkPrn = PS.UkPrn
+inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
 inner join (select
 		LocationId
@@ -244,7 +244,7 @@ inner join (select
 	from [StandardLocation] l) l on l.LocationId = psl.LocationId
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-where psl.StandardId = {standardId}
+where ps.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius
 ";
