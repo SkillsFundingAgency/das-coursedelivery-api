@@ -8,10 +8,11 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     {
         Task InsertMany(IEnumerable<Provider> providers);
         void DeleteAll();
-        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId(int standardId, string sectorSubjectArea);
+        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId( int standardId, string sectorSubjectArea,
+            short level);
         Task<Provider> GetByUkprn(int ukPrn);
         Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(  int standardId, double lat,
-            double lon, short sortOrder, string sectorSubjectArea);
+            double lon, short sortOrder, string sectorSubjectArea, short level);
 
         Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(int ukprn, int standardId,
             double lat = 0, double lon = 0, string sectorSubjectArea= "");

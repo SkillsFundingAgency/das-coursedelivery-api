@@ -69,12 +69,13 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                     Lat = lat,
                     Lon = lon,
                     SortOrder = (short)sortOrder,
-                    SectorSubjectArea = sectorSubjectArea
+                    SectorSubjectArea = sectorSubjectArea,
+                    Level = (short)level
                 });
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=> new GetProviderResponse().Map(c, (short)age, (short)level))
+                    .Select(c=> new GetProviderResponse().Map(c, (short)age))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse

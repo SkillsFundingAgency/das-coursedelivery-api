@@ -22,9 +22,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             _providerStandardRepository = providerStandardRepository;
             _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
         }
-        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId, string sectorSubjectArea)
+        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId, string sectorSubjectArea, short level)
         {
-            var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea)).ToList();
+            var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea, level)).ToList();
 
             var providerLocations = BuildProviderLocations(providers);
             
@@ -60,9 +60,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         }
 
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,
-            double lon, short querySortOrder, string sectorSubjectArea)
+            double lon, short querySortOrder, string sectorSubjectArea,short level)
         {
-            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder, sectorSubjectArea);
+            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder, sectorSubjectArea, level);
 
             var providerLocations = BuildProviderLocations(providers);
             

@@ -16,14 +16,15 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
         public async Task Then_Gets_The_Providers_For_A_Course_From_The_Repository(
             int standardId,
             string sectorSubjectArea,
+            short level,
             [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
         {
             //Act
-            await service.GetProvidersByStandardId(standardId, sectorSubjectArea);
+            await service.GetProvidersByStandardId(standardId, sectorSubjectArea, level);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardId(standardId, sectorSubjectArea), Times.Once);
+            repository.Verify(x=>x.GetByStandardId(standardId, sectorSubjectArea, level), Times.Once);
         }
     }
 }

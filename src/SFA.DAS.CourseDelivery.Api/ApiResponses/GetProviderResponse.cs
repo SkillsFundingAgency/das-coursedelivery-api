@@ -20,18 +20,13 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public List<GetFeedbackAttributeResponse> FeedbackAttributes { get; set; }
         public List<GetFeedbackRatingResponse> FeedbackRatings { get; set; }
 
-        public GetProviderResponse Map(ProviderLocation provider, short age = 0, short apprenticeshipLevel = 0)
+        public GetProviderResponse Map(ProviderLocation provider, short age = 0)
         {
             var nationalAchievementRates = provider.AchievementRates.AsQueryable();
 
-            if (apprenticeshipLevel != 0)
-            {
-                nationalAchievementRates = nationalAchievementRates.Where(c => c.Age.Equals((Age)age));
-            }
-
             if (age != 0)
             {
-                nationalAchievementRates = nationalAchievementRates.Where(c=> c.ApprenticeshipLevel.Equals((ApprenticeshipLevel)apprenticeshipLevel));
+                nationalAchievementRates = nationalAchievementRates.Where(c => c.Age.Equals((Age)age));
             }
 
             return new GetProviderResponse
