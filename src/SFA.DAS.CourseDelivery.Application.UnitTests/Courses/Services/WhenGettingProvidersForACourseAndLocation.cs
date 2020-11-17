@@ -19,6 +19,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             double lon,
             short sortOrder,
             string sectorSubjectArea,
+            short level,
             List<Domain.Entities.ProviderWithStandardAndLocation> providers,
             [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
@@ -27,7 +28,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea)).ReturnsAsync(providers);
             
             //Act
-            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea);
+            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level);
             
             //Assert
             repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea), Times.Once);

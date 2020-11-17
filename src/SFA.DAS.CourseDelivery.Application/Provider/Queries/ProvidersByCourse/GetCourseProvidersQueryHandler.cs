@@ -20,13 +20,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
 
             if (request.Lat != null && request.Lon != null)
             {
-                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value, request.SortOrder, request.SectorSubjectArea);
+                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value, request.SortOrder, request.SectorSubjectArea, request.Level);
             }
             else
             {
-                providers = await _providerService.GetProvidersByStandardId(request.StandardId, request.SectorSubjectArea);    
+                providers = await _providerService.GetProvidersByStandardId(request.StandardId, request.SectorSubjectArea, request.Level);
             }
-            
             
             return new GetCourseProvidersQueryResponse
             {
