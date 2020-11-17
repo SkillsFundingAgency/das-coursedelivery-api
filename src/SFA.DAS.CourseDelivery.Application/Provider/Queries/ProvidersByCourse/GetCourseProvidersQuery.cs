@@ -9,5 +9,6 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
         public double? Lon { get ; set ; }
         public short SortOrder { get ; set ; }
         public string SectorSubjectArea { get ; set ; }
+        public short Level { get ; set ; }
     }
 }
