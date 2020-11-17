@@ -24,7 +24,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             await service.GetProvidersByStandardId(standardId, sectorSubjectArea, level);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardId(standardId, sectorSubjectArea), Times.Once);
+            repository.Verify(x=>x.GetByStandardId(standardId, sectorSubjectArea, level), Times.Once);
         }
     }
 }

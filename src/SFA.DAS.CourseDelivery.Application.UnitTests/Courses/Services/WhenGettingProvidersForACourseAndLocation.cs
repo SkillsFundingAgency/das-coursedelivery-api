@@ -25,13 +25,13 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             ProviderService service)
         {
             //Arrange
-            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea)).ReturnsAsync(providers);
+            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea, level)).ReturnsAsync(providers);
             
             //Act
             var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea), Times.Once);
+            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level), Times.Once);
             actual.Should().BeEquivalentTo(providers, options=> options.ExcludingMissingMembers());
         }
     }
