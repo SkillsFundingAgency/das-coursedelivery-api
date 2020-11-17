@@ -61,6 +61,66 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         }
 
         [Test, RecursiveMoqAutoData]
+        public void Then_Only_All_Levels_Rates_Are_Returned(ProviderLocation provider)
+        {
+            //Arrange
+            provider.AchievementRates = new List<AchievementRate>
+            {
+                new AchievementRate
+                {
+                    Age = Age.SixteenToEighteen,
+                    ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
+                },
+                new AchievementRate
+                {
+                    Age = Age.SixteenToEighteen,
+                    ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
+                },
+                new AchievementRate
+                {
+                    Age = Age.AllAges,
+                    ApprenticeshipLevel = ApprenticeshipLevel.Three
+                }
+            };
+            
+            //Act
+            var actual = new GetProviderResponse().Map(provider, (short)Age.Unknown, (short)ApprenticeshipLevel.AllLevels);
+            
+            //Assert
+            actual.AchievementRates.Count.Should().Be(2);
+        }
+        
+        [Test, RecursiveMoqAutoData]
+        public void Then_Only_All_Ages_Are_Returned(ProviderLocation provider)
+        {
+            //Arrange
+            provider.AchievementRates = new List<AchievementRate>
+            {
+                new AchievementRate
+                {
+                    Age = Age.SixteenToEighteen,
+                    ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
+                },
+                new AchievementRate
+                {
+                    Age = Age.AllAges,
+                    ApprenticeshipLevel = ApprenticeshipLevel.AllLevels
+                },
+                new AchievementRate
+                {
+                    Age = Age.AllAges,
+                    ApprenticeshipLevel = ApprenticeshipLevel.Three
+                }
+            };
+            
+            //Act
+            var actual = new GetProviderResponse().Map(provider, (short)Age.AllAges, (short)ApprenticeshipLevel.Unknown);
+            
+            //Assert
+            actual.AchievementRates.Count.Should().Be(2);
+        }
+
+        [Test, RecursiveMoqAutoData]
         public void Then_Maps_Feedback_Ratings_And_Attributes(ProviderLocation providerLocation)
         {
             var actual = new GetProviderResponse().Map(providerLocation);

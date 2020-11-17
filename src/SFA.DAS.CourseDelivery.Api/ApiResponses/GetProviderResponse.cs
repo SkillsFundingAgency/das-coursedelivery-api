@@ -24,12 +24,12 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         {
             var nationalAchievementRates = provider.AchievementRates.AsQueryable();
 
-            if (apprenticeshipLevel != 0)
+            if (age != 0)
             {
                 nationalAchievementRates = nationalAchievementRates.Where(c => c.Age.Equals((Age)age));
             }
 
-            if (age != 0)
+            if (apprenticeshipLevel != 0)
             {
                 nationalAchievementRates = nationalAchievementRates.Where(c=> c.ApprenticeshipLevel.Equals((ApprenticeshipLevel)apprenticeshipLevel));
             }
