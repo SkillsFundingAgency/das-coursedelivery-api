@@ -48,7 +48,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             var courses = await _readonlyDataContext
                 .ProviderStandards
+                .Include(c=>c.ProviderStandardLocation)
                 .Where(c => c.Ukprn == ukPrn)
+                .Where(c=>c.ProviderStandardLocation!=null && c.ProviderStandardLocation.Any())
                 .Select(c => c.StandardId).ToListAsync();
 
             return courses;

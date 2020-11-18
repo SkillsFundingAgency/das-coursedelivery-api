@@ -14,7 +14,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
         private Data.Repository.ProviderStandardRepository _providerStandardImportRepository;
         private List<ProviderStandard> _providerStandards;
         private List<int> _expectedCourses;
-        private const int StandardId = 2;
+        private const int StandardId = 20;
         private const int Ukprn = 12335;
 
         [SetUp]
@@ -34,18 +34,36 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
                 },
                 new ProviderStandard
                 {
-                    Ukprn = 12335,
+                    Ukprn = Ukprn,
                     StandardId = StandardId,
                     Provider = new Provider
                     {
                         Ukprn = Ukprn,
                         Name = "Second"
+                    },
+                    ProviderStandardLocation = new List<ProviderStandardLocation>
+                    {
+                        new ProviderStandardLocation
+                        {
+                            Ukprn = Ukprn
+                        }
                     }
                 },
                 new ProviderStandard
                 {
-                    Ukprn = 1233,
-                    StandardId = StandardId,
+                    Ukprn = Ukprn,
+                    StandardId = 2,
+                    Provider = new Provider
+                    {
+                        Ukprn = Ukprn,
+                        Name = "Second"
+                    },
+                    ProviderStandardLocation = new List<ProviderStandardLocation>()
+                },
+                new ProviderStandard
+                {
+                    Ukprn = Ukprn,
+                    StandardId = 3,
                     Provider = new Provider
                     {
                         Ukprn = 1233,
@@ -63,7 +81,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
         }
 
         [Test]
-        public async Task Then_The_Courses_Items_Are_Returned_By_StandardId()
+        public async Task Then_The_Courses_Items_Are_Returned_By_StandardId_That_Have_A_Delivery_Location()
         {
             //Act
             var actual = await _providerStandardImportRepository.GetCoursesByUkprn(Ukprn);
