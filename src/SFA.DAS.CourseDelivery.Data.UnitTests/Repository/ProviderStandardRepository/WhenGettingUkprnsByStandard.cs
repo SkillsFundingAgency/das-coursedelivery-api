@@ -30,6 +30,13 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
                     Provider = new Provider
                     {
                         Ukprn = 123
+                    },
+                    ProviderStandardLocation = new List<ProviderStandardLocation>
+                    {
+                        new ProviderStandardLocation
+                        {
+                            Ukprn = 1233
+                        }
                     }
 
                 },
@@ -51,6 +58,13 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
                     {
                         Ukprn = 1233,
                         Name="First"
+                    },
+                    ProviderStandardLocation = new List<ProviderStandardLocation>
+                    {
+                        new ProviderStandardLocation
+                        {
+                            Ukprn = 1233
+                        }
                     }
                 }
             };
@@ -64,13 +78,15 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
         }
         
         [Test]
-        public async Task Then_The_Distinct_Ukprns_Are_Returned()
+        public async Task Then_The_Distinct_Ukprns_Are_Returned_That_Have_A_Location()
         {
             //Act
             var actual = await _providerStandardImportRepository.GetUkprnsByStandard(StandardId);
 
             //Assert
-            actual.Should().BeEquivalentTo(_providerStandards.Where(c=>c.StandardId.Equals(StandardId)).Select(c => c.Ukprn).ToList());
+            actual.Should().BeEquivalentTo(_providerStandards.Where(c=>c.StandardId.Equals(StandardId) 
+                                                                       && c.ProviderStandardLocation!=null 
+                                                                       && c.ProviderStandardLocation.Any()).Select(c => c.Ukprn).ToList());
         }
     }
 }
