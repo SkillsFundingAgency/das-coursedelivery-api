@@ -48,7 +48,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             var courses = await _readonlyDataContext
                 .ProviderStandards
+                .Include(c=>c.ProviderStandardLocation)
                 .Where(c => c.Ukprn == ukPrn)
+                .Where(c=>c.ProviderStandardLocation!=null && c.ProviderStandardLocation.Any())
                 .Select(c => c.StandardId).ToListAsync();
 
             return courses;
@@ -56,8 +58,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<IEnumerable<int>> GetUkprnsByStandard(int standardId)
         {
-            var providers = await _readonlyDataContext.ProviderStandards
+            var providers = await _readonlyDataContext
+                .ProviderStandards
+                .Include(c=>c.ProviderStandardLocation)
                 .Where(c => c.StandardId.Equals(standardId))
+                .Where(c=>c.ProviderStandardLocation!=null && c.ProviderStandardLocation.Any())
                 .Select(c => c.Ukprn).Distinct().ToListAsync();
 
             return providers;
