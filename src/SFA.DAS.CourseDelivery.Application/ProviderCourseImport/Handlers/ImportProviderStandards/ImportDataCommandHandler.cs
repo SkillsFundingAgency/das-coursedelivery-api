@@ -27,12 +27,13 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Handlers.Impor
         }
         public async Task<Unit> Handle(ImportDataCommand request, CancellationToken cancellationToken)
         {
-            var providerImportTask =  _providerCourseImportService.ImportProviderCourses();
+            await _providerCourseImportService.ImportProviderCourses();
+            await _providerRegistrationImportService.ImportData();
+            
             var achievementRatesImportTask = _nationalAchievementRatesImportService.ImportData();
             var achievementRatesAllImportTask = _nationalAchievementRatesOverallImportService.ImportData();
-            var providerRegistrationImportTask = _providerRegistrationImportService.ImportData();
             
-            await Task.WhenAll(providerImportTask, achievementRatesImportTask, achievementRatesAllImportTask, providerRegistrationImportTask);
+            await Task.WhenAll(achievementRatesImportTask, achievementRatesAllImportTask);
 
             await _providerRegistrationAddressImportService.ImportAddressData();
             
