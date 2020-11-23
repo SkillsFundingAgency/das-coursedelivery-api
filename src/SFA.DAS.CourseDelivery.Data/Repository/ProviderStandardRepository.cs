@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Data.Repository
@@ -63,6 +64,8 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .Include(c=>c.ProviderStandardLocation)
                 .Where(c => c.StandardId.Equals(standardId))
                 .Where(c=>c.ProviderStandardLocation!=null && c.ProviderStandardLocation.Any())
+                .Where(c=>c.Provider.ProviderRegistration.ProviderTypeId == RoatpTypeConstants.ProviderTypeOfMainProvider 
+                          && c.Provider.ProviderRegistration.StatusId == RoatpTypeConstants.StatusOfActive)
                 .Select(c => c.Ukprn).Distinct().ToListAsync();
 
             return providers;

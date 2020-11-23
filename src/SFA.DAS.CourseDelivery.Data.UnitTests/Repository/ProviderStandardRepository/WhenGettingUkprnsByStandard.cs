@@ -5,7 +5,10 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.Courses.Data.UnitTests.DatabaseMock;
+using Provider = SFA.DAS.CourseDelivery.Domain.Entities.Provider;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Domain.Entities.ProviderRegistration;
 
 namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepository
 {
@@ -29,7 +32,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
                     StandardId = 1,
                     Provider = new Provider
                     {
-                        Ukprn = 123
+                        Ukprn = 123,
+                        ProviderRegistration = new ProviderRegistration()
                     },
                     ProviderStandardLocation = new List<ProviderStandardLocation>
                     {
@@ -47,7 +51,13 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
                     Provider = new Provider
                     {
                         Ukprn = Ukprn,
-                        Name = "Second"
+                        Name = "Second",
+                        ProviderRegistration = new ProviderRegistration
+                        {
+                            ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider,
+                            StatusId = RoatpTypeConstants.StatusOfActive,
+                            Ukprn =  Ukprn
+                        }
                     }
                 },
                 new ProviderStandard
@@ -57,7 +67,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
                     Provider = new Provider
                     {
                         Ukprn = 1233,
-                        Name="First"
+                        Name="First",
+                        ProviderRegistration = new ProviderRegistration()
                     },
                     ProviderStandardLocation = new List<ProviderStandardLocation>
                     {
@@ -78,7 +89,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
         }
         
         [Test]
-        public async Task Then_The_Distinct_Ukprns_Are_Returned_That_Have_A_Location()
+        public async Task Then_The_Distinct_Ukprns_Are_Returned_That_Have_A_Location_And_Are_Approved()
         {
             //Act
             var actual = await _providerStandardImportRepository.GetUkprnsByStandard(StandardId);
@@ -86,7 +97,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardRepos
             //Assert
             actual.Should().BeEquivalentTo(_providerStandards.Where(c=>c.StandardId.Equals(StandardId) 
                                                                        && c.ProviderStandardLocation!=null 
-                                                                       && c.ProviderStandardLocation.Any()).Select(c => c.Ukprn).ToList());
+                                                                       && c.ProviderStandardLocation.Any()
+                                                                       && c.Provider.ProviderRegistration.StatusId == 1
+                                                                       && c.Provider.ProviderRegistration.ProviderTypeId == 1)
+                .Select(c => c.Ukprn).ToList());
         }
     }
 }
