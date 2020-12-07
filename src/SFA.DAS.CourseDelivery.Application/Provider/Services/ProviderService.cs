@@ -22,6 +22,14 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             _providerStandardRepository = providerStandardRepository;
             _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
         }
+
+        public async Task<IEnumerable<ProviderSummary>> GetRegisteredProviders()
+        {
+            var providersFromRepo = await _providerRepository.GetAllRegistered();
+
+            return providersFromRepo.Select(provider => (ProviderSummary)provider);
+        }
+
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId, string sectorSubjectArea, short level)
         {
             var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea, level)).ToList();
