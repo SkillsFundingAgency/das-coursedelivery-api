@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.CoursesByProvider;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.RegisteredProviders;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -22,6 +23,28 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetProviders()
+        {
+            try
+            {
+                var queryResult = await _mediator.Send(new GetRegisteredProvidersQuery());
+
+                var response = new GetProvidersResponse
+                {
+                    Providers = queryResult.RegisteredProviders
+                };
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Unable to get providers");
+                return BadRequest();
+            }
         }
 
         [HttpGet]
