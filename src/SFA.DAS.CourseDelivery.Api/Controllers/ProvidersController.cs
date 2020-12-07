@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.CoursesByProvider;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.Provider;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.RegisteredProviders;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.Providers;
+using GetProvidersResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProvidersResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -31,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             try
             {
-                var queryResult = await _mediator.Send(new GetRegisteredProvidersQuery());
+                var queryResult = await _mediator.Send(new GetProvidersQuery());
 
                 var response = new GetProvidersResponse
                 {

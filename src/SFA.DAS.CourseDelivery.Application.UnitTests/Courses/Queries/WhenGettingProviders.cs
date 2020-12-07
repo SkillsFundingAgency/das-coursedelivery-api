@@ -5,21 +5,21 @@ using AutoFixture.NUnit3;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.RegisteredProviders;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.Providers;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Domain.Models;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
 {
-    public class WhenGettingRegisteredProviders
+    public class WhenGettingProviders
     {
         [Test, MoqAutoData]
         public async Task Then_Gets_Providers_From_The_Service(
-            GetRegisteredProvidersQuery query,
+            GetProvidersQuery query,
             List<ProviderSummary> providersFromService,
             [Frozen] Mock<IProviderService> mockProviderService,
-            GetRegisteredProvidersQueryHandler handler)
+            GetProvidersQueryHandler handler)
         {
             //Arrange
             mockProviderService

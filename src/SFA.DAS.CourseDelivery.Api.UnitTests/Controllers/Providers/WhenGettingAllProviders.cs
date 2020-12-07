@@ -10,8 +10,9 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
-using SFA.DAS.CourseDelivery.Application.Provider.Queries.RegisteredProviders;
+using SFA.DAS.CourseDelivery.Application.Provider.Queries.Providers;
 using SFA.DAS.Testing.AutoFixture;
+using GetProvidersResponse = SFA.DAS.CourseDelivery.Application.Provider.Queries.Providers.GetProvidersResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
 {
@@ -20,19 +21,19 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
         [Test, MoqAutoData]
         public async Task Then_Gets_StandardId_List_From_Mediator(
             int ukprn,
-            GetRegisteredProvidersResponse queryResult,
+            GetProvidersResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] ProvidersController controller)
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
-                    It.IsAny<GetRegisteredProvidersQuery>(),
+                    It.IsAny<GetProvidersQuery>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
             var controllerResult = await controller.GetProviders() as ObjectResult;
 
-            var model = controllerResult.Value as GetProvidersResponse;
+            var model = controllerResult.Value as Api.ApiResponses.GetProvidersResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
             model.Providers.Should().BeEquivalentTo(queryResult.RegisteredProviders);
         }
@@ -44,7 +45,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
-                    It.IsAny<GetRegisteredProvidersQuery>(),
+                    It.IsAny<GetProvidersQuery>(),
                     It.IsAny<CancellationToken>()))
                 .Throws<InvalidOperationException>();
 
