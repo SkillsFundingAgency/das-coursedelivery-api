@@ -11,20 +11,8 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
     {
         public static void LoadTestData(CourseDeliveryReadonlyDataContext context)
         {
-            context.Providers.Add(new Provider
-            {
-                Ukprn = 20002451,
-                Email = "test@test.com",
-                Name = "Test provider",
-                TradingName = "Test Alternate Trading Name"
-            });
-            context.ProviderRegistrations.Add(new ProviderRegistration
-            {
-                Ukprn = 20002451,
-                StatusId = 1,
-                StatusDate = DateTime.UtcNow,
-                ProviderTypeId = 1
-            });
+            context.Providers.AddRange(GetAllProviders());
+            context.ProviderRegistrations.AddRange(GetAllProviderRegistrations());
             context.ProviderStandards.Add(new ProviderStandard
             {
                 Ukprn = 20002451,
@@ -56,9 +44,43 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
 
         public static void ClearTestData(CourseDeliveryDataContext context)
         {
-            
+            context.Providers.RemoveRange(GetAllProviders());
+            context.ProviderRegistrations.RemoveRange(GetAllProviderRegistrations());
             context.SaveChanges();
         }
 
+        public static IEnumerable<Provider> GetAllProviders()
+        {
+            return new List<Provider>
+            {
+                new Provider
+                {
+                    Ukprn = 20002451,
+                    Email = "test@test.com",
+                    Name = "Test provider",
+                    TradingName = "Test Alternate Trading Name"
+                },new Provider
+                {
+                    Ukprn = 20002452,
+                    Email = "test2@test.com",
+                    Name = "Test2 provider",
+                    TradingName = "Test2 Alternate Trading Name"
+                }
+            };
+        }
+
+        public static IEnumerable<ProviderRegistration> GetAllProviderRegistrations()
+        {
+            return new List<ProviderRegistration>
+            {
+                new ProviderRegistration
+                {
+                    Ukprn = 20002451,
+                    StatusId = 1,
+                    StatusDate = DateTime.UtcNow,
+                    ProviderTypeId = 1
+                }
+            };
+        }
     }
 }
