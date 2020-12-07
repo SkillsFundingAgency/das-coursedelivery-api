@@ -8,7 +8,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.Providers;
 using SFA.DAS.Testing.AutoFixture;
@@ -19,8 +18,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
     public class WhenGettingAllProviders
     {
         [Test, MoqAutoData]
-        public async Task Then_Gets_StandardId_List_From_Mediator(
-            int ukprn,
+        public async Task Then_Gets_Providers_From_Mediator(
             GetProvidersResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] ProvidersController controller)
