@@ -160,7 +160,7 @@ inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardI
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
-    and NAR.Age in ({level},4)
+    and NAR.Age = 4 and NAR.ApprenticeshipLevel in ({level},1) 
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where ps.StandardId = {standardId}
 
@@ -209,7 +209,7 @@ inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} and NAR.Age = 4  
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where ps.StandardId = {standardId}
@@ -271,7 +271,7 @@ inner join (select ukprn,
                     else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} and NAR.Age in ({level},4)
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} and NAR.Age = 4 and NAR.ApprenticeshipLevel in ({level},1) 
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where ps.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
@@ -331,7 +331,7 @@ inner join (select ukprn,
                     else -1 end as DistanceInMiles from [ProviderRegistration]) pdist on pdist.ukprn = P.ukprn
 inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea}
+left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} and NAR.Age=4
 left join ProviderRegistrationFeedbackAttribute PRFA on PRFA.UkPrn = p.UkPrn
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
 where ps.StandardId = {standardId}
