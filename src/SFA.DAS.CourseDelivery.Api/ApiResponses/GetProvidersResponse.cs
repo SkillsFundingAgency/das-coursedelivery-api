@@ -5,6 +5,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
     public class GetProvidersResponse
     {
-        public IEnumerable<ProviderSummary> Providers { get; set; }
+        public IEnumerable<GetProviderSummaryResponse> Providers { get; set; }
     }
 }

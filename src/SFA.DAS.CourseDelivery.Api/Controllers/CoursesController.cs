@@ -11,7 +11,6 @@ using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.GetUkprnsByCourseAndLocation;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse;
-using GetProviderResponse = SFA.DAS.CourseDelivery.Api.ApiResponses.GetProviderResponse;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -75,7 +74,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=> new GetProviderResponse().Map(c, (short)age))
+                    .Select(c=> new GetProviderDetailResponse().Map(c, (short)age))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
@@ -95,8 +94,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers/{ukprn}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderResponse))]
-        [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderResponse))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderDetailResponse))]
+        [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderDetailResponse))]
         public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, string sectorSubjectArea, double? lat = null, double? lon = null)
         {
             var queryResult = await _mediator.Send(new GetCourseProviderQuery
@@ -113,7 +112,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new GetProviderResponse().Map(queryResult.ProviderStandardLocation));
+            return Ok(new GetProviderDetailResponse().Map(queryResult.ProviderStandardLocation));
         }
     }
 }
