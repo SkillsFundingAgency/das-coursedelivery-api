@@ -29,7 +29,7 @@ jobs:
     name: 'DAS - Continuous Integration'
     demands:
     - Agent.OS -equals Linux
-    - Agent.Name -equals azure-pipelines-build-agent-5d7f7bd6b-l42xs
+    - Agent.Name -equals azure-pipelines-build-agent-6f786444bb-dftlm
   workspace:
     clean: all
   steps:
