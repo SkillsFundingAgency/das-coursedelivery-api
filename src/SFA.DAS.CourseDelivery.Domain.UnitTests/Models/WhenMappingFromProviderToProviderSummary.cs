@@ -19,6 +19,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Phone.Should().Be(source.Phone);
             actual.ContactUrl.Should().Be(source.Website);
             actual.TradingName.Should().Be(source.TradingName);
+            actual.Address.Should().BeEquivalentTo(source.ProviderRegistration, options => options.ExcludingMissingMembers());
         }
 
         [Test]

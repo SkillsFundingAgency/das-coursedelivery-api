@@ -10,6 +10,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string Email { get ; set ; }
         public string ContactUrl { get ; set ; }
         public string TradingName { get ; set ; }
+        public ProviderSummaryAddress Address { get; set; }
 
         public static implicit operator ProviderSummary(Provider source)
         {
@@ -20,7 +21,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Email = source.Email,
                 Phone = source.Phone,
                 TradingName = source.TradingName,
-                ContactUrl = source.Website
+                ContactUrl = source.Website,
+                Address = source.ProviderRegistration
             };
         }
     }
