@@ -6,6 +6,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
 {
     public interface IProviderService
     {
+        Task<IEnumerable<ProviderSummary>> GetRegisteredProviders();
         Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId, string sectorSubjectArea, short level);
         Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon, string sectorSubjectArea);
         Task<IEnumerable<Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description);
