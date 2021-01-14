@@ -14,7 +14,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         [Test, RecursiveMoqAutoData]
         public void Then_Maps_Fields(ProviderLocation provider)
         {
-            var actual = new GetProviderResponse().Map(provider);
+            var actual = new GetProviderDetailResponse().Map(provider);
 
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
@@ -25,7 +25,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         [Test, RecursiveMoqAutoData]
         public void Then_The_Delivery_Modes_Are_Mapped_If_Available(ProviderLocation providerLocation)
         {
-            var actual = new GetProviderResponse().Map(providerLocation);
+            var actual = new GetProviderDetailResponse().Map(providerLocation);
 
             actual.DeliveryTypes.Count.Should().Be(providerLocation.DeliveryTypes.Count);
         }
@@ -54,7 +54,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             };
             
             //Act
-            var actual = new GetProviderResponse().Map(provider, (short)Age.AllAges);
+            var actual = new GetProviderDetailResponse().Map(provider, (short)Age.AllAges);
             
             //Assert
             actual.AchievementRates.Count.Should().Be(2);
@@ -63,7 +63,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         [Test, RecursiveMoqAutoData]
         public void Then_Maps_Feedback_Ratings_And_Attributes(ProviderLocation providerLocation)
         {
-            var actual = new GetProviderResponse().Map(providerLocation);
+            var actual = new GetProviderDetailResponse().Map(providerLocation);
 
             actual.FeedbackRatings.Count.Should().Be(providerLocation.FeedbackRating.Count);
             actual.FeedbackAttributes.Count.Should().Be(providerLocation.FeedbackAttributes.Count);

@@ -15,6 +15,10 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
 
             actual.Name.Should().Be(source.Name);
             actual.Ukprn.Should().Be(source.Ukprn);
+            actual.Email.Should().Be(source.Email);
+            actual.Phone.Should().Be(source.Phone);
+            actual.ContactUrl.Should().Be(source.Website);
+            actual.TradingName.Should().Be(source.TradingName);
         }
 
         [Test]

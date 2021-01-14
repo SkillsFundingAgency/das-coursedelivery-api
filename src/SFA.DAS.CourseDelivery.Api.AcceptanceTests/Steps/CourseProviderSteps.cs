@@ -31,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
                 Assert.Fail($"scenario context does not contain value for key [{ContextKeys.HttpResponse}]");
             }
 
-            var model = await HttpUtilities.ReadContent<GetProviderResponse>(result.Content);
+            var model = await HttpUtilities.ReadContent<GetProviderDetailResponse>(result.Content);
             
             model.Should().NotBeNull();
             model.Ukprn.Should().Be(ukprn);

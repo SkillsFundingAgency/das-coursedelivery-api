@@ -36,7 +36,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
                 var response = new GetProvidersResponse
                 {
-                    Providers = queryResult.RegisteredProviders
+                    Providers = queryResult.RegisteredProviders.Select(c=>(GetProviderSummaryResponse)c)
                 };
 
                 return Ok(response);

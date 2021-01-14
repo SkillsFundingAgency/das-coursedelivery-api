@@ -41,9 +41,9 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
 
             var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn,sectorSubjectArea, lat, lon) as ObjectResult;
 
-            var model = controllerResult.Value as GetProviderResponse;
+            var model = controllerResult.Value as GetProviderDetailResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            model.Should().BeAssignableTo<GetProviderResponse>();
+            model.Should().BeAssignableTo<GetProviderDetailResponse>();
         }
 
         [Test, RecursiveMoqAutoData]
