@@ -11,6 +11,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string ContactUrl { get ; set ; }
         public string Email { get ; set ; }
         public string Phone { get ; set ; }
+        public GetProviderSummaryAddress Address { get; set; }
 
         public static implicit operator GetProviderSummaryResponse(ProviderSummary source)
         {
@@ -21,7 +22,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Name = source.Name,
                 Phone = source.Phone,
                 TradingName = source.TradingName,
-                ContactUrl = source.ContactUrl
+                ContactUrl = source.ContactUrl,
+                Address = source.Address
             };
         }
     }

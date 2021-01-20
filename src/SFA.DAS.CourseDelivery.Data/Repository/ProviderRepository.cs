@@ -70,6 +70,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         public async Task<List<Provider>> GetAllRegistered()
         {
             var providers = await _readonlyDataContext.Providers
+                .Include(provider => provider.ProviderRegistration)
                 .FilterRegisteredProviders().ToListAsync();
 
             return providers;
