@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="9777f52c-3ea2-4d25-aad7-34395e9ed428" ChangeDateTime="02/02/2021 14:11:47">
+    <Property Name="ElementName" Value="[dbo].[Shortlist].[ProviderId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Shortlist]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProviderUkprn" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="02d32ac5-35b8-4408-8f52-35ab582be719" ChangeDateTime="02/02/2021 14:12:56">
+    <Property Name="ElementName" Value="[dbo].[Shortlist].[ProviderUkprn]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Shortlist]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Ukprn" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b7384c8e-dfd5-4f35-aff3-47e6d8f523a8" ChangeDateTime="02/02/2021 14:13:08">
+    <Property Name="ElementName" Value="[dbo].[Shortlist].[Ukprn]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Shortlist]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProviderUkprn" />
+  </Operation>
+</Operations>

@@ -78,5 +78,9 @@
     <Build Include="Tables\StandardLocation_Import.sql" />
     <Build Include="Tables\ProviderRegistration.sql" />
     <Build Include="Tables\ProviderRegistration_Import.sql" />
+    <Build Include="Tables\Shortlist.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SFA.DAS.CourseDelivery.Database.refactorlog" />
   </ItemGroup>
 </Project>

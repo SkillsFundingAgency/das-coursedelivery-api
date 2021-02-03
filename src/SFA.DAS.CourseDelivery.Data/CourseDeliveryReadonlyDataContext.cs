@@ -24,6 +24,7 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         public DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
+        public DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
         
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -73,6 +74,7 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderWithStandardAndLocation());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
+            modelBuilder.ApplyConfiguration(new Shortlist());
             
             base.OnModelCreating(modelBuilder);
         }
