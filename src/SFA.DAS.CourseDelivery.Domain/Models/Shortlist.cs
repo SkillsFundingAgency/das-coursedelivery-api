@@ -12,7 +12,14 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
 
         public static implicit operator Shortlist(Entities.Shortlist source)
         {
-            return new Shortlist();
+            return new Shortlist
+            {
+                Id = source.Id,
+                ShortlistUserId = source.ShortlistUserId,
+                ProviderUkprn = source.ProviderUkprn,
+                CourseId = source.CourseId,
+                LocationId = source.LocationId
+            };
         }
     }
 }
