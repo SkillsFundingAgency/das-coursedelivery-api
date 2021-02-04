@@ -21,7 +21,4 @@
     <ProjectReference Include="..\SFA.DAS.CourseDelivery.Domain\SFA.DAS.CourseDelivery.Domain.csproj" />
     <ProjectReference Include="..\SFA.DAS.CourseDelivery.Infrastructure\SFA.DAS.CourseDelivery.Infrastructure.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shortlist\Queries\" />
-  </ItemGroup>
 </Project>
