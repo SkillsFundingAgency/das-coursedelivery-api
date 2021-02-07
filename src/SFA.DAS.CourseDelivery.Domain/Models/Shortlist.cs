@@ -17,8 +17,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Id = source.Id,
                 ShortlistUserId = source.ShortlistUserId,
                 ProviderUkprn = source.ProviderUkprn,
-                CourseId = source.CourseId,
-                LocationId = source.LocationId
+                CourseId = source.CourseId
             };
         }
     }

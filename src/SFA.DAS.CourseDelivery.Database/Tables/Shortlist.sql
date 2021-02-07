@@ -4,5 +4,8 @@
     [ShortlistUserId] UNIQUEIDENTIFIER NOT NULL, 
     [ProviderUkprn] INT NOT NULL, 
     [CourseId] INT NOT NULL, 
-    [LocationId] INT NULL
+    [LocationDescription] VARCHAR(1000) NULL, 
+    [Lat] FLOAT NULL, 
+    [Long] FLOAT NULL, 
+    [CreatedDate] DATETIME NOT NULL DEFAULT GETDATE()
 )

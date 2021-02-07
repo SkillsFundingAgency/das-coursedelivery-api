@@ -11,11 +11,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
         {
             context.Providers.AddRange(GetAllProviders());
             context.ProviderRegistrations.AddRange(GetAllProviderRegistrations());
-            context.ProviderStandards.Add(new ProviderStandard
-            {
-                Ukprn = 20002451,
-                StandardId = 10
-            });
+            context.ProviderStandards.AddRange(GetAllProviderStandards());
             context.ProviderStandardLocations.Add(new ProviderStandardLocation
             {
                 Ukprn = 20002451,
@@ -44,6 +40,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
         public static void ClearTestData(CourseDeliveryDataContext context)
         {
             context.Providers.RemoveRange(GetAllProviders());
+            context.ProviderStandards.RemoveRange(GetAllProviderStandards());
             context.ProviderRegistrations.RemoveRange(GetAllProviderRegistrations());
             context.Shortlists.RemoveRange(GetAllShortlists());
             context.SaveChanges();
@@ -66,6 +63,23 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                     Name = "Test2 provider",
                     TradingName = "Test2 Alternate Trading Name"
                 }
+            };
+        }
+
+        public static IEnumerable<ProviderStandard> GetAllProviderStandards()
+        {
+            return new List<ProviderStandard>
+            {
+                new ProviderStandard
+                {
+                    Ukprn = 20002451,
+                    StandardId = 10
+                },
+                /*new ProviderStandard
+                {
+                    Ukprn = 20002451,
+                    StandardId = 11
+                }*/
             };
         }
 
@@ -95,15 +109,16 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                     ShortlistUserId = Guid.Parse(ShortlistUserId),
                     ProviderUkprn = 20002451,
                     CourseId = 10,
-                    LocationId = 2555
+                    LocationDescription = "Somewhere nice",
+                    Lat = 0,
+                    Long = 0
                 },
                 new Shortlist
                 {
                     Id = Guid.Parse("74f5be32-5e47-4ef2-94e2-a8de66e14148"),
                     ShortlistUserId = Guid.Parse(ShortlistUserId),
                     ProviderUkprn = 20002451,
-                    CourseId = 10,
-                    LocationId = 2555
+                    CourseId = 11
                 },
                 new Shortlist
                 {
@@ -111,7 +126,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                     ShortlistUserId = Guid.Parse("172d5dae-d652-447d-ae7e-a95cb2fcbb72"),//different user
                     ProviderUkprn = 20002451,
                     CourseId = 10,
-                    LocationId = 2555
+                    LocationDescription = "Different location"
                 }
             };
         }

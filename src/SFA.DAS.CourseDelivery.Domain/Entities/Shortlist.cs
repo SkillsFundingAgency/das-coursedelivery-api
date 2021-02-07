@@ -8,6 +8,9 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public Guid ShortlistUserId { get; set; }
         public int ProviderUkprn { get; set; }
         public int CourseId { get; set; }
-        public int? LocationId { get; set; }
+        public string LocationDescription { get; set; }
+        public float? Lat { get; set; }
+        public float? Long { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
