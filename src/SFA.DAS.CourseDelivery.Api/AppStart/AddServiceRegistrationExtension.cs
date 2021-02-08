@@ -10,6 +10,7 @@ using SFA.DAS.CourseDelivery.Application.Provider.Services;
 using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
+using SFA.DAS.CourseDelivery.Data.Repository.Import;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Infrastructure.Api;
 using SFA.DAS.CourseDelivery.Infrastructure.PageParsing;

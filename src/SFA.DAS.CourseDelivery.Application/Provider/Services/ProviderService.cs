@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +40,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
         public async Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon, string sectorSubjectArea)
         {
-            if (lat ==null && lon == null)
+            if (lat == null || lon == null)
             {
                 var providerResult = await _providerRepository.GetByUkprnAndStandardId(ukPrn, standardId, sectorSubjectArea);
 
@@ -54,7 +53,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             
         }
 
-        public async Task<IEnumerable<Domain.Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description)
+        public async Task<IEnumerable<NationalAchievementRateOverall>> GetOverallAchievementRates(string description)
         {
             var items = await _nationalAchievementRateOverallRepository.GetBySectorSubjectArea(description);
 
