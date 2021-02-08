@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
-using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistItemsForUser;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUser;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -31,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             try
             {
-                var queryResult = await _mediator.Send(new GetShortlistItemsForUserQuery
+                var queryResult = await _mediator.Send(new GetShortlistForUserQuery
                 {
                     UserId = userId
                 });

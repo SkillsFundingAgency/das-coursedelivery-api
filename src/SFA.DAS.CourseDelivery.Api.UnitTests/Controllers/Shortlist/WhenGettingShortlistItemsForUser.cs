@@ -11,7 +11,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Api.Controllers;
-using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistItemsForUser;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUser;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
@@ -21,13 +21,13 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_ShortlistItems_From_Mediator(
             Guid userId,
-            GetShortlistItemsForUserQueryResponse queryResult,
+            GetShortlistForUserQueryResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] ShortlistController controller)
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
-                    It.Is<GetShortlistItemsForUserQuery>(query =>
+                    It.Is<GetShortlistForUserQuery>(query =>
                         query.UserId == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
@@ -48,7 +48,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
         {
             mockMediator
                 .Setup(mediator => mediator.Send(
-                    It.IsAny<GetShortlistItemsForUserQuery>(),
+                    It.IsAny<GetShortlistForUserQuery>(),
                     It.IsAny<CancellationToken>()))
                 .Throws<InvalidOperationException>();
 

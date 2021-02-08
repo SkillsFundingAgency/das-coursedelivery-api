@@ -13,6 +13,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string LocationDescription { get; set; }
         public float? Lat { get; set; }
         public float? Long { get; set; }
+        public ProviderLocation ProviderLocation { get; set; }
 
         public static implicit operator Shortlist(Entities.Shortlist source)
         {
@@ -22,6 +23,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 ShortlistUserId = source.ShortlistUserId,
                 ProviderUkprn = source.ProviderUkprn,
                 CourseId = source.CourseId,
+                CourseLevel = source.CourseLevel,
+                CourseSector = source.CourseSector,
                 LocationDescription = source.LocationDescription,
                 Lat = source.Lat,
                 Long = source.Long
