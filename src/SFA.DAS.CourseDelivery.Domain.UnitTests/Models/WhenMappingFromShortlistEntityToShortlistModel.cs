@@ -16,7 +16,11 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.ShortlistUserId.Should().Be(source.ShortlistUserId);
             actual.ProviderUkprn.Should().Be(source.ProviderUkprn);
             actual.CourseId.Should().Be(source.CourseId);
-            //actual.LocationId.Should().Be(source.LocationId);
+            actual.CourseLevel.Should().Be(source.CourseLevel);
+            actual.CourseSector.Should().Be(source.CourseSector);
+            actual.LocationDescription.Should().Be(source.LocationDescription);
+            actual.Lat.Should().Be(source.Lat);
+            actual.Long.Should().Be(source.Long);
         }
 
         [Test]

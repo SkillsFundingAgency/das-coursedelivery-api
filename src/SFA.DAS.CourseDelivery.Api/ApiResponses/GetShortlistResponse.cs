@@ -9,7 +9,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public Guid ShortlistUserId { get; set; }
         public int ProviderUkprn { get; set; }
         public int CourseId { get; set; }
-        public int? LocationId { get; set; }
 
         public static implicit operator GetShortlistResponse(Shortlist source)
         {
@@ -18,8 +17,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Id = source.Id,
                 ShortlistUserId = source.ShortlistUserId,
                 ProviderUkprn = source.ProviderUkprn,
-                CourseId = source.CourseId,
-                LocationId = source.LocationId
+                CourseId = source.CourseId
             };
         }
     }

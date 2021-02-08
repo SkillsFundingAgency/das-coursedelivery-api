@@ -8,7 +8,11 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public Guid ShortlistUserId { get; set; }
         public int ProviderUkprn { get; set; }
         public int CourseId { get; set; }
-        public int? LocationId { get; set; }
+        public int CourseLevel { get; set; }
+        public string CourseSector { get; set; }
+        public string LocationDescription { get; set; }
+        public float? Lat { get; set; }
+        public float? Long { get; set; }
 
         public static implicit operator Shortlist(Entities.Shortlist source)
         {
@@ -17,7 +21,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Id = source.Id,
                 ShortlistUserId = source.ShortlistUserId,
                 ProviderUkprn = source.ProviderUkprn,
-                CourseId = source.CourseId
+                CourseId = source.CourseId,
+                LocationDescription = source.LocationDescription,
+                Lat = source.Lat,
+                Long = source.Long
             };
         }
     }

@@ -17,7 +17,6 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             actual.ShortlistUserId.Should().Be(source.ShortlistUserId);
             actual.ProviderUkprn.Should().Be(source.ProviderUkprn);
             actual.CourseId.Should().Be(source.CourseId);
-            actual.LocationId.Should().Be(source.LocationId);
         }
     }
 }
