@@ -8,5 +8,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     public interface IShortlistRepository
     {
         Task<IEnumerable<Shortlist>> GetAllForUser(Guid userId);
+        Task Insert(Shortlist item);
     }
 }

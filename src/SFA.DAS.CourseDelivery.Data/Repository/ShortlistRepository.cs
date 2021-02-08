@@ -27,5 +27,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .Where(shortlist => shortlist.ShortlistUserId == userId)
                 .ToListAsync();
         }
+
+        public async Task Insert(Shortlist item)
+        {
+            await _dataContext.Shortlists.AddAsync(item);
+            _dataContext.SaveChanges();
+        }
     }
 }
