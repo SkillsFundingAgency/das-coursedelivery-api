@@ -13,7 +13,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public List<GetFeedbackAttributeResponse> FeedbackAttributes { get; set; }
         public List<GetFeedbackRatingResponse> FeedbackRatings { get; set; }
 
-        public GetProviderDetailResponse Map(ProviderLocation provider, short age = 0)
+        public static GetProviderDetailResponse Map(ProviderLocation provider, short age = 0)
         {
             var nationalAchievementRates = provider.AchievementRates.AsQueryable();
 

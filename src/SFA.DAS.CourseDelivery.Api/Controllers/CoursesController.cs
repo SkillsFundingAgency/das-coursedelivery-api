@@ -74,7 +74,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=> new GetProviderDetailResponse().Map(c, (short)age))
+                    .Select(c=> GetProviderDetailResponse.Map(c, (short)age))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
@@ -112,7 +112,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new GetProviderDetailResponse().Map(queryResult.ProviderStandardLocation));
+            return Ok(GetProviderDetailResponse.Map(queryResult.ProviderStandardLocation));
         }
     }
 }
