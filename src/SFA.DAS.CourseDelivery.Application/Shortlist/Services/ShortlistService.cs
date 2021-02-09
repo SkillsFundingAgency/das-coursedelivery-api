@@ -20,5 +20,10 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
             var shortlist = await _shortlistRepository.GetAllForUser(userId);
             return shortlist.Select(entity => (Domain.Models.Shortlist) entity);
         }
+
+        public async Task CreateShortlistItem(Domain.Entities.Shortlist shortlist)
+        {
+            await _shortlistRepository.Insert(shortlist);
+        }
     }
 }
