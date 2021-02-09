@@ -10,5 +10,8 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistI
         public int Level { get ; set ; }
         public string SectorSubjectArea { get ; set ; }
         public int ProviderUkprn { get ; set ; }
+        public float? Lat { get ; set ; }
+        public float? Lon { get ; set ; }
+        public string LocationDescription { get ; set ; }
     }
 }
