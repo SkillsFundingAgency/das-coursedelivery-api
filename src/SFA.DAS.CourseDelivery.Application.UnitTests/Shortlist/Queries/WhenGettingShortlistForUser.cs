@@ -44,7 +44,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Queries
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
 
             //Assert
-            var actualItems = actual.ShortlistItems.ToList();
+            var actualItems = actual.Shortlist.ToList();
             for (var i = 0; i < actualItems.Count; i++)
             {
                 actualItems[i].Id.Should().Be(shortlistFromService[i].Id);

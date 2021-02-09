@@ -4,6 +4,6 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUs
 {
     public class GetShortlistForUserQueryResponse
     {
-        public IEnumerable<Domain.Models.Shortlist> ShortlistItems { get; set; }
+        public IEnumerable<Domain.Models.Shortlist> Shortlist { get; set; }
     }
 }

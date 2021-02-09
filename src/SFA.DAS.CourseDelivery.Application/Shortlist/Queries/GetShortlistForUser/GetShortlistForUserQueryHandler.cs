@@ -34,7 +34,7 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUs
 
             return new GetShortlistForUserQueryResponse
             {
-                ShortlistItems = shortlist
+                Shortlist = shortlist
             };
         }
     }

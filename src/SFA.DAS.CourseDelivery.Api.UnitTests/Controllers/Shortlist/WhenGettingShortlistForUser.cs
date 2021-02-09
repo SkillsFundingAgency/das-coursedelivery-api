@@ -16,10 +16,10 @@ using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
 {
-    public class WhenGettingShortlistItemsForUser
+    public class WhenGettingShortlistForUser
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_ShortlistItems_From_Mediator(
+        public async Task Then_Gets_Shortlist_From_Mediator(
             Guid userId,
             GetShortlistForUserQueryResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
@@ -32,12 +32,12 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetAllShortlistItemsForUser(userId) as ObjectResult;
+            var controllerResult = await controller.GetShortlistForUser(userId) as ObjectResult;
 
             controllerResult!.StatusCode.Should().Be((int)HttpStatusCode.OK);
             var model = controllerResult.Value as GetAllShortlistItemsForUserResponse;
             model!.ShortlistItems.Should().BeEquivalentTo(
-                queryResult.ShortlistItems.Select(shortlist => (GetShortlistResponse) shortlist));
+                queryResult.Shortlist.Select(shortlist => (GetShortlistResponse) shortlist));
         }
 
         [Test, RecursiveMoqAutoData]
@@ -52,7 +52,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
                     It.IsAny<CancellationToken>()))
                 .Throws<InvalidOperationException>();
 
-            var controllerResult = await controller.GetAllShortlistItemsForUser(userId) as StatusCodeResult;
+            var controllerResult = await controller.GetShortlistForUser(userId) as StatusCodeResult;
 
             controllerResult!.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }

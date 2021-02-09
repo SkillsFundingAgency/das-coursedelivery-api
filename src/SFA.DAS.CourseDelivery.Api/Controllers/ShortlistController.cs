@@ -27,7 +27,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
 
         [HttpGet]
         [Route("users/{userId}")]
-        public async Task<IActionResult> GetAllShortlistItemsForUser(Guid userId)
+        public async Task<IActionResult> GetShortlistForUser(Guid userId)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 });
                 var response = new GetAllShortlistItemsForUserResponse
                 {
-                    ShortlistItems = queryResult.ShortlistItems.Select(shortlist => (GetShortlistResponse)shortlist)
+                    ShortlistItems = queryResult.Shortlist.Select(shortlist => (GetShortlistResponse)shortlist)
                 };
                 return Ok(response);
             }
