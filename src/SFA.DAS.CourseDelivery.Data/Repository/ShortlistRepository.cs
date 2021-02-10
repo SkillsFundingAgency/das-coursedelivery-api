@@ -28,6 +28,17 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .ToListAsync();
         }
 
+        public async Task<Shortlist> GetShortlistUserItem(Guid shortlistUserId, int courseId, int providerUkprn, float? lat, float? lon)
+        {
+            return await _readonlyDataContext.Shortlists.SingleOrDefaultAsync(c=>
+                c.ShortlistUserId.Equals(shortlistUserId)
+                && c.CourseId.Equals(courseId)
+                && c.ProviderUkprn.Equals(providerUkprn)
+                && c.Lat.Equals(lat)
+                && c.Long.Equals(lon)
+                );
+        }
+
         public async Task Insert(Shortlist item)
         {
             await _dataContext.Shortlists.AddAsync(item);

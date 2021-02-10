@@ -8,7 +8,8 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
         public void Configure(EntityTypeBuilder<Domain.Entities.Shortlist> builder)
         {
             builder.ToTable("Shortlist");
-            builder.HasKey(x=> x.Id);
+            builder.HasKey(x => x.Id);
+            builder.HasIndex(x=> new {x.ShortlistUserId, x.CourseId, x.ProviderUkprn, x.Lat,x.Long}).IsUnique();
 
             builder.Property(x => x.Id).HasColumnName("Id").HasColumnType("UniqueIdentifier").IsRequired();
             builder.Property(x => x.ShortlistUserId).HasColumnName("ShortlistUserId").HasColumnType("UniqueIdentifier").IsRequired();
