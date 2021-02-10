@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -10,13 +11,16 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 {
     public class ShortlistRepository : IShortlistRepository
     {
+        private readonly ILogger<ShortlistRepository> _logger;
         private readonly ICourseDeliveryDataContext _dataContext;
         private readonly ICourseDeliveryReadonlyDataContext _readonlyDataContext;
 
         public ShortlistRepository(
+            ILogger<ShortlistRepository> logger,
             ICourseDeliveryDataContext dataContext, 
             ICourseDeliveryReadonlyDataContext readonlyDataContext)
         {
+            _logger = logger;
             _dataContext = dataContext;
             _readonlyDataContext = readonlyDataContext;
         }
@@ -41,8 +45,15 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task Insert(Shortlist item)
         {
-            await _dataContext.Shortlists.AddAsync(item);
-            _dataContext.SaveChanges();
+            try
+            {
+                await _dataContext.Shortlists.AddAsync(item);
+                _dataContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                _logger.LogInformation(e, "Unable to add shortlist item");
+            }
         }
     }
 }
