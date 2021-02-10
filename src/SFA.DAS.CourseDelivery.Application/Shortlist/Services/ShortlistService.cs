@@ -23,7 +23,12 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
 
         public async Task CreateShortlistItem(Domain.Entities.Shortlist shortlist)
         {
-            await _shortlistRepository.Insert(shortlist);
+            var item = await _shortlistRepository.GetShortlistUserItem(shortlist);
+            if (item == null)
+            {
+                await _shortlistRepository.Insert(shortlist);    
+            }
+            
         }
     }
 }

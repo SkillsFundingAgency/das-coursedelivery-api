@@ -16,11 +16,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
     {
         [Test, RecursiveMoqAutoData]
         public async Task Then_The_Item_Is_Retrieved_By_Unique_Key(
-            int courseId,
-            int providerUkprn,
-            Guid shortlistUserId,
-            float? lat,
-            float? lon,
+            Shortlist item,
             List<Shortlist> recordsInDb,
             [Frozen] Mock<ICourseDeliveryReadonlyDataContext> mockContext,
             Data.Repository.ShortlistRepository repository)
@@ -28,26 +24,26 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
             //Arrange
             recordsInDb = recordsInDb.Select(c =>
             {
-                c.ShortlistUserId = shortlistUserId;
+                c.ShortlistUserId = item.ShortlistUserId;
                 return c;
             }).ToList();
-            recordsInDb[0].CourseId = courseId;
-            recordsInDb[0].ProviderUkprn = providerUkprn;
-            recordsInDb[0].Lat = lat;
-            recordsInDb[0].Long = lon;
+            recordsInDb[0].CourseId = item.CourseId;
+            recordsInDb[0].ProviderUkprn = item.ProviderUkprn;
+            recordsInDb[0].Lat = item.Lat;
+            recordsInDb[0].Long = item.Long;
             mockContext
                 .Setup(context => context.Shortlists)
                 .ReturnsDbSet(recordsInDb);
 
-            var actual = await repository.GetShortlistUserItem(shortlistUserId,courseId,providerUkprn,lat,lon);
+            var actual = await repository.GetShortlistUserItem(item);
 
             actual.Should()
                 .BeEquivalentTo(recordsInDb.First(shortlist =>
-                    shortlist.ShortlistUserId == shortlistUserId 
-                    && shortlist.ProviderUkprn.Equals(providerUkprn)
-                    && shortlist.CourseId.Equals(courseId)
-                    && shortlist.Lat.Equals(lat)
-                    && shortlist.Long.Equals(lon)
+                    shortlist.ShortlistUserId == item.ShortlistUserId 
+                    && shortlist.ProviderUkprn.Equals(item.ProviderUkprn)
+                    && shortlist.CourseId.Equals(item.CourseId)
+                    && shortlist.Lat.Equals(item.Lat)
+                    && shortlist.Long.Equals(item.Long)
                     ));
         }
     }

@@ -28,14 +28,14 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task<Shortlist> GetShortlistUserItem(Guid shortlistUserId, int courseId, int providerUkprn, float? lat, float? lon)
+        public async Task<Shortlist> GetShortlistUserItem(Shortlist item)
         {
             return await _readonlyDataContext.Shortlists.SingleOrDefaultAsync(c=>
-                c.ShortlistUserId.Equals(shortlistUserId)
-                && c.CourseId.Equals(courseId)
-                && c.ProviderUkprn.Equals(providerUkprn)
-                && c.Lat.Equals(lat)
-                && c.Long.Equals(lon)
+                c.ShortlistUserId.Equals(item.ShortlistUserId)
+                && c.CourseId.Equals(item.CourseId)
+                && c.ProviderUkprn.Equals(item.ProviderUkprn)
+                && c.Lat.Equals(item.Lat)
+                && c.Long.Equals(item.Long)
                 );
         }
 
