@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
@@ -20,7 +21,7 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUs
 
         public async Task<GetShortlistForUserQueryResponse> Handle(GetShortlistForUserQuery request, CancellationToken cancellationToken)
         {
-            var shortlist = await _shortlistService.GetAllForUser(request.UserId);
+            var shortlist = (await _shortlistService.GetAllForUser(request.UserId)).ToList();
 
             foreach (var item in shortlist)
             {
