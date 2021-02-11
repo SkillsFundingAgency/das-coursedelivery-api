@@ -1,41 +1,45 @@
 namespace SFA.DAS.CourseDelivery.Domain.Entities
 {
-    public class ProviderWithStandardAndLocation
+    public class ProviderWithStandardAndLocation : ProviderWithStandardLocationBase
     {
-        public int Ukprn { get; set; }
-        public string Name { get; set; }
-        public string TradingName { get; set; }
-        public string ContactUrl { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string Town { get; set; }
-        public string Postcode { get; set; }
-        public string County { get; set; }
-        public int LocationId { get ; set ; }
-        
-        public string DeliveryModes { get; set; }
-        public bool National { get; set; }
-        public float DistanceInMiles { get; set; }
-        public long? Id { get; set; }
-        public Age? Age { get; set; }
-        public string SectorSubjectArea { get; set; }
-        public ApprenticeshipLevel? ApprenticeshipLevel { get; set; }
-        public int? OverallCohort { get; set; }
-        public decimal? OverallAchievementRate { get; set; }
-        public string AttributeName { get; set; }
-        public int? Strength { get; set; }
-        public int? Weakness { get; set; }
-        public string FeedbackName { get; set; }
-        public int? FeedbackCount { get; set; }
-        public float ProviderDistanceInMiles { get; set; }
-        public string ProviderHeadOfficeAddress1 { get; set; }
-        public string ProviderHeadOfficeAddress2 { get; set; }
-        public string ProviderHeadOfficeAddress3 { get; set; }
-        public string ProviderHeadOfficeAddress4 { get; set; }
-        public string ProviderHeadOfficeTown { get; set; }
-        public string ProviderHeadOfficePostcode { get; set; }
+        public static implicit operator ProviderWithStandardAndLocation(ShortlistProviderWithStandardAndLocation source)
+        {
+            return new ProviderWithStandardAndLocation
+            {
+                Address1 = source.Address1,
+                Address2 = source.Address2,
+                Age = source.Age,
+                County = source.County,
+                Email = source.Email,
+                Id = source.Id,
+                Name = source.Name,
+                National = source.National,
+                Phone = source.Phone,
+                Postcode = source.Postcode,
+                Strength = source.Strength,
+                Town = source.Town,
+                Ukprn = source.Ukprn,
+                Weakness = source.Weakness,
+                ApprenticeshipLevel = source.ApprenticeshipLevel,
+                AttributeName = source.AttributeName,
+                ContactUrl = source.ContactUrl,
+                DeliveryModes = source.DeliveryModes,
+                FeedbackCount = source.FeedbackCount,
+                FeedbackName = source.FeedbackName,
+                LocationId = source.LocationId,
+                OverallCohort = source.OverallCohort,
+                TradingName = source.TradingName,
+                DistanceInMiles = source.DistanceInMiles,
+                OverallAchievementRate = source.OverallAchievementRate,
+                SectorSubjectArea = source.SectorSubjectArea,
+                ProviderDistanceInMiles = source.ProviderDistanceInMiles,
+                ProviderHeadOfficeAddress1 = source.ProviderHeadOfficeAddress1,
+                ProviderHeadOfficeAddress2 = source.ProviderHeadOfficeAddress2,
+                ProviderHeadOfficeAddress3 = source.ProviderHeadOfficeAddress3,
+                ProviderHeadOfficeAddress4 = source.ProviderHeadOfficeAddress4,
+                ProviderHeadOfficePostcode = source.ProviderHeadOfficePostcode,
+                ProviderHeadOfficeTown = source.ProviderHeadOfficeTown
+            };
+        }
     }
-
 }
