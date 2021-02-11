@@ -18,7 +18,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Entities
                 .Excluding(c=>c.ShortlistUserId)
                 .Excluding(c=>c.ShortlistId)
                 .Excluding(c=>c.LocationDescription)
-                .Excluding(c=>c.CourseId)
+                .Excluding(c=>c.StandardId)
                 .Excluding(c=>c.CreatedDate)
             );
         }

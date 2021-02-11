@@ -107,8 +107,8 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                 {
                     Id = Guid.Parse("40b2a8aa-11f5-4418-a84d-cfcb5f922a32"),
                     ShortlistUserId = Guid.Parse(ShortlistUserId),
-                    ProviderUkprn = 20002451,
-                    CourseId = 10,
+                    Ukprn = 20002451,
+                    StandardId = 10,
                     LocationDescription = "Somewhere nice",
                     Lat = 0,
                     Long = 0
@@ -117,15 +117,15 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                 {
                     Id = Guid.Parse("74f5be32-5e47-4ef2-94e2-a8de66e14148"),
                     ShortlistUserId = Guid.Parse(ShortlistUserId),
-                    ProviderUkprn = 20002451,
-                    CourseId = 11
+                    Ukprn = 20002451,
+                    StandardId = 11
                 },
                 new Shortlist
                 {
                     Id = Guid.Parse("0f21cf96-5c4f-4f2b-9c1c-1e2a3bf5b72e"),
                     ShortlistUserId = Guid.Parse("172d5dae-d652-447d-ae7e-a95cb2fcbb72"),//different user
-                    ProviderUkprn = 20002451,
-                    CourseId = 10,
+                    Ukprn = 20002451,
+                    StandardId = 10,
                     LocationDescription = "Different location"
                 }
             };

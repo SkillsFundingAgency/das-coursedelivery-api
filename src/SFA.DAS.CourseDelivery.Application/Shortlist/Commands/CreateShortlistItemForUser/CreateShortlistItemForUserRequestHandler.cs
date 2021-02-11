@@ -31,11 +31,10 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistI
                 Id = Guid.NewGuid(),
                 Lat = request.Lat,
                 Long = request.Lon,
-                CourseId = request.CourseId,
-                CourseLevel = request.Level,
+                StandardId = request.StandardId,
                 CourseSector = request.SectorSubjectArea,
                 LocationDescription = request.LocationDescription,
-                ProviderUkprn = request.ProviderUkprn,
+                Ukprn = request.Ukprn,
                 ShortlistUserId = request.ShortlistUserId
             });
             

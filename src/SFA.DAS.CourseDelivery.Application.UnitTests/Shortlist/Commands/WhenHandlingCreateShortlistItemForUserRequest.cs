@@ -46,13 +46,12 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Commands
 
             //Assert
             service.Verify(x=>x.CreateShortlistItem(It.Is<Domain.Entities.Shortlist>( c=>
-                c.CourseId.Equals(request.CourseId)
+                c.StandardId.Equals(request.StandardId)
                 && c.Lat.Equals(request.Lat)
                 && c.Long.Equals(request.Lon)
-                && c.CourseLevel.Equals(request.Level)
                 && c.CourseSector.Equals(request.SectorSubjectArea)
                 && c.LocationDescription.Equals(request.LocationDescription)
-                && c.ProviderUkprn.Equals(request.ProviderUkprn)
+                && c.Ukprn.Equals(request.Ukprn)
                 && c.ShortlistUserId.Equals(request.ShortlistUserId)
                 && c.Id != Guid.Empty
                 )), Times.Once);

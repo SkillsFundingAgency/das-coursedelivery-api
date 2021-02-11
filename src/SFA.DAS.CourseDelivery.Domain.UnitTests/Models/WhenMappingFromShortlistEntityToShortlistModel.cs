@@ -14,9 +14,8 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
 
             actual.Id.Should().Be(source.Id);
             actual.ShortlistUserId.Should().Be(source.ShortlistUserId);
-            actual.ProviderUkprn.Should().Be(source.ProviderUkprn);
-            actual.CourseId.Should().Be(source.CourseId);
-            actual.CourseLevel.Should().Be(source.CourseLevel);
+            actual.Ukprn.Should().Be(source.Ukprn);
+            actual.StandardId.Should().Be(source.StandardId);
             actual.CourseSector.Should().Be(source.CourseSector);
             actual.LocationDescription.Should().Be(source.LocationDescription);
             actual.Lat.Should().Be(source.Lat);

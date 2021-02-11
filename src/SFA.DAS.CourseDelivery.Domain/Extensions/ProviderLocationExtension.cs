@@ -69,14 +69,14 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                     item.ProviderHeadOfficePostcode,
                     item.ShortlistId,
                     item.ShortlistUserId,
-                    item.CourseId,
+                    CourseId = item.StandardId,
                     item.LocationDescription,
                     item.CreatedDate
                 })
                 .Select(group => new Models.Shortlist
                 {
                     Id = group.Key.ShortlistId,
-                    CourseId = group.Key.CourseId,
+                    StandardId = group.Key.CourseId,
                     LocationDescription = group.Key.LocationDescription,
                     ShortlistUserId = group.Key.ShortlistUserId,
                     CreatedDate = group.Key.CreatedDate,

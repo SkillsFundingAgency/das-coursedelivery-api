@@ -27,8 +27,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
                 c.ShortlistUserId = item.ShortlistUserId;
                 return c;
             }).ToList();
-            recordsInDb[0].CourseId = item.CourseId;
-            recordsInDb[0].ProviderUkprn = item.ProviderUkprn;
+            recordsInDb[0].StandardId = item.StandardId;
+            recordsInDb[0].Ukprn = item.Ukprn;
             recordsInDb[0].Lat = item.Lat;
             recordsInDb[0].Long = item.Long;
             mockContext
@@ -42,8 +42,8 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
             actual.Should()
                 .BeEquivalentTo(recordsInDb.First(shortlist =>
                     shortlist.ShortlistUserId == item.ShortlistUserId 
-                    && shortlist.ProviderUkprn.Equals(item.ProviderUkprn)
-                    && shortlist.CourseId.Equals(item.CourseId)
+                    && shortlist.Ukprn.Equals(item.Ukprn)
+                    && shortlist.StandardId.Equals(item.StandardId)
                     && shortlist.Lat.Equals(item.Lat)
                     && shortlist.Long.Equals(item.Long)
                     ));

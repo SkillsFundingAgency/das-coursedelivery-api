@@ -18,7 +18,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.ApprenticeshipLevel).IsRequired(false);
             builder.Property(x => x.OverallCohort).IsRequired(false);
             builder.Property(x => x.OverallAchievementRate).IsRequired(false);
-            builder.Property(x => x.CourseId).HasColumnType("int");
+            builder.Property(x => x.StandardId).HasColumnType("int");
             builder.Property(x => x.LocationDescription).HasColumnType("varchar").HasMaxLength(1000).IsRequired(false);
         }
     }

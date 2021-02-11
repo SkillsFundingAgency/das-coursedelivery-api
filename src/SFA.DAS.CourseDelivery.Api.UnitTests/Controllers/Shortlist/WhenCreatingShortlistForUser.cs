@@ -49,10 +49,9 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
                         query.ShortlistUserId == request.ShortlistUserId
                         && query.Lat.Equals(request.Lat)
                         && query.Lon.Equals(request.Lon)
-                        && query.Level == request.Level
-                        && query.CourseId == request.CourseId
+                        && query.StandardId == request.StandardId
                         && query.LocationDescription == request.LocationDescription
-                        && query.ProviderUkprn == request.ProviderUkprn
+                        && query.Ukprn == request.Ukprn
                         && query.SectorSubjectArea == request.SectorSubjectArea
 
                     ),

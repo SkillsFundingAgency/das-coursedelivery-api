@@ -18,7 +18,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Id = source.Id,
                 ShortlistUserId = source.ShortlistUserId,
                 ProviderDetails = GetProviderDetailResponse.Map(source.ProviderLocation),
-                CourseId = source.CourseId,
+                CourseId = source.StandardId,
                 LocationDescription = source.LocationDescription
             };
         }

@@ -43,30 +43,14 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Commands
             CreateShortlistItemForUserValidator validator)
         {
             //Arrange
-            request.CourseId = 0;
+            request.StandardId = 0;
             
             //Act
             var actual = await validator.ValidateAsync(request);
             
             //Assert
             actual.IsValid().Should().BeFalse();
-            actual.ValidationDictionary.Should().ContainKey(nameof(request.CourseId));
-        }
-        
-        [Test, AutoData]
-        public async Task Then_If_The_Level_Is_Zero_Then_The_Request_Is_Invalid(
-            CreateShortlistItemForUserRequest request,
-            CreateShortlistItemForUserValidator validator)
-        {
-            //Arrange
-            request.Level = 0;
-            
-            //Act
-            var actual = await validator.ValidateAsync(request);
-            
-            //Assert
-            actual.IsValid().Should().BeFalse();
-            actual.ValidationDictionary.Should().ContainKey(nameof(request.Level));
+            actual.ValidationDictionary.Should().ContainKey(nameof(request.StandardId));
         }
         
         [Test, AutoData]
@@ -75,14 +59,14 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Commands
             CreateShortlistItemForUserValidator validator)
         {
             //Arrange
-            request.ProviderUkprn = 0;
+            request.Ukprn = 0;
             
             //Act
             var actual = await validator.ValidateAsync(request);
             
             //Assert
             actual.IsValid().Should().BeFalse();
-            actual.ValidationDictionary.Should().ContainKey(nameof(request.ProviderUkprn));
+            actual.ValidationDictionary.Should().ContainKey(nameof(request.Ukprn));
         }
         
         [Test, AutoData]

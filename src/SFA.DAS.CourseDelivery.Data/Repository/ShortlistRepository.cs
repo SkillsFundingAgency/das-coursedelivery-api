@@ -36,8 +36,8 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             return await _readonlyDataContext.Shortlists.SingleOrDefaultAsync(c=>
                 c.ShortlistUserId.Equals(item.ShortlistUserId)
-                && c.CourseId.Equals(item.CourseId)
-                && c.ProviderUkprn.Equals(item.ProviderUkprn)
+                && c.StandardId.Equals(item.StandardId)
+                && c.Ukprn.Equals(item.Ukprn)
                 && c.Lat.Equals(item.Lat)
                 && c.Long.Equals(item.Long)
                 );
@@ -102,7 +102,7 @@ select
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode,
-    Shl.CourseId as CourseId,
+    Shl.StandardId as StandardId,
     Shl.LocationDescription,
     Shl.ShortlistUserId,
     Shl.Id as ShortlistId,
@@ -112,7 +112,7 @@ from Provider P
     inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
     inner join StandardLocation SL on sl.LocationId = psl.LocationId
     inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
-    inner join Shortlist Shl on Shl.CourseId = ps.StandardId and Shl.ProviderUkprn = p.UkPrn
+    inner join Shortlist Shl on Shl.StandardId = ps.StandardId and Shl.UkPrn = p.UkPrn
     left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = Shl.CourseSector and NAR.Age=4
     left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
     left join (select
@@ -122,7 +122,7 @@ from Provider P
                            .STDistance(geography::Point(isnull(slx.Lat,0), isnull(slx.Long,0), 4326)) * 0.0006213712 as DistanceInMiles
                  from [StandardLocation] l
                 inner join ProviderStandardLocation pslx on pslx.LocationId = l.LocationId
-        inner join Shortlist slx on slx.CourseId = pslx.StandardId and slx.ProviderUkprn = pslx.UkPrn
+        inner join Shortlist slx on slx.StandardId = pslx.StandardId and slx.UkPrn = pslx.UkPrn
         ) l on l.LocationId = psl.LocationId
 where
   PR.StatusId = 1 AND PR.ProviderTypeId = 1 and Shl.ShortlistUserId = {userId}";

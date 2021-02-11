@@ -16,19 +16,14 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistI
                 result.AddError(nameof(item.ShortlistUserId));
             }
 
-            if (item.CourseId == 0)
+            if (item.StandardId == 0)
             {
-                result.AddError(nameof(item.CourseId));
+                result.AddError(nameof(item.StandardId));
             }
 
-            if (item.Level == 0)
+            if (item.Ukprn == 0)
             {
-                result.AddError(nameof(item.Level));
-            }
-
-            if (item.ProviderUkprn == 0)
-            {
-                result.AddError(nameof(item.ProviderUkprn));
+                result.AddError(nameof(item.Ukprn));
             }
 
             if (string.IsNullOrEmpty(item.SectorSubjectArea))

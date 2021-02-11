@@ -61,11 +61,10 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 await _mediator.Send(new CreateShortlistItemForUserRequest
                 {
                     Lat = request.Lat,
-                    Level = request.Level,
                     Lon = request.Lon,
-                    CourseId = request.CourseId,
+                    StandardId = request.StandardId,
                     LocationDescription = request.LocationDescription,
-                    ProviderUkprn = request.ProviderUkprn,
+                    Ukprn = request.Ukprn,
                     SectorSubjectArea = request.SectorSubjectArea,
                     ShortlistUserId = request.ShortlistUserId
                 });
