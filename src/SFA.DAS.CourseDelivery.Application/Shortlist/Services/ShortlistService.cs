@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SFA.DAS.CourseDelivery.Domain.Extensions;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
@@ -28,7 +29,13 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
             {
                 await _shortlistRepository.Insert(shortlist);    
             }
-            
+        }
+
+        public async Task<IEnumerable<Domain.Models.Shortlist>> GetAllForUserWithProviders(Guid userId)
+        {
+            var items = await _shortlistRepository.GetShortListForUser(userId);
+
+            return items.ToList().BuildShortlistProviderLocation();
         }
     }
 }

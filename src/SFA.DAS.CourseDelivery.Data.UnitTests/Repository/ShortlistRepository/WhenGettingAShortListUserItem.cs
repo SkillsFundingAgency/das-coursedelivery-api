@@ -35,8 +35,10 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
                 .Setup(context => context.Shortlists)
                 .ReturnsDbSet(recordsInDb);
 
+            //Act
             var actual = await repository.GetShortlistUserItem(item);
 
+            //Assert
             actual.Should()
                 .BeEquivalentTo(recordsInDb.First(shortlist =>
                     shortlist.ShortlistUserId == item.ShortlistUserId 

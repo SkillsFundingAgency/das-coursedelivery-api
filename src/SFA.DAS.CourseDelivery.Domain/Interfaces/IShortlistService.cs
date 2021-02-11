@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SFA.DAS.CourseDelivery.Domain.Models;
+using SFA.DAS.CourseDelivery.Domain.Entities;
+using Shortlist = SFA.DAS.CourseDelivery.Domain.Models.Shortlist;
 
 namespace SFA.DAS.CourseDelivery.Domain.Interfaces
 {
@@ -9,5 +10,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     {
         Task<IEnumerable<Shortlist>> GetAllForUser(Guid userId);
         Task CreateShortlistItem(Domain.Entities.Shortlist shortlist);
+        Task<IEnumerable<Shortlist>> GetAllForUserWithProviders(Guid userId);
     }
 }
