@@ -10,5 +10,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         Task<IEnumerable<Shortlist>> GetAllForUser(Guid userId);
         Task Insert(Shortlist item);
         Task<Shortlist> GetShortlistUserItem(Shortlist item);
+        Task<IEnumerable<ShortlistProviderWithStandardAndLocation>> GetShortListForUser(Guid userId);
     }
 }
