@@ -14,6 +14,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public float? Lat { get; set; }
         public float? Long { get; set; }
         public ProviderLocation ProviderLocation { get; set; }
+        public DateTime CreatedDate { get ; set ; }
 
         public static implicit operator Shortlist(Entities.Shortlist source)
         {
@@ -27,7 +28,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 CourseSector = source.CourseSector,
                 LocationDescription = source.LocationDescription,
                 Lat = source.Lat,
-                Long = source.Long
+                Long = source.Long,
+                CreatedDate = source.CreatedDate
             };
         }
     }
