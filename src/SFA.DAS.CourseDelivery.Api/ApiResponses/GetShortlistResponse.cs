@@ -10,6 +10,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public GetProviderDetailResponse ProviderDetails { get; set; }
         public int CourseId { get; set; }
         public string LocationDescription { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public static implicit operator GetShortlistResponse(Shortlist source)
         {
@@ -19,7 +20,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 ShortlistUserId = source.ShortlistUserId,
                 ProviderDetails = GetProviderDetailResponse.Map(source.ProviderLocation),
                 CourseId = source.StandardId,
-                LocationDescription = source.LocationDescription
+                LocationDescription = source.LocationDescription,
+                CreatedDate = source.CreatedDate
             };
         }
     }
