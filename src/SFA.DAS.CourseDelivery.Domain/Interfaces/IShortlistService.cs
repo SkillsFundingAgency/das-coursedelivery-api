@@ -11,5 +11,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         Task<IEnumerable<Shortlist>> GetAllForUser(Guid userId);
         Task CreateShortlistItem(Domain.Entities.Shortlist shortlist);
         Task<IEnumerable<Shortlist>> GetAllForUserWithProviders(Guid userId);
+        void DeleteShortlistUserItem(Guid id, Guid userId);
     }
 }
