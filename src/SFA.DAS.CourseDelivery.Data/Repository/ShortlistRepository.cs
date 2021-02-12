@@ -63,7 +63,18 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
             return shortlistItems;
         }
-        
+
+        public void Delete(Guid id, Guid shortlistUserId)
+        {
+            var shortlistItem =
+                _dataContext.Shortlists.SingleOrDefault(c => c.Id.Equals(id) && c.ShortlistUserId.Equals(shortlistUserId));
+            if (shortlistItem != null)
+            {
+                _dataContext.Shortlists.Remove(shortlistItem);
+                _dataContext.SaveChanges();
+            }
+        }
+
         private FormattableString GetProvidersShortlistQuery(Guid userId)
         {
             return $@"
