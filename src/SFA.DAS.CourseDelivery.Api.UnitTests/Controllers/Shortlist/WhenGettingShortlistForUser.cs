@@ -35,9 +35,9 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
             var controllerResult = await controller.GetShortlistForUser(userId) as ObjectResult;
 
             controllerResult!.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            var model = controllerResult.Value as GetAllShortlistItemsForUserResponse;
-            model!.ShortlistItems.Should().BeEquivalentTo(
-                queryResult.Shortlist.Select(shortlist => (GetShortlistResponse) shortlist));
+            var model = controllerResult.Value as GetShortlistForUserResponse;
+            model!.Shortlist.Should().BeEquivalentTo(
+                queryResult.Shortlist.Select(shortlist => (GetShortlistItemResponse) shortlist));
         }
 
         [Test, RecursiveMoqAutoData]

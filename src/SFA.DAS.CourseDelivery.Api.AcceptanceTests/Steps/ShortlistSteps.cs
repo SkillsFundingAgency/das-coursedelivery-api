@@ -28,12 +28,12 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
                 Assert.Fail($"scenario context does not contain value for key [{ContextKeys.HttpResponse}]");
             }
 
-            var model = await HttpUtilities.ReadContent<GetAllShortlistItemsForUserResponse>(result.Content);
+            var model = await HttpUtilities.ReadContent<GetShortlistForUserResponse>(result.Content);
 
             var allShortlistsForUser = DbUtilities.GetAllShortlists()
                 .Where(shortlist => shortlist.ShortlistUserId == Guid.Parse(DbUtilities.ShortlistUserId));
 
-            model.ShortlistItems.Should().BeEquivalentTo(allShortlistsForUser, options=> options
+            model.Shortlist.Should().BeEquivalentTo(allShortlistsForUser, options=> options
                 .ExcludingMissingMembers()
             );
         }

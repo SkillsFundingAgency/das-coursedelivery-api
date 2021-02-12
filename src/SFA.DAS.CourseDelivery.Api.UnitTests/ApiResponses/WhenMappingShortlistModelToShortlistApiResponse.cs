@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         [Test, AutoData]
         public void Then_The_Fields_Are_Correctly_Mapped(Shortlist source)
         {
-            var actual = (GetShortlistResponse) source;
+            var actual = (GetShortlistItemResponse) source;
             
             actual.Id.Should().Be(source.Id);
             actual.ShortlistUserId.Should().Be(source.ShortlistUserId);

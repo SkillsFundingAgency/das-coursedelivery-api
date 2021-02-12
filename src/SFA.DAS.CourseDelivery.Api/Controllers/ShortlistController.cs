@@ -39,9 +39,9 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 {
                     UserId = userId
                 });
-                var response = new GetAllShortlistItemsForUserResponse
+                var response = new GetShortlistForUserResponse
                 {
-                    ShortlistItems = queryResult.Shortlist.Select(shortlist => (GetShortlistResponse)shortlist)
+                    Shortlist = queryResult.Shortlist.Select(shortlist => (GetShortlistItemResponse)shortlist)
                 };
                 return Ok(response);
             }

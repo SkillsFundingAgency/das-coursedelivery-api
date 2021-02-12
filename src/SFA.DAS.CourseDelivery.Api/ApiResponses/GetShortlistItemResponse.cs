@@ -3,7 +3,7 @@ using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
-    public class GetShortlistResponse
+    public class GetShortlistItemResponse
     {
         public Guid Id { get; set; }
         public Guid ShortlistUserId { get; set; }
@@ -12,9 +12,9 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string LocationDescription { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public static implicit operator GetShortlistResponse(Shortlist source)
+        public static implicit operator GetShortlistItemResponse(Shortlist source)
         {
-            return new GetShortlistResponse
+            return new GetShortlistItemResponse
             {
                 Id = source.Id,
                 ShortlistUserId = source.ShortlistUserId,
