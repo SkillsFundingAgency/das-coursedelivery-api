@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiRequests;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistItemForUser;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.DeleteShortlistItemForUser;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUser;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
@@ -77,7 +78,29 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, e.Message);
                 return StatusCode((int) HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("users/{userId}/items/{id}")]
+        public async Task<IActionResult> DeleteShortlistItemForUser(Guid userId, Guid id)
+        {
+            try
+            {
+                await _mediator.Send(new DeleteShortlistItemForUserRequest
+                {
+                    Id = id,
+                    ShortlistUserId = userId
+                });
+
+                return Accepted();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return BadRequest();
             }
         }
     }
