@@ -37,5 +37,10 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
 
             return items.ToList().BuildShortlistProviderLocation();
         }
+
+        public void DeleteShortlistUserItem(Guid id, Guid userId)
+        {
+            _shortlistRepository.Delete(id, userId);
+        }
     }
 }
