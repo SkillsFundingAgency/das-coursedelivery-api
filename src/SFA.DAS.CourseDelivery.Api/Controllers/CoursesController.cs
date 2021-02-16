@@ -56,25 +56,24 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers")]
-        public async Task<IActionResult> GetProvidersByStandardId(     int id, [FromQuery] Age age = 0,
-            [FromQuery] Level level = 0, [FromQuery] double? lat = null, [FromQuery] double? lon = null,
-            [FromQuery] SortOrder sortOrder = SortOrder.Distance, string sectorSubjectArea = "")
+        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]GetProvidersByStandardRequest request)
         {
             try
             {
                 var queryResult = await _mediator.Send(new GetCourseProvidersQuery
                 {
                     StandardId = id,
-                    Lat = lat,
-                    Lon = lon,
-                    SortOrder = (short)sortOrder,
-                    SectorSubjectArea = sectorSubjectArea,
-                    Level = (short)level
+                    Lat = request.Lat,
+                    Lon = request.Lon,
+                    SortOrder = (short)request.SortOrder,
+                    SectorSubjectArea = request.SectorSubjectArea,
+                    Level = (short)request.Level,
+                    ShortlistUserId = request.ShortlistUserId
                 });
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=> GetProviderDetailResponse.Map(c, (short)age))
+                    .Select(c=> GetProviderDetailResponse.Map(c, (short)request.Age))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
