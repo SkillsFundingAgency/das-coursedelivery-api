@@ -38,7 +38,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 ProviderHeadOfficeAddress3 = source.ProviderHeadOfficeAddress3,
                 ProviderHeadOfficeAddress4 = source.ProviderHeadOfficeAddress4,
                 ProviderHeadOfficePostcode = source.ProviderHeadOfficePostcode,
-                ProviderHeadOfficeTown = source.ProviderHeadOfficeTown
+                ProviderHeadOfficeTown = source.ProviderHeadOfficeTown,
+                ShortlistId = source.ShortlistId
             };
         }
     }

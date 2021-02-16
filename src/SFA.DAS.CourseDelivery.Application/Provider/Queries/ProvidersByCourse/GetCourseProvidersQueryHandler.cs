@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,11 +21,11 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
 
             if (request.Lat != null && request.Lon != null)
             {
-                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value, request.SortOrder, request.SectorSubjectArea, request.Level);
+                providers = await _providerService.GetProvidersByStandardAndLocation(request.StandardId, request.Lat.Value, request.Lon.Value, request.SortOrder, request.SectorSubjectArea, request.Level, request.ShortlistUserId ?? Guid.Empty);
             }
             else
             {
-                providers = await _providerService.GetProvidersByStandardId(request.StandardId, request.SectorSubjectArea, request.Level);
+                providers = await _providerService.GetProvidersByStandardId(request.StandardId, request.SectorSubjectArea, request.Level, request.ShortlistUserId ?? Guid.Empty);
             }
             
             return new GetCourseProvidersQueryResponse

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -35,8 +36,10 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                     .Select(c=>(GetNationalAchievementRateResponse)c).ToList(),
                 DeliveryTypes = provider.DeliveryTypes.Select(c=>(GetDeliveryTypesResponse)c).ToList(),
                 FeedbackAttributes = provider.FeedbackAttributes.Select(x=>(GetFeedbackAttributeResponse)x).ToList(),
-                FeedbackRatings = provider.FeedbackRating.Select(x=>(GetFeedbackRatingResponse)x).ToList()
+                FeedbackRatings = provider.FeedbackRating.Select(x=>(GetFeedbackRatingResponse)x).ToList(),
+                ShortlistId = provider.ShortlistId
             };
         }
+
     }
 }

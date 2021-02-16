@@ -16,7 +16,6 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Entities
             //Assert
             actual.Should().BeEquivalentTo(source, options=>options
                 .Excluding(c=>c.ShortlistUserId)
-                .Excluding(c=>c.ShortlistId)
                 .Excluding(c=>c.LocationDescription)
                 .Excluding(c=>c.StandardId)
                 .Excluding(c=>c.CreatedDate)

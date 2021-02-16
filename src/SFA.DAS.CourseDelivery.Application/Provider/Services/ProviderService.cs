@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,9 +24,10 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
         }
 
-        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(int standardId, string sectorSubjectArea, short level)
+        public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(  int standardId,
+            string sectorSubjectArea, short level, Guid shortlistUserId)
         {
-            var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea, level)).ToList();
+            var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea, level, shortlistUserId)).ToList();
             
             return providers.BuildProviderLocations();
         }
@@ -66,9 +68,9 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         }
 
         public async Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat,
-            double lon, short querySortOrder, string sectorSubjectArea,short level)
+            double lon, short querySortOrder, string sectorSubjectArea, short level, Guid shortlistUserId)
         {
-            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder, sectorSubjectArea, level);
+            var providers = await _providerRepository.GetByStandardIdAndLocation(standardId, lat, lon, querySortOrder, sectorSubjectArea, level, shortlistUserId);
 
             return providers.BuildProviderLocations();
         }

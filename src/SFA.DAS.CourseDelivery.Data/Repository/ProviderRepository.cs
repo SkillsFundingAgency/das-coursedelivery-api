@@ -34,11 +34,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         }
 
         public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId( int standardId,
-            string sectorSubjectArea, short level)
+            string sectorSubjectArea, short level, Guid shortlistUserId)
         {
             
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
-                .FromSqlInterpolated(GetProvidersListNoLocationQuery(standardId, sectorSubjectArea, level))
+                .FromSqlInterpolated(GetProvidersListNoLocationQuery(standardId, sectorSubjectArea, level, shortlistUserId))
                 .OrderBy(p=>p.Name)
                 .ThenByDescending(p=>p.National)
                 .ToListAsync();
@@ -76,11 +76,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return providers;
         }
 
-        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(   int standardId,
-            double lat, double lon, short sortOrder, string sectorSubjectArea, short level)
+        public async Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(    int standardId,
+            double lat, double lon, short sortOrder, string sectorSubjectArea, short level, Guid shortlistUserId)
         {
             var providers = await _readonlyDataContext.ProviderWithStandardAndLocations
-                .FromSqlInterpolated(GetProviderListQuery(standardId, lat, lon, sectorSubjectArea, level))
+                .FromSqlInterpolated(GetProviderListQuery(standardId, lat, lon, sectorSubjectArea, level, shortlistUserId))
                 .OrderBy(OrderProviderStandards(sortOrder))
                 .ThenByDescending(c=>c.National)
                 .ToListAsync();
@@ -118,7 +118,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             return c=>c.Name;
         }
         
-        private FormattableString GetProvidersListNoLocationQuery(int standardId, string sectorSubjectArea, short level)
+        private FormattableString GetProvidersListNoLocationQuery(int standardId, string sectorSubjectArea, short level, Guid shortlistUserId)
         {
             return $@"
 select
@@ -154,7 +154,8 @@ select
     pr.Address3 ProviderHeadOfficeAddress3,
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
-    pr.PostCode ProviderHeadOfficePostcode
+    pr.PostCode ProviderHeadOfficePostcode,
+    shl.Id as ShortlistId
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -163,6 +164,8 @@ inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} 
     and NAR.Age = 4 and NAR.ApprenticeshipLevel in ({level},1) 
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
+left join Shortlist shl on shl.UkPrn = p.UkPrn and shl.Lat is null and shl.long is null 
+    and shl.StandardId = PS.StandardId and shl.ShortlistUserId = {shortlistUserId} 
 where ps.StandardId = {standardId}
 
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
@@ -204,7 +207,8 @@ select
     pr.Address3 ProviderHeadOfficeAddress3,
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
-    pr.PostCode ProviderHeadOfficePostcode
+    pr.PostCode ProviderHeadOfficePostcode,
+    null as ShortlistId
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -218,8 +222,8 @@ and P.UkPrn = {ukprn}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1";
         }
 
-        private FormattableString GetProviderListQuery(   int standardId, double lat, double lon,
-            string sectorSubjectArea, short level)
+        private FormattableString GetProviderListQuery( int standardId, double lat, double lon,
+            string sectorSubjectArea, short level, Guid shortlistUserId)
         {
             return $@"
 select
@@ -255,7 +259,8 @@ select
     pr.Address3 ProviderHeadOfficeAddress3,
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
-    pr.PostCode ProviderHeadOfficePostcode
+    pr.PostCode ProviderHeadOfficePostcode,
+    shl.Id as ShortlistId
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 
@@ -274,6 +279,8 @@ inner join StandardLocation SL on sl.LocationId = psl.LocationId
 inner join ProviderRegistration PR on PR.UkPrn = p.UkPrn
 left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = {sectorSubjectArea} and NAR.Age = 4 and NAR.ApprenticeshipLevel in ({level},1) 
 left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
+left join Shortlist shl on shl.UkPrn = p.UkPrn and Round(shl.Lat,3) = Round({lat},3) and Round(shl.long,3) = Round({lon},3) 
+    and shl.StandardId = PS.StandardId and shl.ShortlistUserId = {shortlistUserId} 
 where ps.StandardId = {standardId}
 and PR.StatusId = 1 AND PR.ProviderTypeId = 1
 and l.DistanceInMiles <= psl.Radius";
@@ -315,7 +322,8 @@ select
     pr.Address3 ProviderHeadOfficeAddress3,
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
-    pr.PostCode ProviderHeadOfficePostcode
+    pr.PostCode ProviderHeadOfficePostcode,
+    null as ShortlistId
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 

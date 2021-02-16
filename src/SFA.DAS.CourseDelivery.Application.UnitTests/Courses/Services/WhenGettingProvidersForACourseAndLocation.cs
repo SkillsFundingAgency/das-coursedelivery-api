@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
@@ -20,18 +21,19 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             short sortOrder,
             string sectorSubjectArea,
             short level,
+            Guid shortlistUserId,
             List<Domain.Entities.ProviderWithStandardAndLocation> providers,
             [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
         {
             //Arrange
-            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea, level)).ReturnsAsync(providers);
+            repository.Setup(x => x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder,sectorSubjectArea, level,shortlistUserId)).ReturnsAsync(providers);
             
             //Act
-            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level);
+            var actual = await service.GetProvidersByStandardAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level, shortlistUserId);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level), Times.Once);
+            repository.Verify(x=>x.GetByStandardIdAndLocation(standardId, lat, lon, sortOrder, sectorSubjectArea, level, shortlistUserId), Times.Once);
             actual.Should().BeEquivalentTo(providers, options=> options.ExcludingMissingMembers());
         }
     }

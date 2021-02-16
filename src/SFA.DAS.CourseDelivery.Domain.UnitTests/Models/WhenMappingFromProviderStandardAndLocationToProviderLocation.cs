@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoFixture.NUnit3;
 using FluentAssertions;
@@ -21,6 +22,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             string providerHeadOfficeAddress4,
             string providerHeadOfficeAddressTown,
             string providerHeadOfficeAddressPostcode,
+            Guid? shortlistId,
             List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
             var actual = new ProviderLocation(ukprn, name, tradingName, contactUrl, phone, email, 
@@ -30,7 +32,9 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
                 providerHeadOfficeAddress3, 
                 providerHeadOfficeAddress4, 
                 providerHeadOfficeAddressTown, 
-                providerHeadOfficeAddressPostcode, providerWithStandardAndLocations);
+                providerHeadOfficeAddressPostcode,
+                shortlistId,
+                providerWithStandardAndLocations);
 
             actual.Name.Should().Be(name);
             actual.TradingName.Should().Be(tradingName);
@@ -38,6 +42,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.ContactUrl.Should().Be(contactUrl);
             actual.Email.Should().Be(email);
             actual.Phone.Should().Be(phone);
+            actual.ShortlistId.Should().Be(shortlistId);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().NotBeEmpty();
             actual.Address.Address1.Should().Be(providerHeadOfficeAddress1);

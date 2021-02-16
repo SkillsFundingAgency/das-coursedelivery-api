@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -8,11 +9,11 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
     {
         Task InsertMany(IEnumerable<Provider> providers);
         void DeleteAll();
-        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId( int standardId, string sectorSubjectArea,
-            short level);
+        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardId(int standardId, string sectorSubjectArea,
+            short level, Guid shortlistUserId);
         Task<Provider> GetByUkprn(int ukPrn);
-        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(  int standardId, double lat,
-            double lon, short sortOrder, string sectorSubjectArea, short level);
+        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(   int standardId, double lat,
+            double lon, short sortOrder, string sectorSubjectArea, short level, Guid shortlistUserId);
 
         Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(int ukprn, int standardId,
             double lat = 0, double lon = 0, string sectorSubjectArea= "");

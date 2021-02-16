@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
@@ -17,14 +18,15 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             int standardId,
             string sectorSubjectArea,
             short level,
+            Guid shortlistUserId,
             [Frozen]Mock<IProviderRepository> repository,
             ProviderService service)
         {
             //Act
-            await service.GetProvidersByStandardId(standardId, sectorSubjectArea, level);
+            await service.GetProvidersByStandardId(standardId, sectorSubjectArea, level, shortlistUserId);
             
             //Assert
-            repository.Verify(x=>x.GetByStandardId(standardId, sectorSubjectArea, level), Times.Once);
+            repository.Verify(x=>x.GetByStandardId(standardId, sectorSubjectArea, level, shortlistUserId), Times.Once);
         }
     }
 }

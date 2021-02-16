@@ -26,7 +26,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                     item.ProviderHeadOfficeAddress3,
                     item.ProviderHeadOfficeAddress4,
                     item.ProviderHeadOfficeTown,
-                    item.ProviderHeadOfficePostcode
+                    item.ProviderHeadOfficePostcode,
+                    item.ShortlistId
                 })
                 .Select(group => new ProviderLocation(
                     group.Key.UkPrn, 
@@ -42,6 +43,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                     group.Key.ProviderHeadOfficeAddress4,
                     group.Key.ProviderHeadOfficeTown,
                     group.Key.ProviderHeadOfficePostcode,
+                    group.Key.ShortlistId,
                     group.ToList()))
                 .ToList();
         }

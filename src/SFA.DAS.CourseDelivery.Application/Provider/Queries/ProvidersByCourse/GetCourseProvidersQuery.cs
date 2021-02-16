@@ -11,6 +11,6 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProvidersByCourse
         public short SortOrder { get ; set ; }
         public string SectorSubjectArea { get ; set ; }
         public short Level { get ; set ; }
-        public Guid ShortlistUserId { get ; set ; }
+        public Guid? ShortlistUserId { get ; set ; }
     }
 }

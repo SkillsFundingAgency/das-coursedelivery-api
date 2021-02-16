@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             //Arrange
             query.Lat = null;
             query.Lon = null;
-            providerService.Setup(x => x.GetProvidersByStandardId(query.StandardId, query.SectorSubjectArea, query.Level)).ReturnsAsync(providers);
+            providerService.Setup(x => x.GetProvidersByStandardId(query.StandardId, query.SectorSubjectArea, query.Level, query.ShortlistUserId.Value)).ReturnsAsync(providers);
 
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
@@ -40,7 +41,25 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             GetCourseProvidersQueryHandler handler)
         {
             //Arrange
-            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value, query.SortOrder, query.SectorSubjectArea, query.Level)).ReturnsAsync(providers);
+            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value, query.SortOrder, query.SectorSubjectArea, query.Level, query.ShortlistUserId.Value)).ReturnsAsync(providers);
+            
+            //Act
+            var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
+
+            //Assert
+            actual.Providers.Should().BeEquivalentTo(providers);
+        }
+        
+        [Test, RecursiveMoqAutoData]
+        public async Task Then_If_There_Is_No_Shortlist_In_The_Request_It_Is_Defaulted_To_Empty_Guid(
+            GetCourseProvidersQuery query,
+            List<Domain.Models.ProviderLocation> providers,
+            [Frozen] Mock<IProviderService> providerService,
+            GetCourseProvidersQueryHandler handler)
+        {
+            //Arrange
+            query.ShortlistUserId = null;
+            providerService.Setup(x => x.GetProvidersByStandardAndLocation(query.StandardId, query.Lat.Value, query.Lon.Value, query.SortOrder, query.SectorSubjectArea, query.Level, Guid.Empty)).ReturnsAsync(providers);
             
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());

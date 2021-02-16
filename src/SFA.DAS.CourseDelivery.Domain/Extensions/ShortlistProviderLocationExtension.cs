@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -33,7 +34,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                 })
                 .Select(group => new Models.Shortlist
                 {
-                    Id = group.Key.ShortlistId,
+                    Id = group.Key.ShortlistId ?? Guid.Empty,
                     StandardId = group.Key.CourseId,
                     LocationDescription = group.Key.LocationDescription,
                     ShortlistUserId = group.Key.ShortlistUserId,
@@ -52,6 +53,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                         group.Key.ProviderHeadOfficeAddress4,
                         group.Key.ProviderHeadOfficeTown,
                         group.Key.ProviderHeadOfficePostcode,
+                        group.Key.ShortlistId,
                         group.Select(c=>(ProviderWithStandardAndLocation)c).ToList())
                 })
                 .ToList();

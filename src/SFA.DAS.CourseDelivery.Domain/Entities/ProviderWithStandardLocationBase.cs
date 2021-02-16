@@ -1,3 +1,5 @@
+using System;
+
 namespace SFA.DAS.CourseDelivery.Domain.Entities
 {
     public class ProviderWithStandardLocationBase
@@ -36,5 +38,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public string ProviderHeadOfficeAddress4 { get; set; }
         public string ProviderHeadOfficeTown { get; set; }
         public string ProviderHeadOfficePostcode { get; set; }
+        public Guid? ShortlistId { get; set; } 
     }
 }

@@ -19,6 +19,6 @@ namespace SFA.DAS.CourseDelivery.Api.ApiRequests
         [FromQuery] 
         public string SectorSubjectArea { get; set; } = "";
         [FromQuery] 
-        public Guid ShortlistUserId { get; set; } = Guid.Empty;
+        public Guid? ShortlistUserId { get; set; } = Guid.Empty;
     }
 }
