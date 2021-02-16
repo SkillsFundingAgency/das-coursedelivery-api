@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistItemForUser;
@@ -31,6 +32,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Commands
 
         [Test, MoqAutoData]
         public async Task Then_If_The_Request_Is_Valid_The_Service_Is_Called(
+            Guid returnId,
             CreateShortlistItemForUserRequest request,
             [Frozen]Mock<IValidator<CreateShortlistItemForUserRequest>> validator,
             [Frozen]Mock<IShortlistService> service,
@@ -40,12 +42,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Commands
             validator
                 .Setup(x => x.ValidateAsync(request))
                 .ReturnsAsync(new ValidationResult( ));
-
-            //Act
-            await handler.Handle(request, CancellationToken.None);
-
-            //Assert
-            service.Verify(x=>x.CreateShortlistItem(It.Is<Domain.Entities.Shortlist>( c=>
+            service.Setup(x => x.CreateShortlistItem(It.Is<Domain.Entities.Shortlist>( c =>
                 c.StandardId.Equals(request.StandardId)
                 && c.Lat.Equals(request.Lat)
                 && c.Long.Equals(request.Lon)
@@ -54,7 +51,13 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Commands
                 && c.Ukprn.Equals(request.Ukprn)
                 && c.ShortlistUserId.Equals(request.ShortlistUserId)
                 && c.Id != Guid.Empty
-                )), Times.Once);
+            ))).ReturnsAsync(returnId);
+
+            //Act
+            var actual = await handler.Handle(request, CancellationToken.None);
+
+            //Assert
+            actual.Should().Be(returnId);
         }
     }
 }

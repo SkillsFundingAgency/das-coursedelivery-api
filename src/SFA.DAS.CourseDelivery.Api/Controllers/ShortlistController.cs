@@ -59,7 +59,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         {
             try
             {
-                await _mediator.Send(new CreateShortlistItemForUserRequest
+                var id =await _mediator.Send(new CreateShortlistItemForUserRequest
                 {
                     Lat = request.Lat,
                     Lon = request.Lon,
@@ -70,7 +70,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                     ShortlistUserId = request.ShortlistUserId
                 });
                 
-                return Created($"/api/{ControllerContext.ActionDescriptor.ControllerName}/{request.ShortlistUserId}", null);
+                return Created($"/api/{ControllerContext.ActionDescriptor.ControllerName}/{request.ShortlistUserId}/items/{id}", new {Id=id});
             }
             catch (ValidationException e)
             {

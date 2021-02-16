@@ -25,6 +25,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Shortlist_From_Mediator(
             string controllerName,
+            Guid returnId,
             CreateShortlistRequest request,
             [Frozen] Mock<HttpContext> httpContext,
             [Frozen] Mock<IMediator> mockMediator)
@@ -38,13 +39,8 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
                         ControllerName = controllerName
                     }}
             };
-            
-            var controllerResult = await controller.CreateShortlistItemForUser(request) as CreatedResult;
-
-            controllerResult!.StatusCode.Should().Be((int)HttpStatusCode.Created);
-            controllerResult.Location.Should().Be($"/api/{controllerName}/{request.ShortlistUserId}");
             mockMediator
-                .Verify(mediator => mediator.Send(
+                .Setup(mediator => mediator.Send(
                     It.Is<CreateShortlistItemForUserRequest>(query =>
                         query.ShortlistUserId == request.ShortlistUserId
                         && query.Lat.Equals(request.Lat)
@@ -55,7 +51,13 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
                         && query.SectorSubjectArea == request.SectorSubjectArea
 
                     ),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                    It.IsAny<CancellationToken>())).ReturnsAsync(returnId);
+            
+            var controllerResult = await controller.CreateShortlistItemForUser(request) as CreatedResult;
+
+            controllerResult!.StatusCode.Should().Be((int)HttpStatusCode.Created);
+            controllerResult.Location.Should().Be($"/api/{controllerName}/{request.ShortlistUserId}/items/{returnId}");
+            
 
         }
 

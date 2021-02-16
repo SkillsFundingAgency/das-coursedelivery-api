@@ -7,7 +7,7 @@ using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
 namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistItemForUser
 {
-    public class CreateShortlistItemForUserRequestHandler : IRequestHandler<CreateShortlistItemForUserRequest, Unit>
+    public class CreateShortlistItemForUserRequestHandler : IRequestHandler<CreateShortlistItemForUserRequest, Guid>
     {
         private readonly IValidator<CreateShortlistItemForUserRequest> _validator;
         private readonly IShortlistService _service;
@@ -17,7 +17,7 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistI
             _validator = validator;
             _service = service;
         }
-        public async Task<Unit> Handle(CreateShortlistItemForUserRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateShortlistItemForUserRequest request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request);
 
@@ -26,7 +26,7 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistI
                 throw new ValidationException(validationResult.DataAnnotationResult,null, null);
             }
 
-            await _service.CreateShortlistItem(new Domain.Entities.Shortlist
+            var returnId = await _service.CreateShortlistItem(new Domain.Entities.Shortlist
             {
                 Id = Guid.NewGuid(),
                 Lat = request.Lat,
@@ -38,7 +38,7 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistI
                 ShortlistUserId = request.ShortlistUserId
             });
             
-            return Unit.Value;
+            return returnId;
         }
     }
 }

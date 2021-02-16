@@ -22,13 +22,14 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
             return shortlist.Select(entity => (Domain.Models.Shortlist) entity);
         }
 
-        public async Task CreateShortlistItem(Domain.Entities.Shortlist shortlist)
+        public async Task<Guid> CreateShortlistItem(Domain.Entities.Shortlist shortlist)
         {
             var item = await _shortlistRepository.GetShortlistUserItem(shortlist);
             if (item == null)
             {
                 await _shortlistRepository.Insert(shortlist);    
             }
+            return item?.Id ?? shortlist.Id;
         }
 
         public async Task<IEnumerable<Domain.Models.Shortlist>> GetAllForUserWithProviders(Guid userId)
