@@ -43,5 +43,10 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
         {
             _shortlistRepository.Delete(id, userId);
         }
+
+        public async Task<int> GetShortlistItemCountForUser(Guid userId)
+        {
+            return await _shortlistRepository.GetShortlistItemCountForUser(userId);
+        }
     }
 }
