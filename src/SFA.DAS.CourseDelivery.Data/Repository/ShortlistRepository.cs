@@ -75,6 +75,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             }
         }
 
+        public async Task<int> GetShortlistItemCountForUser(Guid userId)
+        {
+            return await _readonlyDataContext.Shortlists.CountAsync(c => c.ShortlistUserId.Equals(userId));
+        }
+
         private FormattableString GetProvidersShortlistQuery(Guid userId)
         {
             return $@"
