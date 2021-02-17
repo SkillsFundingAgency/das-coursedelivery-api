@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
             string sectorSubjectArea,
             double lat,
             double lon,
+            Guid shortlistUserId,
             GetCourseProviderQueryResponse queryResult,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] CoursesController controller)
@@ -35,11 +37,12 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                         && query.Lat.Equals(lat)
                         && query.Lon.Equals(lon)
                         && query.SectorSubjectArea.Equals(sectorSubjectArea)
+                        && query.ShortlistUserId.Equals(shortlistUserId)
                         ), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn,sectorSubjectArea, lat, lon) as ObjectResult;
+            var controllerResult = await controller.GetProviderByUkprn(standardId, ukPrn,sectorSubjectArea, lat, lon, shortlistUserId) as ObjectResult;
 
             var model = controllerResult.Value as GetProviderDetailResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
