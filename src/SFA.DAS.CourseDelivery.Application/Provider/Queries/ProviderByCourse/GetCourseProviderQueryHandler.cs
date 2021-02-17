@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -15,13 +16,12 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse
         }
         public async Task<GetCourseProviderQueryResponse> Handle(GetCourseProviderQuery request, CancellationToken cancellationToken)
         {
-            var provider = await _service.GetProviderByUkprnAndStandard(request.Ukprn, request.StandardId, request.Lat, request.Lon, request.SectorSubjectArea);
+            var provider = await _service.GetProviderByUkprnAndStandard(request.Ukprn, request.StandardId, request.Lat, request.Lon, request.SectorSubjectArea, request.ShortlistUserId ?? Guid.Empty);
             
             return new GetCourseProviderQueryResponse
             {
                 ProviderStandardLocation = provider
-            }; 
-                
+            };
         }
     }
 }

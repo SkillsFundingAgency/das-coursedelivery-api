@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         Task<IEnumerable<ProviderSummary>> GetRegisteredProviders();
         Task<IEnumerable<ProviderLocation>> GetProvidersByStandardId(  int standardId, string sectorSubjectArea,
             short level, Guid shortlistUserId);
-        Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon, string sectorSubjectArea);
+        Task<ProviderLocation> GetProviderByUkprnAndStandard(int ukPrn, int standardId, double? lat, double? lon, string sectorSubjectArea, Guid shortlistUserId);
         Task<IEnumerable<Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description);
         Task<IEnumerable<int>> GetStandardIdsByUkprn(int ukprn);
         Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(       int standardId, double lat,

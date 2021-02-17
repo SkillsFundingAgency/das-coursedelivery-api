@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +7,6 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Application.Provider.Queries.ProviderByCourse;
-using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Domain.Models;
 using SFA.DAS.Testing.AutoFixture;
@@ -17,11 +16,10 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
     public class WhenGettingACourseProvider
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_StandardId_And_Location_And_Overall_AchievementRates(
+        public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_And_StandardId(
             string sectorSubjectArea,
             GetCourseProviderQuery query,
             ProviderLocation providerStandard,
-            List<NationalAchievementRateOverall> overallAchievementRates,
             [Frozen] Mock<IProviderService> providerService,
             GetCourseProviderQueryHandler handler)
         {
@@ -31,10 +29,8 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
                 c.SectorSubjectArea = sectorSubjectArea;
                 return c;
             }).ToList();
-            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon, query.SectorSubjectArea)).ReturnsAsync(providerStandard);
-            providerService
-                .Setup(x => x.GetOverallAchievementRates(sectorSubjectArea)).ReturnsAsync(overallAchievementRates);
-
+            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon, query.SectorSubjectArea, query.ShortlistUserId.Value)).ReturnsAsync(providerStandard);
+            
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
 
@@ -43,7 +39,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
         }
         
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_And_StandardId_And_Returns_Null_For_Overall_AchievementRates_If_No_AchievementRate(
+        public async Task Then_Gets_Provider_From_The_Service_By_Ukprn_And_StandardId_And_Passes_Empty_Guid_If_No_Shortlist_UserId(
             string sectorSubjectArea,
             GetCourseProviderQuery query,
             ProviderLocation providerStandard,
@@ -51,8 +47,9 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
             GetCourseProviderQueryHandler handler)
         {
             //Arrange
+            query.ShortlistUserId = null;
             providerStandard.AchievementRates = null;
-            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon, query.SectorSubjectArea)).ReturnsAsync(providerStandard);
+            providerService.Setup(x => x.GetProviderByUkprnAndStandard(query.Ukprn, query.StandardId, query.Lat, query.Lon, query.SectorSubjectArea, Guid.Empty)).ReturnsAsync(providerStandard);
             
             //Act
             var actual = await handler.Handle(query, It.IsAny<CancellationToken>());
