@@ -14,6 +14,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
 
         public static implicit operator ProviderSummary(Provider source)
         {
+            if (source == null)
+            {
+                return null;
+            }
             return new ProviderSummary
             {
                 Ukprn = source.Ukprn,
@@ -28,6 +32,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
 
         public static implicit operator ProviderSummary(ProviderRegistration source)
         {
+            if (source == null)
+            {
+                return null;
+            }
             return new ProviderSummary
             {
                 Ukprn = source.Ukprn,

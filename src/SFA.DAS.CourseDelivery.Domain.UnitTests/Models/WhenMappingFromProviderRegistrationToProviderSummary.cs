@@ -22,5 +22,15 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.ContactUrl.Should().BeEmpty();
             actual.Address.Should().BeEquivalentTo((ProviderSummaryAddress)source);
         }
+
+        [Test, RecursiveMoqAutoData]
+        public void Then_Returns_Null_If_Source_Is_Null()
+        {
+            //Act
+            var actual = (ProviderSummary) (Domain.Entities.ProviderRegistration)null;
+            
+            //Assert
+            actual.Should().BeNull();
+        }
     }
 }

@@ -56,6 +56,11 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
             {
                 var queryResult = await _mediator.Send(new GetProviderQuery { Ukprn = ukprn });
 
+                if (queryResult.Provider == null)
+                {
+                    return NotFound();
+                }
+                
                 GetProviderDetailsResponse response = queryResult.Provider;
 
                 return Ok(response);
