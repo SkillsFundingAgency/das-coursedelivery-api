@@ -22,10 +22,11 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationR
             mockContext
                 .Setup(context => context.ProviderRegistrations)
                 .ReturnsDbSet(recordsInDb);
+            var ukprn = recordsInDb.First().Ukprn;
 
-            var actual = await repository.GetByUkprn(recordsInDb.First().Ukprn);
+            var actual = await repository.GetByUkprn(ukprn);
 
-            actual.Should().BeEquivalentTo(recordsInDb);
+            actual.Should().BeEquivalentTo(recordsInDb.First(c=>c.Ukprn.Equals(ukprn)));
         }
     }
 }

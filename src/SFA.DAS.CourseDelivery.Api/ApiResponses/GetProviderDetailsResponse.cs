@@ -1,4 +1,5 @@
 ﻿using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
@@ -14,18 +15,17 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public string Website { get; set; }
         public string Phone { get; set; }
 
-        public static implicit operator GetProviderDetailsResponse(Provider source)
+        public static implicit operator GetProviderDetailsResponse(ProviderSummary source)
         {
             return new GetProviderDetailsResponse
             {
-                Id = source.Id,
                 Ukprn = source.Ukprn,
                 Name = source.Name,
-                LearnerSatisfaction = source.LearnerSatisfaction,
-                EmployerSatisfaction = source.EmployerSatisfaction,
+                LearnerSatisfaction = 0,
+                EmployerSatisfaction = 0,
                 TradingName = source.TradingName,
                 Email = source.Email,
-                Website = source.Website,
+                Website = source.ContactUrl,
                 Phone = source.Phone
             };
         }

@@ -12,7 +12,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         Task<IEnumerable<Entities.NationalAchievementRateOverall>> GetOverallAchievementRates(string description);
         Task<IEnumerable<int>> GetStandardIdsByUkprn(int ukprn);
         Task<IEnumerable<ProviderLocation>> GetProvidersByStandardAndLocation(  int standardId, double lat, double lon, short querySortOrder, string sectorSubjectArea, short level);
-        Task<Entities.Provider> GetProviderByUkprn(int ukprn);
+        Task<ProviderSummary> GetProviderByUkprn(int ukprn);
         Task<UkprnsForStandard> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon);
     }
 }

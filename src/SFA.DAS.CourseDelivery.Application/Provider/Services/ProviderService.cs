@@ -13,14 +13,17 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
         private readonly IProviderRepository _providerRepository;
         private readonly IProviderStandardRepository _providerStandardRepository;
         private readonly INationalAchievementRateOverallRepository _nationalAchievementRateOverallRepository;
+        private readonly IProviderRegistrationRepository _providerRegistrationRepository;
 
         public ProviderService (IProviderRepository providerRepository, 
             IProviderStandardRepository providerStandardRepository, 
-            INationalAchievementRateOverallRepository nationalAchievementRateOverallRepository)
+            INationalAchievementRateOverallRepository nationalAchievementRateOverallRepository,
+            IProviderRegistrationRepository providerRegistrationRepository)
         {
             _providerRepository = providerRepository;
             _providerStandardRepository = providerStandardRepository;
             _nationalAchievementRateOverallRepository = nationalAchievementRateOverallRepository;
+            _providerRegistrationRepository = providerRegistrationRepository;
         }
 
         public async Task<IEnumerable<ProviderSummary>> GetRegisteredProviders()
@@ -114,9 +117,14 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
                 .ToList();
         }
 
-        public async Task<Domain.Entities.Provider> GetProviderByUkprn(int ukprn)
+        public async Task<ProviderSummary> GetProviderByUkprn(int ukprn)
         {
             var provider = await _providerRepository.GetByUkprn(ukprn);
+
+            if (provider == null)
+            {
+                return await  _providerRegistrationRepository.GetByUkprn(ukprn);
+            }
 
             return provider;
         }
