@@ -5,30 +5,22 @@ using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
 {
-    public class WhenMappingFromProviderToRegisteredProvider
-    {
-        [Test, RecursiveMoqAutoData]
-        public void Then_The_Fields_Are_Correctly_Mapped(Domain.Entities.Provider source)
-        {
-            //Act
-            var actual = (RegisteredProvider) source;
-            
-            //Assert
-            actual.Should().BeEquivalentTo(source, options=> options.ExcludingMissingMembers());
-        }
-    }
-    public class WhenMappingFromProviderRegistrationToRegisteredProvider
+    public class WhenMappingFromProviderRegistrationToProviderSummary
     {
         [Test, RecursiveMoqAutoData]
         public void Then_The_Fields_Are_Correctly_Mapped(Domain.Entities.ProviderRegistration source)
         {
             //Act
-            var actual = (RegisteredProvider) source;
+            var actual = (ProviderSummary) source;
             
             //Assert
             actual.Name.Should().Be(source.LegalName);
             actual.TradingName.Should().Be(source.LegalName);
             actual.Ukprn.Should().Be(source.Ukprn);
+            actual.Email.Should().BeEmpty();
+            actual.Phone.Should().BeEmpty();
+            actual.ContactUrl.Should().BeEmpty();
+            actual.Address.Should().BeEquivalentTo((ProviderSummaryAddress)source);
         }
     }
 }

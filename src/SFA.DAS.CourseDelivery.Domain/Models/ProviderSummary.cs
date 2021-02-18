@@ -25,5 +25,20 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Address = source.ProviderRegistration
             };
         }
+
+        public static implicit operator ProviderSummary(ProviderRegistration source)
+        {
+            return new ProviderSummary
+            {
+                Ukprn = source.Ukprn,
+                Name = source.LegalName,
+                Email = string.Empty,
+                Phone = string.Empty,
+                TradingName = source.LegalName,
+                ContactUrl = string.Empty,
+                Address = source
+            }; 
+                
+        }
     }
 }
