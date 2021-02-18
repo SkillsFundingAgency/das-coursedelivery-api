@@ -15,5 +15,14 @@ namespace SFA.DAS.CourseDelivery.Data.Extensions
 
             return filteredProviders;
         }
+
+        public static IQueryable<ProviderRegistration> FilterRegisteredProviders(this IQueryable<ProviderRegistration> providers)
+        {
+            var filteredProviders = providers.Where(provider => 
+                provider.StatusId == RoatpTypeConstants.StatusOfActive &&
+                provider.ProviderTypeId == RoatpTypeConstants.ProviderTypeOfMainProvider);
+
+            return filteredProviders;
+        }
     }
 }
