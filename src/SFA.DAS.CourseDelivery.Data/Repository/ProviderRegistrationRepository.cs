@@ -10,10 +10,13 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
     public class ProviderRegistrationRepository : IProviderRegistrationRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
+        private readonly ICourseDeliveryReadonlyDataContext _readonlyDataContext;
 
-        public ProviderRegistrationRepository(ICourseDeliveryDataContext dataContext)
+        public ProviderRegistrationRepository(ICourseDeliveryDataContext dataContext, 
+            ICourseDeliveryReadonlyDataContext readonlyDataContext)
         {
             _dataContext = dataContext;
+            _readonlyDataContext = readonlyDataContext;
         }
 
         public async Task InsertMany(IEnumerable<ProviderRegistration> providerRegistrations)
@@ -50,6 +53,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 providerRegistration.Long = providerRegistrationImport.Long;
             }
             _dataContext.SaveChanges();
+        }
+
+        public async Task<ProviderRegistration> GetByUkprn(int ukprn)
+        {
+            return await _readonlyDataContext.ProviderRegistrations.SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
         }
     }
 }
