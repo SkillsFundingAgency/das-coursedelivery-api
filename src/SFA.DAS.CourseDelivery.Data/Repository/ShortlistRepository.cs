@@ -139,9 +139,10 @@ from Provider P
                  from [StandardLocation] l
                 inner join ProviderStandardLocation pslx on pslx.LocationId = l.LocationId
         inner join Shortlist slx on slx.StandardId = pslx.StandardId and slx.UkPrn = pslx.UkPrn
+        and slx.ShortlistUserId = '{userId}'
         ) l on l.LocationId = psl.LocationId
 where
-  PR.StatusId = 1 AND PR.ProviderTypeId = 1 and Shl.ShortlistUserId = {userId}";
+  PR.StatusId = 1 AND PR.ProviderTypeId = 1 and Shl.ShortlistUserId = '{userId}'";
         }
     }
 }
