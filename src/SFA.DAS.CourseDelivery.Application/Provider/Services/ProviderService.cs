@@ -28,7 +28,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
         public async Task<IEnumerable<ProviderSummary>> GetRegisteredProviders()
         {
-            var providersFromRepo = await _providerRepository.GetAllRegistered();
+            var providersFromRepo = await _providerRegistrationRepository.GetAllRegisteredApprovedAndActiveProviders();
 
             return providersFromRepo.Select(provider => (ProviderSummary)provider);
         }
@@ -123,7 +123,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
             if (provider == null)
             {
-                return await  _providerRegistrationRepository.GetByUkprn(ukprn);
+                return await  _providerRegistrationRepository.GetRegisteredApprovedAndActiveProviderByUkprn(ukprn);
             }
 
             return provider;

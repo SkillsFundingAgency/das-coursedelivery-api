@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SFA.DAS.CourseDelivery.Data.Extensions;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -55,9 +56,19 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task<ProviderRegistration> GetByUkprn(int ukprn)
+        public async Task<ProviderRegistration> GetRegisteredApprovedAndActiveProviderByUkprn(int ukprn)
         {
-            return await _readonlyDataContext.ProviderRegistrations.SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
+            return await _readonlyDataContext
+                .ProviderRegistrations
+                .FilterRegisteredProviders()
+                .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
+        }
+
+        public async Task<IEnumerable<ProviderRegistration>> GetAllRegisteredApprovedAndActiveProviders()
+        {
+            return await _readonlyDataContext
+                .ProviderRegistrations
+                .FilterRegisteredProviders().ToListAsync();
         }
     }
 }

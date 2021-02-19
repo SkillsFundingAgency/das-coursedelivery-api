@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using Provider = SFA.DAS.CourseDelivery.Domain.Entities.Provider;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Domain.Entities.ProviderRegistration;
 
 namespace SFA.DAS.CourseDelivery.Data.Extensions
 {

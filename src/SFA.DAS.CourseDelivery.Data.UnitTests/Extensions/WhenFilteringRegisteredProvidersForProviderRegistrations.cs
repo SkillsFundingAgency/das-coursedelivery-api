@@ -5,6 +5,7 @@ using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Data.Extensions;
 using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.Testing.AutoFixture;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Domain.Entities.ProviderRegistration;
 
 namespace SFA.DAS.CourseDelivery.Data.UnitTests.Extensions
 {

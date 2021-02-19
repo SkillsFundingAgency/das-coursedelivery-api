@@ -24,7 +24,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             repository
                 .Setup(x => x.GetByUkprn(ukprn))
                 .ReturnsAsync(provider);
-            providerRegistrationRepository.Verify(x=>x.GetByUkprn(It.IsAny<int>()), Times.Never);
+            providerRegistrationRepository.Verify(x=>x.GetRegisteredApprovedAndActiveProviderByUkprn(It.IsAny<int>()), Times.Never);
 
             //Act
             var actual = await service.GetProviderByUkprn(ukprn);
@@ -45,7 +45,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             repository
                 .Setup(x => x.GetByUkprn(ukprn))
                 .ReturnsAsync((Domain.Entities.Provider) null);
-            providerRegistrationRepository.Setup(x => x.GetByUkprn(ukprn))
+            providerRegistrationRepository.Setup(x => x.GetRegisteredApprovedAndActiveProviderByUkprn(ukprn))
                 .ReturnsAsync(providerRegistration);
             
             //Act
