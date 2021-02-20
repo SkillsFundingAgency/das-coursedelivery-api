@@ -38,8 +38,8 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
                 builder.HasOne(c => c.Provider)
                         .WithOne(c => c.ProviderRegistration)
                         .HasPrincipalKey<Domain.Entities.Provider>(c => c.Ukprn)
-                        .HasForeignKey<Domain.Entities.ProviderRegistration>(c => c.Ukprn).Metadata.DeleteBehavior =
-                    DeleteBehavior.Restrict;
+                        .HasForeignKey<Domain.Entities.ProviderRegistration>(c => c.Ukprn).IsRequired(false)
+                        .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
 
                 builder.HasMany(c => c.ProviderRegistrationFeedbackAttributes)
                     .WithOne(c => c.ProviderRegistration)

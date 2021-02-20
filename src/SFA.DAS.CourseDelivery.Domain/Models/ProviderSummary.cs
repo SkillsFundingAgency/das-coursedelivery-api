@@ -40,10 +40,10 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             {
                 Ukprn = source.Ukprn,
                 Name = source.LegalName,
-                Email = string.Empty,
-                Phone = string.Empty,
-                TradingName = source.LegalName,
-                ContactUrl = string.Empty,
+                Email = source.Provider?.Email ?? string.Empty,
+                Phone = source.Provider?.Phone ?? string.Empty,
+                TradingName = source.Provider?.TradingName ?? source.LegalName,
+                ContactUrl = source.Provider?.Website ?? string.Empty,
                 Address = source
             }; 
                 

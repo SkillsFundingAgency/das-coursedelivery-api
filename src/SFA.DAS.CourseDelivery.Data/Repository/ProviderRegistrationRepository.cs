@@ -60,6 +60,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             return await _readonlyDataContext
                 .ProviderRegistrations
+                .Include(c=>c.Provider)
                 .FilterRegisteredProviders()
                 .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
         }
@@ -68,6 +69,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
         {
             return await _readonlyDataContext
                 .ProviderRegistrations
+                .Include(c=>c.Provider)
                 .FilterRegisteredProviders().ToListAsync();
         }
     }
