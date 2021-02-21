@@ -27,19 +27,19 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
         }
         
         [Test, RecursiveMoqAutoData]
-        public void Then_The_Fields_Are_Correctly_Mapped_With_Provider(Domain.Entities.ProviderRegistration source)
+        public void Then_The_Fields_Are_Correctly_Mapped_With_Provider(Domain.Entities.Provider source)
         {
             //Act
             var actual = (ProviderSummary) source;
             
             //Assert
-            actual.Name.Should().Be(source.Provider.Name);
-            actual.TradingName.Should().Be(source.Provider.TradingName);
+            actual.Name.Should().Be(source.Name);
+            actual.TradingName.Should().Be(source.TradingName);
             actual.Ukprn.Should().Be(source.Ukprn);
-            actual.Email.Should().Be(source.Provider.Email);
-            actual.Phone.Should().Be(source.Provider.Phone);
-            actual.ContactUrl.Should().Be(source.Provider.Website);
-            actual.Address.Should().BeEquivalentTo((ProviderSummaryAddress)source);
+            actual.Email.Should().Be(source.Email);
+            actual.Phone.Should().Be(source.Phone);
+            actual.ContactUrl.Should().Be(source.Website);
+            actual.Address.Should().BeEquivalentTo((ProviderSummaryAddress)source.ProviderRegistration);
         }
 
         [Test, RecursiveMoqAutoData]
