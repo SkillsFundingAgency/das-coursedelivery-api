@@ -22,7 +22,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
         {
             //Arrange
             mockRepository
-                .Setup(repository => repository.GetAllRegisteredApprovedAndActiveProviders())
+                .Setup(repository => repository.GetAllProviders())
                 .ReturnsAsync(providersFromRepository);
 
             //Act

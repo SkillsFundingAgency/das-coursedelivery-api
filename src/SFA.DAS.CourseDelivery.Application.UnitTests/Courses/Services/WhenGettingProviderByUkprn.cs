@@ -12,29 +12,9 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
 {
     public class WhenGettingProviderByUkprn
     {
-        [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_Provider_From_Repository(
-            int ukprn,
-            Domain.Entities.Provider provider,
-            [Frozen]Mock<IProviderRepository> repository,
-            [Frozen]Mock<IProviderRegistrationRepository> providerRegistrationRepository,
-            ProviderService service)
-        {
-            //Arrange
-            repository
-                .Setup(x => x.GetByUkprn(ukprn))
-                .ReturnsAsync(provider);
-            providerRegistrationRepository.Verify(x=>x.GetRegisteredApprovedAndActiveProviderByUkprn(It.IsAny<int>()), Times.Never);
-
-            //Act
-            var actual = await service.GetProviderByUkprn(ukprn);
-
-            //Assert
-            actual.Should().BeEquivalentTo((ProviderSummary)provider);
-        }
 
         [Test, RecursiveMoqAutoData]
-        public async Task Then_If_Null_From_ProviderRepository_It_Is_Taken_From_ProviderRegistration(
+        public async Task Then_Provider_Is_Taken_From_ProviderRegistration_Repository(
             int ukprn,
             Domain.Entities.ProviderRegistration providerRegistration,
             [Frozen]Mock<IProviderRepository> repository,
@@ -42,10 +22,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             ProviderService service)
         {
             //Arrange
-            repository
-                .Setup(x => x.GetByUkprn(ukprn))
-                .ReturnsAsync((Domain.Entities.Provider) null);
-            providerRegistrationRepository.Setup(x => x.GetRegisteredApprovedAndActiveProviderByUkprn(ukprn))
+            providerRegistrationRepository.Setup(x => x.GetProviderByUkprn(ukprn))
                 .ReturnsAsync(providerRegistration);
             
             //Act

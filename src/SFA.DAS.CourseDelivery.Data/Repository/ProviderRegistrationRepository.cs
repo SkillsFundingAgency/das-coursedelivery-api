@@ -56,21 +56,20 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             _dataContext.SaveChanges();
         }
 
-        public async Task<ProviderRegistration> GetRegisteredApprovedAndActiveProviderByUkprn(int ukprn)
+        public async Task<ProviderRegistration> GetProviderByUkprn(int ukprn)
         {
             return await _readonlyDataContext
                 .ProviderRegistrations
                 .Include(c=>c.Provider)
-                .FilterRegisteredProviders()
                 .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
         }
 
-        public async Task<IEnumerable<ProviderRegistration>> GetAllRegisteredApprovedAndActiveProviders()
+        public async Task<IEnumerable<ProviderRegistration>> GetAllProviders()
         {
             return await _readonlyDataContext
                 .ProviderRegistrations
                 .Include(c=>c.Provider)
-                .FilterRegisteredProviders().ToListAsync();
+                .ToListAsync();
         }
     }
 }
