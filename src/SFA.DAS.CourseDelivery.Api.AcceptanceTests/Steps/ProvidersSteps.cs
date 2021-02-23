@@ -31,13 +31,13 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Steps
 
             var model = await HttpUtilities.ReadContent<GetProvidersResponse>(result.Content);
 
-            var registeredProviders = DbUtilities.GetAllProviders()
-                .Join(DbUtilities.GetAllProviderRegistrations(), 
+            var registeredProviders = DbUtilities.GetAllProviderRegistrations()
+                .Join(DbUtilities.GetAllProviders(), 
                     provider => provider.Ukprn,
                     registration => registration.Ukprn,
                     (provider, registration) =>
                     {
-                        provider.ProviderRegistration = registration;
+                        provider.Provider = registration;
                         return provider;
                     }).AsQueryable()
                 .FilterRegisteredProviders().ToList();

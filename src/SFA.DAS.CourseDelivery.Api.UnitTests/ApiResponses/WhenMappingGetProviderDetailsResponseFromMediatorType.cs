@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.Models;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
@@ -9,17 +10,15 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
     public class WhenMappingGetProviderDetailsResponseFromMediatorType
     {
         [Test, RecursiveMoqAutoData]
-        public void Then_Maps_Fields(Provider source)
+        public void Then_Maps_Fields(ProviderSummary source)
         {
             var result = (GetProviderDetailsResponse) source;
 
             result.Should().BeEquivalentTo(source, options => options
-                .Excluding(provider => provider.ProviderStandards)
-                .Excluding(provider => provider.NationalAchievementRates)
-                .Excluding(provider => provider.ProviderRegistration)
-                .Excluding(provider => provider.ProviderRegistrationFeedbackAttributes)
-                .Excluding(provider => provider.ProviderRegistrationFeedbackRating)
+                .Excluding(c=>c.ContactUrl)
+                .Excluding(c=>c.Address)
             );
+            result.Website.Should().Be(source.ContactUrl);
         }
 
         [Test]

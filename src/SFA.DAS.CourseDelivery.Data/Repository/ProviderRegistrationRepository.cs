@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SFA.DAS.CourseDelivery.Data.Extensions;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
@@ -10,10 +11,13 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
     public class ProviderRegistrationRepository : IProviderRegistrationRepository
     {
         private readonly ICourseDeliveryDataContext _dataContext;
+        private readonly ICourseDeliveryReadonlyDataContext _readonlyDataContext;
 
-        public ProviderRegistrationRepository(ICourseDeliveryDataContext dataContext)
+        public ProviderRegistrationRepository(ICourseDeliveryDataContext dataContext, 
+            ICourseDeliveryReadonlyDataContext readonlyDataContext)
         {
             _dataContext = dataContext;
+            _readonlyDataContext = readonlyDataContext;
         }
 
         public async Task InsertMany(IEnumerable<ProviderRegistration> providerRegistrations)
@@ -50,6 +54,23 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 providerRegistration.Long = providerRegistrationImport.Long;
             }
             _dataContext.SaveChanges();
+        }
+
+        public async Task<ProviderRegistration> GetRegisteredApprovedAndActiveProviderByUkprn(int ukprn)
+        {
+            return await _readonlyDataContext
+                .ProviderRegistrations
+                .Include(c=>c.Provider)
+                .FilterRegisteredProviders()
+                .SingleOrDefaultAsync(c => c.Ukprn.Equals(ukprn));
+        }
+
+        public async Task<IEnumerable<ProviderRegistration>> GetAllRegisteredApprovedAndActiveProviders()
+        {
+            return await _readonlyDataContext
+                .ProviderRegistrations
+                .Include(c=>c.Provider)
+                .FilterRegisteredProviders().ToListAsync();
         }
     }
 }

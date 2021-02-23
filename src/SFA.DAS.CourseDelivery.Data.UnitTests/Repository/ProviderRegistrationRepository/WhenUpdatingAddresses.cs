@@ -52,7 +52,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationR
             _courseDeliveryDataContext.Setup(x => x.ProviderRegistrations.FindAsync(It.IsAny<int>()))
                 .ReturnsAsync(_expectedProviderRegistration);
             
-            _providerRegistrationRepository = new Data.Repository.ProviderRegistrationRepository(_courseDeliveryDataContext.Object);
+            _providerRegistrationRepository = new Data.Repository.ProviderRegistrationRepository(_courseDeliveryDataContext.Object, Mock.Of<ICourseDeliveryReadonlyDataContext>());
         }
 
         [Test]
