@@ -11,7 +11,8 @@
                 StatusId = source.StatusId,
                 ProviderTypeId = source.ProviderTypeId,
                 OrganisationTypeId = source.OrganisationTypeId,
-                FeedbackTotal = source.Feedback.Total
+                FeedbackTotal = source.Feedback.Total,
+                LegalName = source.LegalName
             };
         }
     }

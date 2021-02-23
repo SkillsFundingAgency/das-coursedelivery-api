@@ -8,6 +8,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public virtual IEnumerable<ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get ; set ; }
         public virtual IEnumerable<ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRating { get ; set ; }
         
+
         public static implicit operator ProviderRegistration(ProviderRegistrationImport source)
         {
             return new ProviderRegistration
@@ -25,7 +26,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 Town = source.Town,
                 Postcode = source.Postcode,
                 Lat = source.Lat,
-                Long = source.Long
+                Long = source.Long,
+                LegalName = source.LegalName
             };
         }
     }

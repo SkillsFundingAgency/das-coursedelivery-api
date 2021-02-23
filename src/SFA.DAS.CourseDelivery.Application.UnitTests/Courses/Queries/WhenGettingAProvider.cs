@@ -15,7 +15,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Queries
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Provider_From_The_Service_By_Ukprn(
             GetProviderQuery query,
-            Domain.Entities.Provider provider,
+            Domain.Models.ProviderSummary provider,
             [Frozen] Mock<IProviderService> providerService,
             GetProviderQueryHandler handler)
         {

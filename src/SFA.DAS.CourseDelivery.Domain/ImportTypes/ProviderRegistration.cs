@@ -18,6 +18,8 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public int ProviderTypeId { get; set; }
         [JsonProperty("feedback")]
         public Feedback Feedback { get; set; }
+        [JsonProperty]
+        public string LegalName { get; set; }
     }
     public class Feedback
     {
