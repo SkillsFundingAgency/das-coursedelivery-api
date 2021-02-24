@@ -31,6 +31,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
             string sectorSubjectArea, short level, Guid shortlistUserId)
         {
             var providers = (await _providerRepository.GetByStandardId(standardId, sectorSubjectArea, level, shortlistUserId)).ToList();
+            
 
             
             return providers.BuildProviderLocations();
@@ -53,7 +54,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
         public async Task<IEnumerable<ProviderSummary>> GetRegisteredProviders()
         {
-            var providersFromRepo = await _providerRegistrationRepository.GetAllRegisteredApprovedAndActiveProviders();
+            var providersFromRepo = await _providerRegistrationRepository.GetAllProviders();
             return providersFromRepo.Select(provider => (ProviderSummary)provider);
         }
 
@@ -80,14 +81,7 @@ namespace SFA.DAS.CourseDelivery.Application.Provider.Services
 
         public async Task<ProviderSummary> GetProviderByUkprn(int ukprn)
         {
-            var provider = await _providerRepository.GetByUkprn(ukprn);
-
-            if (provider == null)
-            {
-                return await  _providerRegistrationRepository.GetRegisteredApprovedAndActiveProviderByUkprn(ukprn);
-            }
-
-            return provider;
+            return await  _providerRegistrationRepository.GetProviderByUkprn(ukprn);
         }
 
         public async Task<UkprnsForStandard> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon)
