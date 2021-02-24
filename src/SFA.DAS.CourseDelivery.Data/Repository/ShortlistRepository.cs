@@ -77,7 +77,11 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
 
         public async Task<int> GetShortlistItemCountForUser(Guid userId)
         {
-            return await _readonlyDataContext.Shortlists.CountAsync(c => c.ShortlistUserId.Equals(userId));
+            return await _readonlyDataContext
+                .Shortlists
+                .Include(c=>c.ProviderStandard)
+                .CountAsync(c => c.ShortlistUserId.Equals(userId) 
+                                 && c.ProviderStandard != null);
         }
 
         private FormattableString GetProvidersShortlistQuery(Guid userId)

@@ -15,13 +15,15 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
     public class WhenGettingCountOfShortlistItemsForUser
     {
         [Test, RecursiveMoqAutoData]
-        public async Task Then_Gets_Number_Of_Items_For_That_User_From_DbContext(
+        public async Task Then_Gets_Number_Of_Items_For_That_User_From_DbContext_With_Standard(
             Guid userId,
             List<Shortlist> recordsInDb,
             [Frozen] Mock<ICourseDeliveryReadonlyDataContext> mockContext,
             Data.Repository.ShortlistRepository repository)
         {
             recordsInDb[0].ShortlistUserId = userId;
+            recordsInDb[1].ShortlistUserId = userId;
+            recordsInDb[1].ProviderStandard = null;
             mockContext
                 .Setup(context => context.Shortlists)
                 .ReturnsDbSet(recordsInDb);
@@ -30,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
 
             actual.Should()
                 .Be(recordsInDb.Count(shortlist =>
-                    shortlist.ShortlistUserId == userId));
+                    shortlist.ShortlistUserId == userId && shortlist.ProviderStandard != null));
         }
     }
 }
