@@ -90,6 +90,7 @@ select
     ps.ContactUrl,
     ps.Email,
     ps.Phone,
+    ps.StandardInfoUrl,
     sl.LocationId,
     sl.Address1,
     sl.Address2,

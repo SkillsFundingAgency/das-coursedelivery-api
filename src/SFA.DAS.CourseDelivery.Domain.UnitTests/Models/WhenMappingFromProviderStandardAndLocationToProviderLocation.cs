@@ -22,10 +22,11 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             string providerHeadOfficeAddress4,
             string providerHeadOfficeAddressTown,
             string providerHeadOfficeAddressPostcode,
+            string standardInfoUrl,
             Guid? shortlistId,
             List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
-            var actual = new ProviderLocation(ukprn, name, tradingName, contactUrl, phone, email, 
+            var actual = new ProviderLocation(ukprn, name, tradingName, contactUrl, phone, email, standardInfoUrl,
                 providerDistanceInMiles,
                 providerHeadOfficeAddress1,
                 providerHeadOfficeAddress2, 
@@ -52,6 +53,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Address.Town.Should().Be(providerHeadOfficeAddressTown);
             actual.Address.Postcode.Should().Be(providerHeadOfficeAddressPostcode);
             actual.Address.DistanceInMiles.Should().Be(providerDistanceInMiles);
+            actual.StandardInfoUrl.Should().Be(standardInfoUrl);
         }
         
     }

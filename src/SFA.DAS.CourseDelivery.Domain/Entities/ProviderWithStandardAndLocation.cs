@@ -11,6 +11,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 Age = source.Age,
                 County = source.County,
                 Email = source.Email,
+                StandardInfoUrl = source.StandardInfoUrl,
                 Id = source.Id,
                 Name = source.Name,
                 National = source.National,
