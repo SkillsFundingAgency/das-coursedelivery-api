@@ -8,6 +8,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public string ContactUrl { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string StandardInfoUrl { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Town { get; set; }
