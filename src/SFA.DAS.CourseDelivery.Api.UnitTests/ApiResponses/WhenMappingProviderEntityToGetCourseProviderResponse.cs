@@ -20,6 +20,10 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             actual.Name.Should().Be(provider.Name);
             actual.TradingName.Should().Be(provider.TradingName);
             actual.ProviderAddress.Should().BeEquivalentTo(provider.Address);
+            actual.Email.Should().Be(provider.Email);
+            actual.Phone.Should().Be(provider.Phone);
+            actual.ContactUrl.Should().Be(provider.ContactUrl);
+            actual.StandardInfoUrl.Should().Be(provider.StandardInfoUrl);
         }
 
         [Test, RecursiveMoqAutoData]

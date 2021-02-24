@@ -7,6 +7,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
 {
     public class GetProviderDetailResponse : GetProviderSummaryResponse
     {
+        public string StandardInfoUrl { get; set; }
         public GetProviderHeadOfficeAddress ProviderAddress { get; set; }
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
@@ -30,6 +31,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Email = provider.Email,
                 ContactUrl = provider.ContactUrl,
                 Phone = provider.Phone,
+                StandardInfoUrl = provider.StandardInfoUrl,
                 ProviderAddress =  provider.Address,
                 AchievementRates = nationalAchievementRates
                     .Select(c=>(GetNationalAchievementRateResponse)c).ToList(),
