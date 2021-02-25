@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Services
 {
     public class WhenAddingShortlistUserItem
     {
-        [Test, MoqAutoData]
+        [Test, RecursiveMoqAutoData]
         public async Task Then_The_Item_Is_Added_To_The_Repository(
             Domain.Entities.Shortlist item,
             [Frozen] Mock<IShortlistRepository> repository,
@@ -28,7 +28,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Shortlist.Services
             repository.Verify(x=>x.Insert(item), Times.Once);
         }
 
-        [Test, MoqAutoData]
+        [Test, RecursiveMoqAutoData]
         public async Task Then_If_There_Already_Is_A_Matching_Item_On_Course_And_Provider_And_Location_It_Is_Not_Added(
             Domain.Entities.Shortlist item,
             [Frozen] Mock<IShortlistRepository> repository,

@@ -1,6 +1,8 @@
 ﻿using SFA.DAS.CourseDelivery.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 
 namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
@@ -52,16 +54,17 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
             {
                 new Provider
                 {
-                    Ukprn = 20002451,
-                    Email = "test@test.com",
-                    Name = "Test provider",
-                    TradingName = "Test Alternate Trading Name"
-                },new Provider
-                {
                     Ukprn = 20002452,
                     Email = "test2@test.com",
                     Name = "Test2 provider",
                     TradingName = "Test2 Alternate Trading Name"
+                },
+                new Provider
+                {
+                    Ukprn = 20002451,
+                    Email = "test@test.com",
+                    Name = "Test provider",
+                    TradingName = "Test Alternate Trading Name"
                 }
             };
         }
@@ -92,7 +95,8 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                     Ukprn = 20002451,
                     StatusId = 1,
                     StatusDate = DateTime.UtcNow,
-                    ProviderTypeId = 1
+                    ProviderTypeId = 1,
+                   
                 }
             };
         }

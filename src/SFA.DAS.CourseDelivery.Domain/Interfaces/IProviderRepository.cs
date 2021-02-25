@@ -15,11 +15,14 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         Task<IEnumerable<ProviderWithStandardAndLocation>> GetByStandardIdAndLocation(   int standardId, double lat,
             double lon, short sortOrder, string sectorSubjectArea, short level, Guid shortlistUserId);
 
-        Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(int ukprn, int standardId,
-            double lat = 0, double lon = 0, string sectorSubjectArea= "");
+        Task<IEnumerable<ProviderWithStandardAndLocation>> GetProviderByStandardIdAndLocation(  int ukprn,
+            int standardId,
+            Guid shortlistUserId,
+            double lat = 0, double lon = 0, string sectorSubjectArea = "");
 
         Task<IEnumerable<int>> GetUkprnsForStandardAndLocation(int standardId, double lat, double lon);
         Task<List<Provider>> GetAllRegistered();
-        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(int ukprn, int standardId, string sectorSubjectArea);
+        Task<IEnumerable<ProviderWithStandardAndLocation>> GetByUkprnAndStandardId(  int ukprn, int standardId,
+            string sectorSubjectArea, Guid shortlistUserId);
     }
 }

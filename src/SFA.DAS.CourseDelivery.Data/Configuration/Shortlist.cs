@@ -21,6 +21,12 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.Long).HasColumnName("Long").HasColumnType("float");
             builder.Property(x => x.CreatedDate).HasColumnName("CreatedDate").HasColumnType("datetime").IsRequired().ValueGeneratedOnAdd();
 
+            builder.HasOne(c => c.ProviderStandard)
+                .WithMany(c=>c.Shortlists)
+                .HasPrincipalKey(c => new { c.Ukprn, c.StandardId })
+                .HasForeignKey(c => new {c.Ukprn, c.StandardId})
+                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+            
             builder.HasIndex(x => x.Id).IsUnique();
         }
     }

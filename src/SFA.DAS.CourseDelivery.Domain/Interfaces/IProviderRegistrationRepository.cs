@@ -9,5 +9,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         void DeleteAll();
         Task InsertMany(IEnumerable<ProviderRegistration> providerRegistrations);
         Task UpdateAddressesFromImportTable();
+        Task<ProviderRegistration> GetProviderByUkprn(int ukprn);
+        Task<IEnumerable<ProviderRegistration>> GetAllProviders();
     }
 }

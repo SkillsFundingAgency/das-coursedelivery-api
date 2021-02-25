@@ -95,7 +95,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         [Route("{id}/providers/{ukprn}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderDetailResponse))]
         [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderDetailResponse))]
-        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, string sectorSubjectArea, double? lat = null, double? lon = null)
+        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, string sectorSubjectArea, double? lat = null, double? lon = null, Guid? shortlistUserId = null)
         {
             var queryResult = await _mediator.Send(new GetCourseProviderQuery
             {
@@ -103,7 +103,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 StandardId = id, 
                 Lat = lat, 
                 Lon = lon,
-                SectorSubjectArea = sectorSubjectArea
+                SectorSubjectArea = sectorSubjectArea,
+                ShortlistUserId = shortlistUserId
             });
 
             if (queryResult.ProviderStandardLocation == null)

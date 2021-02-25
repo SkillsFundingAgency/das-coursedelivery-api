@@ -75,6 +75,15 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             }
         }
 
+        public async Task<int> GetShortlistItemCountForUser(Guid userId)
+        {
+            return await _readonlyDataContext
+                .Shortlists
+                .Include(c=>c.ProviderStandard)
+                .CountAsync(c => c.ShortlistUserId.Equals(userId) 
+                                 && c.ProviderStandard != null);
+        }
+
         private FormattableString GetProvidersShortlistQuery(Guid userId)
         {
             return $@"
@@ -85,6 +94,7 @@ select
     ps.ContactUrl,
     ps.Email,
     ps.Phone,
+    ps.StandardInfoUrl,
     sl.LocationId,
     sl.Address1,
     sl.Address2,
@@ -134,6 +144,7 @@ from Provider P
                  from [StandardLocation] l
                 inner join ProviderStandardLocation pslx on pslx.LocationId = l.LocationId
         inner join Shortlist slx on slx.StandardId = pslx.StandardId and slx.UkPrn = pslx.UkPrn
+        and slx.Long is not null and slx.lat is not null and slx.ShortlistUserId = {userId}
         ) l on l.LocationId = psl.LocationId
 where
   PR.StatusId = 1 AND PR.ProviderTypeId = 1 and Shl.ShortlistUserId = {userId}";

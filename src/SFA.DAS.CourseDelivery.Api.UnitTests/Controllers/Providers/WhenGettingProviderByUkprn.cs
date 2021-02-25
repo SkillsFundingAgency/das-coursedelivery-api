@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
@@ -39,7 +40,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
         }
 
         [Test, RecursiveMoqAutoData]
-        public async Task And_Null_Then_Returns_BadRequest(
+        public async Task And_Null_Then_Returns_NotFound(
             int ukPrn,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] ProvidersController controller)
@@ -49,6 +50,24 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Providers
                     It.IsAny<GetProviderQuery>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new GetProviderResponse());
+
+            var controllerResult = await controller.GetProvider(ukPrn) as StatusCodeResult;
+
+            controllerResult.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+        }
+        
+        
+        [Test, RecursiveMoqAutoData]
+        public async Task And_Error_Then_Returns_BadRequest(
+            int ukPrn,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] ProvidersController controller)
+        {
+            mockMediator
+                .Setup(mediator => mediator.Send(
+                    It.IsAny<GetProviderQuery>(),
+                    It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new Exception());
 
             var controllerResult = await controller.GetProvider(ukPrn) as StatusCodeResult;
 

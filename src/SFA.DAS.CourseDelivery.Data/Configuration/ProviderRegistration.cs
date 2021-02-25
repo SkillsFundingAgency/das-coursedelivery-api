@@ -31,14 +31,15 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.Postcode).HasColumnName("Postcode").HasColumnType("varchar").HasMaxLength(20).IsRequired(false);
             builder.Property(x => x.Lat).HasColumnName("Lat").HasColumnType("float").IsRequired();
             builder.Property(x => x.Long).HasColumnName("Long").HasColumnType("float").IsRequired();
+            builder.Property(x => x.LegalName).HasColumnName("LegalName").HasColumnType("varchar").HasMaxLength(1000).IsRequired(false);
 
             if (_buildRelations)
             {
                 builder.HasOne(c => c.Provider)
                         .WithOne(c => c.ProviderRegistration)
                         .HasPrincipalKey<Domain.Entities.Provider>(c => c.Ukprn)
-                        .HasForeignKey<Domain.Entities.ProviderRegistration>(c => c.Ukprn).Metadata.DeleteBehavior =
-                    DeleteBehavior.Restrict;
+                        .HasForeignKey<Domain.Entities.ProviderRegistration>(c => c.Ukprn).IsRequired(false)
+                        .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
 
                 builder.HasMany(c => c.ProviderRegistrationFeedbackAttributes)
                     .WithOne(c => c.ProviderRegistration)

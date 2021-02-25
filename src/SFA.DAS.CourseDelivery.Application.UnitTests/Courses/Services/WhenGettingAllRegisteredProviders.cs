@@ -16,13 +16,13 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
     {
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_The_Providers_From_The_Repository(
-            List<Domain.Entities.Provider> providersFromRepository,
-            [Frozen]Mock<IProviderRepository> mockRepository,
+            List<Domain.Entities.ProviderRegistration> providersFromRepository,
+            [Frozen]Mock<IProviderRegistrationRepository> mockRepository,
             ProviderService service)
         {
             //Arrange
             mockRepository
-                .Setup(repository => repository.GetAllRegistered())
+                .Setup(repository => repository.GetAllProviders())
                 .ReturnsAsync(providersFromRepository);
 
             //Act

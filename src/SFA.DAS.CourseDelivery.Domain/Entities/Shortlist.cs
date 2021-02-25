@@ -13,5 +13,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public float? Lat { get; set; }
         public float? Long { get; set; }
         public DateTime CreatedDate { get; set; }
+        public virtual ProviderStandard ProviderStandard { get; set; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public class GetProviderResponse
     {
-        public Domain.Entities.Provider Provider { get ; set ; }
+        public Domain.Models.ProviderSummary Provider { get ; set ; }
     }
 }

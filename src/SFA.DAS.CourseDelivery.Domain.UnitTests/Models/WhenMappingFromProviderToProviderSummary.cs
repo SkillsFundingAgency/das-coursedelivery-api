@@ -25,7 +25,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
         [Test]
         public void And_Null_Then_Returns_Null()
         {
-            var actual = (ProviderSummary)null;
+            var actual = (ProviderSummary)(Provider)null;
 
             actual.Should().BeNull();
         }

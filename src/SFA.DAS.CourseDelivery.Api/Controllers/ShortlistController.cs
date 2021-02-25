@@ -11,6 +11,7 @@ using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistItemForUser;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.DeleteShortlistItemForUser;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUser;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUserCount;
 
 namespace SFA.DAS.CourseDelivery.Api.Controllers
 {
@@ -96,6 +97,30 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 });
 
                 return Accepted();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("count/users/{userId}")]
+        public async Task<IActionResult> GetShortlistForUserCount(Guid userId)
+        {
+            try
+            {
+                var queryResult = await _mediator.Send(new GetShortlistForUserCountQuery
+                {
+                    UserId = userId
+                });
+                
+                var response =  new GetShortlistForUserCountResponse
+                {
+                    Count = queryResult
+                };
+                return Ok(response);
             }
             catch (Exception e)
             {
