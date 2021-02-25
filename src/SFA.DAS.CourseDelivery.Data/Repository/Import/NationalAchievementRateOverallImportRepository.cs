@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SFA.DAS.CourseDelivery.Domain.Entities;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 
-namespace SFA.DAS.CourseDelivery.Data.Repository
+namespace SFA.DAS.CourseDelivery.Data.Repository.Import
 {
     public class NationalAchievementRateOverallImportRepository : INationalAchievementRateOverallImportRepository
     {

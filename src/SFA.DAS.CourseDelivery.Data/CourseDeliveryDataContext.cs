@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
@@ -21,7 +20,7 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
-        
+        DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
     }
     
     public interface ICourseDeliveryDataContext : IDataContext
@@ -63,6 +62,7 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
+        public DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
 
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -126,6 +126,7 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttributeImport());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRatingImport());
+            modelBuilder.ApplyConfiguration(new Shortlist());
             
             base.OnModelCreating(modelBuilder);
         }

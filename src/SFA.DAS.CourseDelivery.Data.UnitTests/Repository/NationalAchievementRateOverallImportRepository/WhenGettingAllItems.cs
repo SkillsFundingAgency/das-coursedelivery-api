@@ -12,7 +12,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
     public class WhenGettingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.NationalAchievementRateOverallImportRepository _importRepository;
+        private Data.Repository.Import.NationalAchievementRateOverallImportRepository _importRepository;
         private List<NationalAchievementRateOverallImport> _importItems;
 
         [SetUp]
@@ -40,7 +40,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.NationalAchievementRateOverallImports).ReturnsDbSet(_importItems);
-            _importRepository = new Data.Repository.NationalAchievementRateOverallImportRepository(_courseDeliveryDataContext.Object);
+            _importRepository = new Data.Repository.Import.NationalAchievementRateOverallImportRepository(_courseDeliveryDataContext.Object);
         }
         
         [Test]

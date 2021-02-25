@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -14,6 +15,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             string contactUrl, 
             string phone, 
             string email, 
+            string standardInfoUrl,
             double providerDistanceInMiles,
             string providerHeadOfficeAddress1,
             string providerHeadOfficeAddress2,
@@ -21,6 +23,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             string providerHeadOfficeAddress4,
             string providerHeadOfficeTown,
             string providerHeadOfficePostcode,
+            Guid? shortlistId,
             IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
             Ukprn = ukPrn;
@@ -29,6 +32,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             ContactUrl = contactUrl;
             Email = email;
             Phone = phone;
+            StandardInfoUrl = standardInfoUrl;
+            ShortlistId = shortlistId;            
             Address = new ProviderHeadOfficeAddress
             {
                 Address1 = providerHeadOfficeAddress1,
@@ -99,7 +104,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string ContactUrl { get ; private set ; }
         public string Email { get ; private set ; }
         public string Phone { get ; private set ; }
-        
+        public string StandardInfoUrl { get ; set ; }
+        public Guid? ShortlistId { get; set; }
         public ProviderHeadOfficeAddress Address { get; set; }
         public List<DeliveryType> DeliveryTypes { get; set; }
         public List<AchievementRate> AchievementRates { get; set; }

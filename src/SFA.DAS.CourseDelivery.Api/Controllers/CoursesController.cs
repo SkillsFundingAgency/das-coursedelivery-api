@@ -56,25 +56,24 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         
         [HttpGet]
         [Route("{id}/providers")]
-        public async Task<IActionResult> GetProvidersByStandardId(     int id, [FromQuery] Age age = 0,
-            [FromQuery] Level level = 0, [FromQuery] double? lat = null, [FromQuery] double? lon = null,
-            [FromQuery] SortOrder sortOrder = SortOrder.Distance, string sectorSubjectArea = "")
+        public async Task<IActionResult> GetProvidersByStandardId(int id, [FromQuery]GetProvidersByStandardRequest request)
         {
             try
             {
                 var queryResult = await _mediator.Send(new GetCourseProvidersQuery
                 {
                     StandardId = id,
-                    Lat = lat,
-                    Lon = lon,
-                    SortOrder = (short)sortOrder,
-                    SectorSubjectArea = sectorSubjectArea,
-                    Level = (short)level
+                    Lat = request.Lat,
+                    Lon = request.Lon,
+                    SortOrder = (short)request.SortOrder,
+                    SectorSubjectArea = request.SectorSubjectArea,
+                    Level = (short)request.Level,
+                    ShortlistUserId = request.ShortlistUserId
                 });
 
                 var getCourseProviderResponses = queryResult
                     .Providers
-                    .Select(c=> new GetProviderDetailResponse().Map(c, (short)age))
+                    .Select(c=> GetProviderDetailResponse.Map(c, (short)request.Age))
                     .ToList();
                 
                 var response = new GetCourseProvidersListResponse
@@ -96,7 +95,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
         [Route("{id}/providers/{ukprn}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GetProviderDetailResponse))]
         [ProducesResponseType((int)HttpStatusCode.NotFound, Type = typeof(GetProviderDetailResponse))]
-        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, string sectorSubjectArea, double? lat = null, double? lon = null)
+        public async Task<IActionResult> GetProviderByUkprn(int id, int ukprn, string sectorSubjectArea, double? lat = null, double? lon = null, Guid? shortlistUserId = null)
         {
             var queryResult = await _mediator.Send(new GetCourseProviderQuery
             {
@@ -104,7 +103,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 StandardId = id, 
                 Lat = lat, 
                 Lon = lon,
-                SectorSubjectArea = sectorSubjectArea
+                SectorSubjectArea = sectorSubjectArea,
+                ShortlistUserId = shortlistUserId
             });
 
             if (queryResult.ProviderStandardLocation == null)
@@ -112,7 +112,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new GetProviderDetailResponse().Map(queryResult.ProviderStandardLocation));
+            return Ok(GetProviderDetailResponse.Map(queryResult.ProviderStandardLocation));
         }
     }
 }

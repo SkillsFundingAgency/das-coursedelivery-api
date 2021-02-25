@@ -8,7 +8,9 @@ using SFA.DAS.Api.Common.Interfaces;
 using SFA.DAS.CourseDelivery.Application.OverallNationalAchievementRates.Services;
 using SFA.DAS.CourseDelivery.Application.Provider.Services;
 using SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Services;
 using SFA.DAS.CourseDelivery.Data.Repository;
+using SFA.DAS.CourseDelivery.Data.Repository.Import;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using SFA.DAS.CourseDelivery.Infrastructure.Api;
 using SFA.DAS.CourseDelivery.Infrastructure.PageParsing;
@@ -47,6 +49,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<INationalAchievementRatesOverallImportService, NationalAchievementRatesOverallImportService>();
             services.AddTransient<IOverallNationalAchievementRateService, OverallNationalAchievementRateService>();
             services.AddTransient<IProviderRegistrationAddressImportService, ProviderRegistrationAddressImportService>();
+            services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
+            services.AddTransient<IShortlistService, ShortlistService>();
             
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
@@ -67,8 +71,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderRegistrationFeedbackAttributeImportRepository, ProviderRegistrationFeedbackAttributeImportRepository>();
             services.AddTransient<IProviderRegistrationFeedbackRatingRepository, ProviderRegistrationFeedbackRatingRepository>();
             services.AddTransient<IProviderRegistrationFeedbackRatingImportRepository, ProviderRegistrationFeedbackRatingImportRepository>();
-            
-            services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
+            services.AddTransient<IShortlistRepository, ShortlistRepository>();
+
             services.AddTransient<IAzureClientCredentialHelper, AzureClientCredentialHelper>();
         }
         private static IAsyncPolicy<HttpResponseMessage> HttpClientRetryPolicy()

@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardImpor
     public class WhenGettingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.ProviderStandardImportRepository _providerStandardImportRepository;
+        private Data.Repository.Import.ProviderStandardImportRepository _providerStandardImportRepository;
         private List<ProviderStandardImport> _providerStandardImports;
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardImpor
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ProviderStandardImports).ReturnsDbSet(_providerStandardImports);
             
-            _providerStandardImportRepository = new Data.Repository.ProviderStandardImportRepository(_courseDeliveryDataContext.Object);
+            _providerStandardImportRepository = new Data.Repository.Import.ProviderStandardImportRepository(_courseDeliveryDataContext.Object);
         }
 
         [Test]

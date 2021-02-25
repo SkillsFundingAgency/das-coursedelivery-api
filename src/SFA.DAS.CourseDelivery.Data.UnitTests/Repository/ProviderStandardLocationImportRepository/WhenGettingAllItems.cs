@@ -11,7 +11,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
     public class WhenGettingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.ProviderStandardLocationImportRepository _providerStandardLocationImportRepository;
+        private Data.Repository.Import.ProviderStandardLocationImportRepository _providerStandardLocationImportRepository;
         private List<ProviderStandardLocationImport> _providerStandardLocationImports;
 
         [SetUp]
@@ -33,7 +33,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderStandardLocat
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ProviderStandardLocationImports).ReturnsDbSet(_providerStandardLocationImports);
-            _providerStandardLocationImportRepository = new Data.Repository.ProviderStandardLocationImportRepository(_courseDeliveryDataContext.Object);
+            _providerStandardLocationImportRepository = new Data.Repository.Import.ProviderStandardLocationImportRepository(_courseDeliveryDataContext.Object);
         }
 
         [Test]

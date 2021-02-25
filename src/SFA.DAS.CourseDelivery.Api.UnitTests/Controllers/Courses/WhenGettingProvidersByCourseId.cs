@@ -25,17 +25,14 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
     {
         [Test, RecursiveMoqAutoData]
         public async Task Then_Gets_Providers_List_From_Mediator_Using_Params(
-            int standardId,
-            double? lat,
-            double? lon,
-            SortOrder sort,
-            string sectorSubjectArea,
-            Level level,
+            int id,
+            GetProvidersByStandardRequest request,
             ProviderLocation provider,
             ProviderLocation provider2,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] CoursesController controller)
         {
+            request.Age = Age.AllAges;
             provider.AchievementRates.Clear();
             provider.AchievementRates.Add(new NationalAchievementRate
             {
@@ -57,17 +54,18 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
             mockMediator
                 .Setup(mediator => mediator.Send(
                     It.Is<GetCourseProvidersQuery>(query => 
-                        query.StandardId == standardId &&
-                        query.Lat.Equals(lat) &&
-                        query.Lon.Equals(lon) &&
-                        query.SortOrder.Equals((short)sort) && 
-                        query.SectorSubjectArea.Equals(sectorSubjectArea) &&
-                        query.Level.Equals((short)level)
+                        query.StandardId == id &&
+                        query.Lat.Equals(request.Lat) &&
+                        query.Lon.Equals(request.Lon) &&
+                        query.SortOrder.Equals((short)request.SortOrder) && 
+                        query.SectorSubjectArea.Equals(request.SectorSubjectArea) &&
+                        query.Level.Equals((short)request.Level) &&
+                        query.ShortlistUserId.Equals(request.ShortlistUserId)
                         ), 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(queryResult);
 
-            var controllerResult = await controller.GetProvidersByStandardId(standardId, Age.AllAges, level, lat, lon, sort, sectorSubjectArea) as ObjectResult;
+            var controllerResult = await controller.GetProvidersByStandardId(id, request) as ObjectResult;
 
             var model = controllerResult.Value as GetCourseProvidersListResponse;
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
@@ -78,7 +76,8 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
 
         [Test, RecursiveMoqAutoData]
         public async Task And_Exception_Then_Returns_Bad_Request(
-            int standardId,
+            int id,
+            GetProvidersByStandardRequest request,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] CoursesController controller)
         {
@@ -88,7 +87,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Courses
                     It.IsAny<CancellationToken>()))
                 .Throws<InvalidOperationException>();
 
-            var controllerResult = await controller.GetProvidersByStandardId(standardId) as StatusCodeResult;
+            var controllerResult = await controller.GetProvidersByStandardId(id, request) as StatusCodeResult;
 
             controllerResult.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }

@@ -9,7 +9,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.StandardLocationImpor
     public class WhenDeletingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.StandardLocationImportRepository _standardLocationImportRepository;
+        private Data.Repository.Import.StandardLocationImportRepository _standardLocationImportRepository;
         private List<StandardLocationImport> _standardLocationImports;
 
         [SetUp]
@@ -31,7 +31,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.StandardLocationImpor
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.StandardLocationImports).ReturnsDbSet(_standardLocationImports);
-            _standardLocationImportRepository = new Data.Repository.StandardLocationImportRepository(_courseDeliveryDataContext.Object);
+            _standardLocationImportRepository = new Data.Repository.Import.StandardLocationImportRepository(_courseDeliveryDataContext.Object);
         }
 
         [Test]

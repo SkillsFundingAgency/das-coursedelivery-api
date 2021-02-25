@@ -9,7 +9,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
     public class WhenDeletingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.NationalAchievementRateImportRepository _importRepository;
+        private Data.Repository.Import.NationalAchievementRateImportRepository _importRepository;
         private List<NationalAchievementRateImport> _importItems;
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.NationalAchievementRa
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.NationalAchievementRateImports).ReturnsDbSet(_importItems);
-            _importRepository = new Data.Repository.NationalAchievementRateImportRepository(_courseDeliveryDataContext.Object);
+            _importRepository = new Data.Repository.Import.NationalAchievementRateImportRepository(_courseDeliveryDataContext.Object);
         }
         
         [Test]

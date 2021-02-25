@@ -14,7 +14,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationF
         public void Then_Deletes_All_Records_In_Db(
             List<ProviderRegistrationFeedbackAttributeImport> importsInDb,
             [Frozen] Mock<ICourseDeliveryDataContext> mockContext,
-            Data.Repository.ProviderRegistrationFeedbackAttributeImportRepository repository)
+            Data.Repository.Import.ProviderRegistrationFeedbackAttributeImportRepository repository)
         {
             mockContext
                 .Setup(context => context.ProviderRegistrationFeedbackAttributeImports)

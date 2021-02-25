@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SFA.DAS.CourseDelivery.Domain.Entities;
-using SFA.DAS.CourseDelivery.Domain.Models;
 
 namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
 {
@@ -14,11 +13,7 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
         {
             context.Providers.AddRange(GetAllProviders());
             context.ProviderRegistrations.AddRange(GetAllProviderRegistrations());
-            context.ProviderStandards.Add(new ProviderStandard
-            {
-                Ukprn = 20002451,
-                StandardId = 10
-            });
+            context.ProviderStandards.AddRange(GetAllProviderStandards());
             context.ProviderStandardLocations.Add(new ProviderStandardLocation
             {
                 Ukprn = 20002451,
@@ -40,13 +35,16 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                 OverallCohort = 100,
                 SectorSubjectArea = "Test"
             });
+            context.Shortlists.AddRange(GetAllShortlists());
             context.SaveChanges();
         }
 
         public static void ClearTestData(CourseDeliveryDataContext context)
         {
             context.Providers.RemoveRange(GetAllProviders());
+            context.ProviderStandards.RemoveRange(GetAllProviderStandards());
             context.ProviderRegistrations.RemoveRange(GetAllProviderRegistrations());
+            context.Shortlists.RemoveRange(GetAllShortlists());
             context.SaveChanges();
         }
 
@@ -71,6 +69,23 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
             };
         }
 
+        public static IEnumerable<ProviderStandard> GetAllProviderStandards()
+        {
+            return new List<ProviderStandard>
+            {
+                new ProviderStandard
+                {
+                    Ukprn = 20002451,
+                    StandardId = 10
+                },
+                /*new ProviderStandard
+                {
+                    Ukprn = 20002451,
+                    StandardId = 11
+                }*/
+            };
+        }
+
         public static IEnumerable<ProviderRegistration> GetAllProviderRegistrations()
         {
             return new List<ProviderRegistration>
@@ -82,6 +97,40 @@ namespace SFA.DAS.CourseDelivery.Api.AcceptanceTests.Infrastructure
                     StatusDate = DateTime.UtcNow,
                     ProviderTypeId = 1,
                    
+                }
+            };
+        }
+
+        public static string ShortlistUserId = "d6d467c4-28fb-4993-ac97-f1b1f865fd69";
+
+        public static IEnumerable<Shortlist> GetAllShortlists()
+        {
+            return new List<Shortlist>
+            {
+                new Shortlist
+                {
+                    Id = Guid.Parse("40b2a8aa-11f5-4418-a84d-cfcb5f922a32"),
+                    ShortlistUserId = Guid.Parse(ShortlistUserId),
+                    Ukprn = 20002451,
+                    StandardId = 10,
+                    LocationDescription = "Somewhere nice",
+                    Lat = 0,
+                    Long = 0
+                },
+                new Shortlist
+                {
+                    Id = Guid.Parse("74f5be32-5e47-4ef2-94e2-a8de66e14148"),
+                    ShortlistUserId = Guid.Parse(ShortlistUserId),
+                    Ukprn = 20002451,
+                    StandardId = 11
+                },
+                new Shortlist
+                {
+                    Id = Guid.Parse("0f21cf96-5c4f-4f2b-9c1c-1e2a3bf5b72e"),
+                    ShortlistUserId = Guid.Parse("172d5dae-d652-447d-ae7e-a95cb2fcbb72"),//different user
+                    Ukprn = 20002451,
+                    StandardId = 10,
+                    LocationDescription = "Different location"
                 }
             };
         }

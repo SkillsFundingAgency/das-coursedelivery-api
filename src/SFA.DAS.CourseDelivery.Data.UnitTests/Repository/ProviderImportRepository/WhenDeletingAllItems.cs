@@ -10,7 +10,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderImportReposit
     public class WhenDeletingAllItems
     {
         private Mock<ICourseDeliveryDataContext> _courseDeliveryDataContext;
-        private Data.Repository.ProviderImportRepository _providerImportRepository;
+        private Data.Repository.Import.ProviderImportRepository _providerImportRepository;
         private List<ProviderImport> _providerImports;
 
         [SetUp]
@@ -32,7 +32,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderImportReposit
 
             _courseDeliveryDataContext = new Mock<ICourseDeliveryDataContext>();
             _courseDeliveryDataContext.Setup(x => x.ProviderImports).ReturnsDbSet(_providerImports);
-            _providerImportRepository = new Data.Repository.ProviderImportRepository(_courseDeliveryDataContext.Object);
+            _providerImportRepository = new Data.Repository.Import.ProviderImportRepository(_courseDeliveryDataContext.Object);
         }
 
         [Test]

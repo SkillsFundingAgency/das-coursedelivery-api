@@ -78,5 +78,6 @@
     <Build Include="Tables\StandardLocation_Import.sql" />
     <Build Include="Tables\ProviderRegistration.sql" />
     <Build Include="Tables\ProviderRegistration_Import.sql" />
+    <Build Include="Tables\Shortlist.sql" />
   </ItemGroup>
 </Project>

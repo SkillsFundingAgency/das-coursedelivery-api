@@ -15,7 +15,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationF
         public async Task Then_Inserts_Records_Into_DbContext(
             List<ProviderRegistrationFeedbackRatingImport> importsInDb,
             [Frozen] Mock<ICourseDeliveryDataContext> mockContext,
-            Data.Repository.ProviderRegistrationFeedbackRatingImportRepository repository)
+            Data.Repository.Import.ProviderRegistrationFeedbackRatingImportRepository repository)
         {
             await repository.InsertMany(importsInDb);
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoFixture.NUnit3;
 using FluentAssertions;
@@ -21,16 +22,20 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             string providerHeadOfficeAddress4,
             string providerHeadOfficeAddressTown,
             string providerHeadOfficeAddressPostcode,
+            string standardInfoUrl,
+            Guid? shortlistId,
             List<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
-            var actual = new ProviderLocation(ukprn, name, tradingName, contactUrl, phone, email, 
+            var actual = new ProviderLocation(ukprn, name, tradingName, contactUrl, phone, email, standardInfoUrl,
                 providerDistanceInMiles,
                 providerHeadOfficeAddress1,
                 providerHeadOfficeAddress2, 
                 providerHeadOfficeAddress3, 
                 providerHeadOfficeAddress4, 
                 providerHeadOfficeAddressTown, 
-                providerHeadOfficeAddressPostcode, providerWithStandardAndLocations);
+                providerHeadOfficeAddressPostcode,
+                shortlistId,
+                providerWithStandardAndLocations);
 
             actual.Name.Should().Be(name);
             actual.TradingName.Should().Be(tradingName);
@@ -38,6 +43,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.ContactUrl.Should().Be(contactUrl);
             actual.Email.Should().Be(email);
             actual.Phone.Should().Be(phone);
+            actual.ShortlistId.Should().Be(shortlistId);
             actual.AchievementRates.Should().NotBeEmpty();
             actual.DeliveryTypes.Should().NotBeEmpty();
             actual.Address.Address1.Should().Be(providerHeadOfficeAddress1);
@@ -47,6 +53,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Address.Town.Should().Be(providerHeadOfficeAddressTown);
             actual.Address.Postcode.Should().Be(providerHeadOfficeAddressPostcode);
             actual.Address.DistanceInMiles.Should().Be(providerDistanceInMiles);
+            actual.StandardInfoUrl.Should().Be(standardInfoUrl);
         }
         
     }

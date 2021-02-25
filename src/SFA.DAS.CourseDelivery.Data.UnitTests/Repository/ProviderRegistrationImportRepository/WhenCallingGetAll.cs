@@ -16,7 +16,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRegistrationI
         public async Task Then_Returns_All_Records_From_DbContext(
             List<ProviderRegistrationImport> recordsInDb,
             [Frozen] Mock<ICourseDeliveryDataContext> mockContext,
-            Data.Repository.ProviderRegistrationImportRepository repository)
+            Data.Repository.Import.ProviderRegistrationImportRepository repository)
         {
             mockContext
                 .Setup(context => context.ProviderRegistrationImports)

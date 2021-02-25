@@ -16,6 +16,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.ApprenticeshipLevel).IsRequired(false);
             builder.Property(x => x.OverallCohort).IsRequired(false);
             builder.Property(x => x.OverallAchievementRate).IsRequired(false);
+            builder.Property(x => x.ShortlistId).HasColumnType("UniqueIdentifier").IsRequired(false);
         }
     }
 }

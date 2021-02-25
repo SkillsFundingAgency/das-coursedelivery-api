@@ -9,7 +9,7 @@ namespace SFA.DAS.CourseDelivery.Data
 {
     public interface ICourseDeliveryReadonlyDataContext : IDataContext
     {
-        
+        DbSet<Domain.Entities.ShortlistProviderWithStandardAndLocation> ShortlistProviderWithStandardAndLocations { get; set; }
     }
     
     public class CourseDeliveryReadonlyDataContext : DbContext, ICourseDeliveryReadonlyDataContext
@@ -24,6 +24,8 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderRegistration> ProviderRegistrations { get; set; }
         public DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
+        public DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
+        public DbSet<Domain.Entities.ShortlistProviderWithStandardAndLocation> ShortlistProviderWithStandardAndLocations { get; set; }
         
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -73,6 +75,8 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderWithStandardAndLocation());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttribute());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
+            modelBuilder.ApplyConfiguration(new Shortlist());
+            modelBuilder.ApplyConfiguration(new ShortlistProviderWithStandardAndLocation());
             
             base.OnModelCreating(modelBuilder);
         }
