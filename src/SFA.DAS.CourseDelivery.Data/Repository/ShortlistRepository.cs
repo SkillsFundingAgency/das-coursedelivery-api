@@ -91,6 +91,7 @@ select
     P.Ukprn,
     P.Name,
     p.TradingName,
+    '' as MarketingInfo,
     ps.ContactUrl,
     ps.Email,
     ps.Phone,

@@ -24,11 +24,13 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             string providerHeadOfficeTown,
             string providerHeadOfficePostcode,
             Guid? shortlistId,
+            string marketingInfo,
             IReadOnlyCollection<ProviderWithStandardAndLocation> providerWithStandardAndLocations)
         {
             Ukprn = ukPrn;
             Name = name;
-            TradingName = tradingName; 
+            TradingName = tradingName;
+            MarketingInfo = marketingInfo;
             ContactUrl = contactUrl;
             Email = email;
             Phone = phone;
@@ -70,6 +72,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 .ToList();
         }
 
+        
+
         public ProviderLocation(Provider provider)
         {
             Ukprn = provider.Ukprn;
@@ -101,6 +105,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public int Ukprn { get; private set; }
         public string Name { get; private set; }
         public string TradingName { get; set; }
+        public string MarketingInfo { get ; set ; }
         public string ContactUrl { get ; private set ; }
         public string Email { get ; private set ; }
         public string Phone { get ; private set ; }
