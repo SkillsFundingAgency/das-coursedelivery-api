@@ -9,6 +9,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
     public class GetProviderDetailResponse : GetProviderSummaryResponse
     {
         public string StandardInfoUrl { get; set; }
+        public string MarketingInfo { get ; set ; }
         public GetProviderHeadOfficeAddress ProviderAddress { get; set; }
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
@@ -29,6 +30,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Ukprn = provider.Ukprn,
                 Name = provider.Name,
                 TradingName = provider.TradingName,
+                MarketingInfo = provider.MarketingInfo,
                 Email = provider.Email,
                 ContactUrl = provider.ContactUrl,
                 Phone = provider.Phone,
