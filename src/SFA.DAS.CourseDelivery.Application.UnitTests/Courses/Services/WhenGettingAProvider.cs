@@ -38,6 +38,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
             actual.TradingName.Should().Be(provider.TradingName);
+            actual.MarketingInfo.Should().Be(provider.MarketingInfo);
         }
 
         [Test, RecursiveMoqAutoData]
@@ -60,6 +61,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.Courses.Services
             actual.Ukprn.Should().Be(provider.Ukprn);
             actual.Name.Should().Be(provider.Name);
             actual.TradingName.Should().Be(provider.TradingName);
+            actual.MarketingInfo.Should().Be(provider.MarketingInfo);
         }
     }
 }

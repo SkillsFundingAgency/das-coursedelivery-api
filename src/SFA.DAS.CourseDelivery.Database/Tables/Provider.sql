@@ -8,7 +8,8 @@
 	[LearnerSatisfaction] DECIMAL NULL,
 	[Email] VARCHAR(256) NULL,
 	[Phone] VARCHAR(50) NULL,
-	[Website] VARCHAR(500) NULL	
+	[Website] VARCHAR(500) NULL,
+	[MarketingInfo] VARCHAR(MAX) NULL,	
 )
 GO
 

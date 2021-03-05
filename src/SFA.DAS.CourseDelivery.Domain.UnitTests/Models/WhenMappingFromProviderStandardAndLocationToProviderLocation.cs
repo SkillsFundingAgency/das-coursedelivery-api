@@ -15,6 +15,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             string email, 
             string phone, 
             string tradingName,
+            string marketingInfo,
             double providerDistanceInMiles, 
             string providerHeadOfficeAddress1,
             string providerHeadOfficeAddress2,
@@ -35,6 +36,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
                 providerHeadOfficeAddressTown, 
                 providerHeadOfficeAddressPostcode,
                 shortlistId,
+                marketingInfo,
                 providerWithStandardAndLocations);
 
             actual.Name.Should().Be(name);
@@ -54,6 +56,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Address.Postcode.Should().Be(providerHeadOfficeAddressPostcode);
             actual.Address.DistanceInMiles.Should().Be(providerDistanceInMiles);
             actual.StandardInfoUrl.Should().Be(standardInfoUrl);
+            actual.MarketingInfo.Should().Be(marketingInfo);
         }
         
     }

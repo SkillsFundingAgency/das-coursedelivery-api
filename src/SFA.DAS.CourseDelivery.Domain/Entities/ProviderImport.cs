@@ -16,7 +16,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 Website = provider.Website,
                 Email = provider.Email,
                 EmployerSatisfaction = provider.EmployerSatisfaction,
-                LearnerSatisfaction = provider.LearnerSatisfaction
+                LearnerSatisfaction = provider.LearnerSatisfaction,
+                MarketingInfo = provider.MarketingInfo
             };
         }
     }

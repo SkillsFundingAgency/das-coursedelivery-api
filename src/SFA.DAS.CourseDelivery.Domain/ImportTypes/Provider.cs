@@ -27,5 +27,7 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
         public List<CourseStandard> Standards { get; set; }
         [JsonProperty("locations")]
         public List<CourseLocation> Locations { get; set; }
+        [JsonProperty("marketingInfo")]
+        public string MarketingInfo { get; set; }
     }
 }

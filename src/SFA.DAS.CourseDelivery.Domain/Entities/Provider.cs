@@ -9,6 +9,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public virtual ProviderRegistration ProviderRegistration { get ; set ; }
         public virtual IEnumerable<ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get ; set ; }
         public virtual IEnumerable<ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRating { get ; set ; }
+        
 
         public static implicit operator Provider(ProviderImport providerImport)
         {
@@ -22,7 +23,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
                 Website = providerImport.Website,
                 EmployerSatisfaction = providerImport.EmployerSatisfaction,
                 LearnerSatisfaction = providerImport.LearnerSatisfaction,
-                TradingName = providerImport.TradingName
+                TradingName = providerImport.TradingName,
+                MarketingInfo = providerImport.MarketingInfo
             };
         }
     }

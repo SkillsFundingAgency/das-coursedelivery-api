@@ -19,6 +19,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             builder.Property(x => x.Email).HasColumnName("Email").HasColumnType("varchar").HasMaxLength(256).IsRequired(false);
             builder.Property(x => x.Phone).HasColumnName("Phone").HasColumnType("varchar").HasMaxLength(50).IsRequired(false);
             builder.Property(x => x.Website).HasColumnName("Website").HasColumnType("varchar").HasMaxLength(500).IsRequired(false);
+            builder.Property(x => x.MarketingInfo).HasColumnName("MarketingInfo").HasColumnType("varchar(max)").IsRequired(false);
             
             builder.HasIndex(x => x.Id).IsUnique();
         }

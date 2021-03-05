@@ -24,6 +24,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             actual.Phone.Should().Be(provider.Phone);
             actual.ContactUrl.Should().Be(provider.ContactUrl);
             actual.StandardInfoUrl.Should().Be(provider.StandardInfoUrl);
+            actual.MarketingInfo.Should().Be(provider.MarketingInfo);
         }
 
         [Test, RecursiveMoqAutoData]

@@ -31,7 +31,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                     CourseId = item.StandardId,
                     item.LocationDescription,
                     item.CreatedDate,
-                    item.StandardInfoUrl
+                    item.StandardInfoUrl,
+                    item.MarketingInfo
                 })
                 .Select(group => new Models.Shortlist
                 {
@@ -56,6 +57,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Extensions
                         group.Key.ProviderHeadOfficeTown,
                         group.Key.ProviderHeadOfficePostcode,
                         group.Key.ShortlistId,
+                        group.Key.MarketingInfo,
                         group.Select(c=>(ProviderWithStandardAndLocation)c).ToList())
                 })
                 .ToList();
