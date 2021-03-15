@@ -81,7 +81,7 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             ProviderCourseImportService providerCourseImportService)
         {
             //Arrange
-            providerImportDuplicateIdDifferentUkprn.Id = providerImportDuplicate.Id;
+            providerImportDuplicateIdDifferentUkprn.Ukprn = providerImportDuplicate.Ukprn;
             providerImports.Add(providerImportDuplicate);
             providerImports.Add(providerImportDuplicate);
             providerImports.Add(providerImportDuplicateIdDifferentUkprn);
