@@ -5,8 +5,6 @@ namespace SFA.DAS.CourseDelivery.Domain.ImportTypes
 {
     public class Provider
     {
-        [JsonProperty("id")]
-        public long Id { get; set; }
         [JsonProperty("ukprn")]
         public int Ukprn { get; set; }
         [JsonProperty("name")]
