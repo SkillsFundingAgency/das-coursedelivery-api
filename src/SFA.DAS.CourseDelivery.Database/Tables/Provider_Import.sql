@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[Provider_Import]
 (
-	[Id] BIGINT PRIMARY KEY,
-	[UkPrn] INT NOT NULL,
+	[UkPrn] INT PRIMARY KEY NOT NULL,
 	[Name] VARCHAR(1000) NOT NULL,
 	[TradingName] VARCHAR(1000) NULL,
 	[EmployerSatisfaction] DECIMAL NULL,
