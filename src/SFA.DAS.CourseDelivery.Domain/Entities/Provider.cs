@@ -16,7 +16,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
             return new Provider
             {
                 Email = providerImport.Email,
-                Id = providerImport.Id,
                 Name = providerImport.Name,
                 Phone = providerImport.Phone,
                 Ukprn = providerImport.Ukprn,

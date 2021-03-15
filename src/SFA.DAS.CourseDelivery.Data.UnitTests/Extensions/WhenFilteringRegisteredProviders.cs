@@ -22,7 +22,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Extensions
                 provider.ProviderRegistration.ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider;
             }
             providers[0].ProviderRegistration.StatusId = RoatpTypeConstants.StatusOfActive + 1;
-            var expectedProviders = providers.Where(provider => provider.Id != providers[0].Id);
+            var expectedProviders = providers.Where(provider => provider.Ukprn != providers[0].Ukprn);
 
             var filtered = providers.AsQueryable().FilterRegisteredProviders();
 
@@ -39,7 +39,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Extensions
                 provider.ProviderRegistration.ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider;
             }
             providers[0].ProviderRegistration.ProviderTypeId = RoatpTypeConstants.ProviderTypeOfMainProvider + 1;
-            var expectedProviders = providers.Where(provider => provider.Id != providers[0].Id);
+            var expectedProviders = providers.Where(provider => provider.Ukprn != providers[0].Ukprn);
 
             var filtered = providers.AsQueryable().FilterRegisteredProviders();
 

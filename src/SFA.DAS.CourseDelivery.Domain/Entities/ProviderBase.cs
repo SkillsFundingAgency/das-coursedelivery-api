@@ -2,7 +2,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
 {
     public class ProviderBase
     {
-        public long Id { get; set; }
         public int Ukprn { get; set; }
         public string Name { get; set; }
         public decimal? LearnerSatisfaction { get; set; }

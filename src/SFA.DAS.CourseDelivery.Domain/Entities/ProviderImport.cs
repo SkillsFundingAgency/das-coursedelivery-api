@@ -8,7 +8,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         {
             return new ProviderImport
             {
-                Id = provider.Id,
                 Ukprn = provider.Ukprn,
                 Name = provider.Name,
                 TradingName = provider.TradingName,
