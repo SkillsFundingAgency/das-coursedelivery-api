@@ -20,12 +20,12 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ProviderRepository
             {
                 new Provider
                 {
-                    Id = 1,
+                    Ukprn = 1,
                     Name ="Test"
                 },
                 new Provider
                 {
-                    Id = 1,
+                    Ukprn = 2,
                     Name= "Test 2"
                 }
             };

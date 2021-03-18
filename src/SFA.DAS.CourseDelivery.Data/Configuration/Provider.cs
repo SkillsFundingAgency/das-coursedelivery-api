@@ -15,9 +15,8 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
         public void Configure(EntityTypeBuilder<Domain.Entities.Provider> builder)
         {
             builder.ToTable("Provider");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Ukprn);
             
-            builder.Property(x => x.Id).HasColumnName("Id").HasColumnType("bigint").IsRequired();
             builder.Property(x => x.Ukprn).HasColumnName("Ukprn").HasColumnType("int").IsRequired();
             builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("varchar").HasMaxLength(1000).IsRequired();
             builder.Property(x => x.EmployerSatisfaction).HasColumnName("EmployerSatisfaction").HasColumnType("decimal").IsRequired(false);
@@ -60,7 +59,7 @@ namespace SFA.DAS.CourseDelivery.Data.Configuration
             }
             
             
-            builder.HasIndex(x => x.Id).IsUnique();
+            builder.HasIndex(x => x.Ukprn).IsUnique();
         }
     }
 }

@@ -33,5 +33,13 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ProviderCourses.feature.cs</LastGenOutput>
     </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\Providers.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Providers.feature.cs</LastGenOutput>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\Shortlist.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Shortlist.feature.cs</LastGenOutput>
+    </SpecFlowFeatureFiles>
   </ItemGroup>
 </Project>

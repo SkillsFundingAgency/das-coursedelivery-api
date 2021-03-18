@@ -74,14 +74,15 @@ namespace SFA.DAS.CourseDelivery.Application.UnitTests.ProviderCourseImport.Serv
             [Frozen] Mock<IProviderStandardLocationImportRepository> providerStandardLocationImportRepository,
             [Frozen] Mock<IStandardLocationImportRepository> standardLocationImportRepository,
             [Frozen] Mock<ICourseDirectoryService> service,
-            Domain.ImportTypes.Provider providerImport,
+            Domain.ImportTypes.Provider providerImportDuplicate,
             List<Domain.ImportTypes.Provider> providerImports,
             CourseLocation courseLocation,
             ProviderCourseImportService providerCourseImportService)
         {
             //Arrange
-            providerImports.Add(providerImport);
-            providerImports.Add(providerImport);
+            providerImports.Add(providerImportDuplicate);
+            providerImports.Add(providerImportDuplicate);
+            
             service.Setup(x => x.GetProviderCourseInformation()).ReturnsAsync(providerImports);
             
             //Act

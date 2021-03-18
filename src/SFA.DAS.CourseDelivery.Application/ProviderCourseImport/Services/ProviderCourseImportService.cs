@@ -91,7 +91,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         {
             return providerCourseInformation
                 .Select(c => (ProviderImport) c)
-                .GroupBy(c=>c.Id)
+                .GroupBy(c=>c.Ukprn)
                 .Select(item=>item.First());
         }
 
