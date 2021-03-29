@@ -6,28 +6,27 @@
 ## Requirements
 
 - DotNet Core 3.1 and any supported IDE for DEV running.
-- *If you are not wishing to run the in memory database then*
 - SQL Server database.
 - Azure Storage Account
 
 ## About
 
-das-coursedelivery-api represents the inner api definition for provider course delivery, with data taken from Course Directory. The API creates a local copy of the data for querying over.
+das-coursedelivery-api represents the inner api definition for provider course delivery and RoATP, with data taken from Course Directory. The API creates a local copy of the data for querying over.
 
 ## Local running
 
 **Do not run in IISExpress**
 
-### In memory database
-It is possible to run the whole of the API using the InMemory database. To do this the environment variable in appsettings.json should be set to **DEV**. 
-Once done, start the application as normal, then run the ```ops/dataload``` operation in swagger. You will then be able to query the API
-as per the operations listed in swagger. Running in this mode will only have a subset of data as shown in the ```courses.json``` file
+The solution will run in a **DEV** mode, however due to the use of SQL statements in the data context not all of the operations on the swagger page will be available.
 
 ### SQL Server database
 You are able to run the API by doing the following:
 
 * Run the database deployment publish command to create the database ```SFA.DAS.CourseDelivery``` or create the database manually and run in the table creation scripts
 * Request APIM key and URL from Course Directory
+* Request managed identity access to RoATP service api
+
+ *note if you do not have access to Course Directory or RoATP then use the* ```"UseLocalData": "true"``` *setting in appsettings.json to provide a subset of data*   
 * In your Azure Storage Account, create a table called Configuration and Add the following
 ```
 ParitionKey: LOCAL
