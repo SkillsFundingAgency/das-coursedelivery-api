@@ -55,7 +55,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
                 .ReturnsDbSet(records);
 
             //Act
-            var actual = (await repository.GetExpiredShortListUserIds(expiryPeriod-1)).ToList();
+            var actual = (await repository.GetExpiredShortlistUserIds(expiryPeriod-1)).ToList();
 
             //Assert
             actual.Count.Should().Be(1);
@@ -82,7 +82,7 @@ namespace SFA.DAS.CourseDelivery.Data.UnitTests.Repository.ShortlistRepository
                 .ReturnsDbSet(firstUser);
             
             //Act
-            var actual = (await repository.GetExpiredShortListUserIds(expiryPeriod)).ToList();
+            var actual = (await repository.GetExpiredShortlistUserIds(expiryPeriod)).ToList();
             
             //Assert
             actual.Any().Should().BeFalse();
