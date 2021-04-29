@@ -53,5 +53,10 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
         {
             return await _shortlistRepository.GetExpiredShortlistUserIds(expiryInDays);
         }
+
+        public async Task DeleteShortlist(Guid shortlistUserId)
+        {
+            await _shortlistRepository.DeleteShortlistByUserId(shortlistUserId);
+        }
     }
 }

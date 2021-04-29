@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SFA.DAS.CourseDelivery.Domain.Entities;
@@ -14,5 +14,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Interfaces
         void Delete(Guid id, Guid shortlistUserId);
         Task<int> GetShortlistItemCountForUser(Guid userId);
         Task<IEnumerable<Guid>> GetExpiredShortlistUserIds(uint expiryInDays);
+        Task DeleteShortlistByUserId(Guid shortlistUserId);
     }
 }
