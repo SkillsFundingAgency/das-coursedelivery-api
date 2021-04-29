@@ -48,5 +48,10 @@ namespace SFA.DAS.CourseDelivery.Application.Shortlist.Services
         {
             return await _shortlistRepository.GetShortlistItemCountForUser(userId);
         }
+
+        public async Task<IEnumerable<Guid>> GetExpiredShortlistUserIds(uint expiryInDays)
+        {
+            return await _shortlistRepository.GetExpiredShortlistUserIds(expiryInDays);
+        }
     }
 }
