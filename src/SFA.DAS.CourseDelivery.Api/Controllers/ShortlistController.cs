@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -105,6 +105,26 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("users/expired")]
+        public async Task<IActionResult> GetExpiredShortlistUserIds([FromQuery] uint expiryInDays)
+        {
+            try
+            {
+                var queryResult = await _mediator.Send(new GetExpiredShortlistUsersQuery
+                {
+                    ExpiryInDays = expiryInDays
+                });
+
+                return Ok(queryResult.UserIds.ToList());
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new StatusCodeResult((int) HttpStatusCode.InternalServerError);
+            }
+            return Ok();
+        }
         [HttpGet]
         [Route("count/users/{userId}")]
         public async Task<IActionResult> GetShortlistForUserCount(Guid userId)
