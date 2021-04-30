@@ -17,7 +17,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
 {
     public class WhenGettingExpiredShortlistUserIds
     {
-        [Test, RecursiveMoqAutoData]
+        [Test, MoqAutoData]
         public async Task Then_Gets_Shortlist_UserIds_From_Mediator(
             uint expiryPeriodInDays,
             GetExpiredShortlistUsersQueryResult result,

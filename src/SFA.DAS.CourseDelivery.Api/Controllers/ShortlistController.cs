@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -9,7 +9,9 @@ using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Api.ApiRequests;
 using SFA.DAS.CourseDelivery.Api.ApiResponses;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.CreateShortlistItemForUser;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.DeleteShortlistForUser;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Commands.DeleteShortlistItemForUser;
+using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetExpiredShortlistUsers;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUser;
 using SFA.DAS.CourseDelivery.Application.Shortlist.Queries.GetShortlistForUserCount;
 
@@ -105,6 +107,27 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("users/{userId}")]
+        public async Task<IActionResult> DeleteShortlistForUser(Guid userId)
+        {
+            try
+            {
+                await _mediator.Send(new DeleteShortlistForUserCommand
+                {
+                    ShortlistUserId = userId
+                });
+                
+                return Accepted();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new StatusCodeResult((int) HttpStatusCode.InternalServerError);
+            }
+            
+        }
+
         [HttpGet]
         [Route("users/expired")]
         public async Task<IActionResult> GetExpiredShortlistUserIds([FromQuery] uint expiryInDays)
@@ -123,8 +146,8 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                 _logger.LogError(e, e.Message);
                 return new StatusCodeResult((int) HttpStatusCode.InternalServerError);
             }
-            return Ok();
         }
+
         [HttpGet]
         [Route("count/users/{userId}")]
         public async Task<IActionResult> GetShortlistForUserCount(Guid userId)
