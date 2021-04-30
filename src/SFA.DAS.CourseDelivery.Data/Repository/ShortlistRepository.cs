@@ -91,7 +91,7 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                 .Select(c => new
                 {
                     shortListUserId = c.Key, 
-                    maxDate = c.Select(x => x.CreatedDate).Max()
+                    maxDate = c.Max(x=>x.CreatedDate)
                 })
                 .Where(dateCheck => dateCheck.maxDate.AddDays(expiryInDays) < DateTime.UtcNow)
                 .Select(c => c.shortListUserId)
