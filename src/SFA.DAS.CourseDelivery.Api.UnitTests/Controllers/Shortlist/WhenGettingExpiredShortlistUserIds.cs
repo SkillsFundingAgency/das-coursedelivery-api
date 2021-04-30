@@ -32,8 +32,8 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
             var actual = await controller.GetExpiredShortlistUserIds(expiryPeriodInDays) as ObjectResult;
             
             actual!.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            var actualModel = actual.Value as List<Guid>;
-            actualModel.Should().BeEquivalentTo(result.UserIds);
+            var actualModel = actual.Value;
+            actualModel.Should().BeEquivalentTo(new {result.UserIds});
         }
 
         [Test, MoqAutoData]

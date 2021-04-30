@@ -139,7 +139,7 @@ namespace SFA.DAS.CourseDelivery.Api.Controllers
                     ExpiryInDays = expiryInDays
                 });
 
-                return Ok(queryResult.UserIds.ToList());
+                return Ok(new {UserIds = queryResult.UserIds.ToList()});
             }
             catch (Exception e)
             {
