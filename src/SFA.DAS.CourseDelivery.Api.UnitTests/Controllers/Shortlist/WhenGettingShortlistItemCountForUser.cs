@@ -17,7 +17,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
 {
     public class WhenGettingShortlistItemCountForUser
     {
-        [Test, RecursiveMoqAutoData]
+        [Test, MoqAutoData]
         public async Task Then_Gets_Shortlist_Item_Count_From_Mediator(
             Guid userId,
             int queryResult,
@@ -38,7 +38,7 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.Controllers.Shortlist
             model!.Count.Should().Be(queryResult);
         }
 
-        [Test, RecursiveMoqAutoData]
+        [Test, MoqAutoData]
         public async Task And_Exception_Then_Returns_Bad_Request(
             Guid userId,
             [Frozen] Mock<IMediator> mockMediator,

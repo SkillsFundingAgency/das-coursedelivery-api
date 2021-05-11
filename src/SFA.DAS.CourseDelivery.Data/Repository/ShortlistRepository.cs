@@ -84,6 +84,32 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
                                  && c.ProviderStandard != null);
         }
 
+        public async Task<IEnumerable<Guid>> GetExpiredShortlistUserIds(uint expiryInDays)
+        {
+            return await _readonlyDataContext
+                .Shortlists.GroupBy(item => item.ShortlistUserId)
+                .Select(c => new
+                {
+                    shortListUserId = c.Key, 
+                    maxDate = c.Max(x=>x.CreatedDate)
+                })
+                .Where(dateCheck => dateCheck.maxDate.AddDays(expiryInDays) < DateTime.UtcNow)
+                .Select(c => c.shortListUserId)
+                .ToListAsync();
+        }
+
+        public async Task DeleteShortlistByUserId(Guid shortlistUserId)
+        {
+            var shortListItems =
+                await _dataContext.Shortlists.Where(x => x.ShortlistUserId == shortlistUserId).ToListAsync();
+
+            foreach (var shortlistItem in shortListItems)
+            {
+                _dataContext.Shortlists.Remove(shortlistItem);
+            }
+            _dataContext.SaveChanges();
+        }
+
         private FormattableString GetProvidersShortlistQuery(Guid userId)
         {
             return $@"
