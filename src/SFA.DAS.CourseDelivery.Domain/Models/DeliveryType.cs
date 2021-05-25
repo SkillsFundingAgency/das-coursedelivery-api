@@ -13,6 +13,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
         public string Postcode { get; set; }
         public string County { get; set; }
         public bool National { get ; set ; }
+        public decimal Radius { get; set; }
 
         public static implicit operator DeliveryType(ProviderWithStandardAndLocation source)
         {
@@ -26,7 +27,8 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
                 Town = source.Town,
                 Postcode = source.Postcode,
                 County = source.County,
-                National = source.National
+                National = source.National,
+                Radius = source.Radius
             };
         }
     }

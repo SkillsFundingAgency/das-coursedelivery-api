@@ -16,9 +16,12 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 Town = source.Town,
                 Postcode = source.Postcode,
                 County = source.County,
-                National = source.National
+                National = source.National,
+                Radius = source.Radius
             };
         }
+
+        public decimal Radius { get ; set ; }
 
         public bool National { get ; set ; }
 
