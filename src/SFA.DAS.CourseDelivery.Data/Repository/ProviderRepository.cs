@@ -158,7 +158,8 @@ select
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode,
-    shl.Id as ShortlistId
+    shl.Id as ShortlistId,
+    psl.Radius
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -214,7 +215,8 @@ select
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode,
-    shl.Id as ShortlistId
+    shl.Id as ShortlistId,
+    psl.Radius
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -270,7 +272,8 @@ select
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode,
-    shl.Id as ShortlistId
+    shl.Id as ShortlistId,
+    psl.Radius
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 
@@ -336,7 +339,8 @@ select
     pr.Address4 ProviderHeadOfficeAddress4,
     pr.Town ProviderHeadOfficeTown,
     pr.PostCode ProviderHeadOfficePostcode,
-    shl.Id as ShortlistId
+    shl.Id as ShortlistId,
+    psl.Radius
 from Provider P
 inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
 inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId 

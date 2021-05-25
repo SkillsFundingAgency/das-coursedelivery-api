@@ -131,7 +131,7 @@ select
     psl.DeliveryModes,
     psl.[National],
     case when shl.Long is null then CAST(0.0 as float)
-       else l.DistanceInMiles END as DistanceInMiles,
+       else isnull(l.DistanceInMiles, 0.0) END as DistanceInMiles,
     NAR.Id,
     NAR.Age,
     NAR.SectorSubjectArea,
@@ -154,7 +154,8 @@ select
     Shl.LocationDescription,
     Shl.ShortlistUserId,
     Shl.Id as ShortlistId,
-    Shl.CreatedDate as CreatedDate
+    Shl.CreatedDate as CreatedDate,
+    psl.Radius
 from Provider P
     inner join ProviderStandard PS on PS.UkPrn = P.UkPrn
     inner join ProviderStandardLocation PSL on PSL.UkPrn = P.UkPrn and PSL.StandardId = PS.StandardId
@@ -164,17 +165,22 @@ from Provider P
     left join NationalAchievementRate NAR on NAR.UkPrn = p.UkPrn and NAR.SectorSubjectArea = Shl.CourseSector and NAR.Age=4
     left join ProviderRegistrationFeedbackRating PRFR on PRFR.UkPrn = p.UkPrn
     left join (select
-                     l.LocationId
-                      ,[Name]
-                      ,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
-                           .STDistance(geography::Point(isnull(slx.Lat,0), isnull(slx.Long,0), 4326)) * 0.0006213712 as DistanceInMiles
-                 from [StandardLocation] l
-                inner join ProviderStandardLocation pslx on pslx.LocationId = l.LocationId
-        inner join Shortlist slx on slx.StandardId = pslx.StandardId and slx.UkPrn = pslx.UkPrn
-        and slx.Long is not null and slx.lat is not null and slx.ShortlistUserId = {userId}
-        ) l on l.LocationId = psl.LocationId
+                            slx.id
+                            ,l.lat
+                            ,l.long
+                            ,l.LocationId
+                            ,pslx.StandardId
+                            ,[Name]
+                            ,geography::Point(isnull(l.Lat,0), isnull(l.Long,0), 4326)
+                                 .STDistance(geography::Point(isnull(slx.Lat,0), isnull(slx.Long,0), 4326)) * 0.0006213712 as DistanceInMiles
+                        from [StandardLocation] l
+                        inner join ProviderStandardLocation pslx on pslx.LocationId = l.LocationId
+                        inner join Shortlist slx on slx.StandardId = pslx.StandardId and slx.UkPrn = pslx.UkPrn
+                            and slx.Long is not null and slx.lat is not null and slx.ShortlistUserId ={userId}
+        ) l on l.LocationId = psl.LocationId and l.id = shl.id and l.StandardId = shl.StandardId
 where
-  PR.StatusId = 1 AND PR.ProviderTypeId = 1 and Shl.ShortlistUserId = {userId}";
+  PR.StatusId = 1 AND PR.ProviderTypeId = 1 and Shl.ShortlistUserId = {userId} 
+order by l.DistanceInMiles, psl.[National] desc";
         }
     }
 }
