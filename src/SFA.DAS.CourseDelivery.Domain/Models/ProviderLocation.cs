@@ -48,7 +48,7 @@ namespace SFA.DAS.CourseDelivery.Domain.Models
             };
             
             
-            DeliveryTypes = providerWithStandardAndLocations.GroupBy(x=>new {x.DeliveryModes, x.LocationId,x.DistanceInMiles, x.National})
+            DeliveryTypes = providerWithStandardAndLocations.GroupBy(x=>new {x.DeliveryModes, x.LocationId,x.DistanceInMiles, x.National, x.Radius})
                 .Select(p=>p.FirstOrDefault())
                 .Select(c => (DeliveryType) c).ToList();
             AchievementRates = providerWithStandardAndLocations

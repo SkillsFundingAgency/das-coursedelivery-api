@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoFixture.NUnit3;
 using FluentAssertions;
 using NUnit.Framework;
@@ -57,6 +58,7 @@ namespace SFA.DAS.CourseDelivery.Domain.UnitTests.Models
             actual.Address.DistanceInMiles.Should().Be(providerDistanceInMiles);
             actual.StandardInfoUrl.Should().Be(standardInfoUrl);
             actual.MarketingInfo.Should().Be(marketingInfo);
+            actual.DeliveryTypes.ToList().Count.Should().Be(providerWithStandardAndLocations.Count);
         }
         
     }

@@ -41,5 +41,6 @@ namespace SFA.DAS.CourseDelivery.Domain.Entities
         public string ProviderHeadOfficeTown { get; set; }
         public string ProviderHeadOfficePostcode { get; set; }
         public Guid? ShortlistId { get; set; } 
+        public decimal Radius { get ; set ; }
     }
 }
