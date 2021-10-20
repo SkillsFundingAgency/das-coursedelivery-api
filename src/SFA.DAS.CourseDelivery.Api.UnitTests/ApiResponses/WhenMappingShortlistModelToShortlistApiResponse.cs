@@ -32,6 +32,10 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
             //Arrange
             deliveryType1.Radius = 5;
             deliveryType1.DistanceInMiles = 10;
+            deliveryType2.Radius = 5;
+            deliveryType2.DistanceInMiles = 4;
+            deliveryType3.Radius = 5;
+            deliveryType3.DistanceInMiles = 4;
             source.ProviderLocation.DeliveryTypes = new List<DeliveryType>
             {
                 deliveryType1,
