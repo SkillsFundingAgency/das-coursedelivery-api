@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
@@ -102,7 +103,12 @@ namespace SFA.DAS.CourseDelivery.Data
                 ConnectionString = _configuration.ConnectionString,
                 AccessToken = _azureServiceTokenProvider.GetAccessTokenAsync(AzureResource).Result
             };
-            optionsBuilder.UseSqlServer(connection);
+
+            optionsBuilder.UseSqlServer(connection, options =>
+                 options.EnableRetryOnFailure(
+                     5,
+                     TimeSpan.FromSeconds(20),
+                     null));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
