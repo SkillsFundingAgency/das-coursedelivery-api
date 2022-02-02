@@ -11,7 +11,7 @@ variables:
   - group: 'Prod Management Resources'
   - name: buildConfiguration
     value: 'release'
-  - group: "ESFA - SonarCloud"
+  - group: "BUILD Management Resources"
 
 resources:
   repositories:
