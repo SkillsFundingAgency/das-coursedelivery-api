@@ -11,14 +11,14 @@ variables:
   - group: 'Prod Management Resources'
   - name: buildConfiguration
     value: 'release'
-  - group: "ESFA - SonarCloud"
+  - group: "BUILD Management Resources"
 
 resources:
   repositories:
   - repository: das-platform-building-blocks
     type: github
     name: SkillsFundingAgency/das-platform-building-blocks
-    ref: refs/tags/0.4.10
+    ref: refs/tags/0.4.34
     endpoint: SkillsFundingAgency
 
 jobs:
