@@ -51,6 +51,7 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderRegistrationAddressImportService, ProviderRegistrationAddressImportService>();
             services.AddTransient<IProviderRegistrationImportService, ProviderRegistrationImportService>();
             services.AddTransient<IShortlistService, ShortlistService>();
+            services.AddTransient<IApprenticeFeedbackAttributesApiService, ApprenticeFeedbackAttributeApiService>();
             
             services.AddTransient<IProviderImportRepository, ProviderImportRepository>();
             services.AddTransient<IProviderStandardImportRepository, ProviderStandardImportRepository>();
@@ -72,6 +73,8 @@ namespace SFA.DAS.CourseDelivery.Api.AppStart
             services.AddTransient<IProviderRegistrationFeedbackRatingRepository, ProviderRegistrationFeedbackRatingRepository>();
             services.AddTransient<IProviderRegistrationFeedbackRatingImportRepository, ProviderRegistrationFeedbackRatingImportRepository>();
             services.AddTransient<IShortlistRepository, ShortlistRepository>();
+            services.AddTransient<IApprenticeFeedbackAttributesRepository, ApprenticeFeedbackAttributesRepository>();
+            services.AddTransient<IApprenticeFeedbackAttributesImportRepository, ApprenticeFeedbackAttributesImportRepository>();
 
             services.AddTransient<IAzureClientCredentialHelper, AzureClientCredentialHelper>();
         }

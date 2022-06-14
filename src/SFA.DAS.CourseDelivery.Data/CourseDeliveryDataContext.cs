@@ -4,8 +4,28 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
+using SFA.DAS.CourseDelivery.Domain.Entities;
+using ImportAudit = SFA.DAS.CourseDelivery.Data.Configuration.ImportAudit;
+using NationalAchievementRate = SFA.DAS.CourseDelivery.Data.Configuration.NationalAchievementRate;
+using NationalAchievementRateImport = SFA.DAS.CourseDelivery.Data.Configuration.NationalAchievementRateImport;
+using NationalAchievementRateOverall = SFA.DAS.CourseDelivery.Data.Configuration.NationalAchievementRateOverall;
+using NationalAchievementRateOverallImport = SFA.DAS.CourseDelivery.Data.Configuration.NationalAchievementRateOverallImport;
+using Provider = SFA.DAS.CourseDelivery.Data.Configuration.Provider;
+using ProviderImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderImport;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistration;
+using ProviderRegistrationFeedbackAttribute = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationFeedbackAttribute;
+using ProviderRegistrationFeedbackAttributeImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationFeedbackAttributeImport;
+using ProviderRegistrationFeedbackRating = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationFeedbackRating;
+using ProviderRegistrationFeedbackRatingImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationFeedbackRatingImport;
+using ProviderRegistrationImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationImport;
+using ProviderStandard = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandard;
+using ProviderStandardImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandardImport;
+using ProviderStandardLocation = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandardLocation;
+using ProviderStandardLocationImport = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandardLocationImport;
+using Shortlist = SFA.DAS.CourseDelivery.Data.Configuration.Shortlist;
+using StandardLocation = SFA.DAS.CourseDelivery.Data.Configuration.StandardLocation;
+using StandardLocationImport = SFA.DAS.CourseDelivery.Data.Configuration.StandardLocationImport;
 
 namespace SFA.DAS.CourseDelivery.Data
 {
@@ -22,6 +42,7 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
         DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
+        DbSet<ApprenticeFeedbackAttributes> ApprenticeFeedbackAttributes { get; set; }
     }
     
     public interface ICourseDeliveryDataContext : IDataContext
@@ -36,6 +57,7 @@ namespace SFA.DAS.CourseDelivery.Data
         DbSet<Domain.Entities.ProviderRegistrationImport> ProviderRegistrationImports { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttribute> ProviderRegistrationFeedbackAttributes { get; set; }
         DbSet<Domain.Entities.ProviderRegistrationFeedbackAttributeImport> ProviderRegistrationFeedbackAttributeImports { get; set; }
+        DbSet<ApprenticeFeedbackAttributesImport> ApprenticeFeedbackAttributesImports { get; set; }
         int SaveChanges();
         Task<int> ExecuteRawSql(string sql);
         
@@ -64,6 +86,8 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRatingImport> ProviderRegistrationFeedbackRatingImports { get; set; }
         public DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
+        public DbSet<ApprenticeFeedbackAttributes> ApprenticeFeedbackAttributes { get; set; }
+        public DbSet<ApprenticeFeedbackAttributesImport> ApprenticeFeedbackAttributesImports { get; set; }
 
         private const string AzureResource = "https://database.windows.net/";
         private readonly CourseDeliveryConfiguration _configuration;
@@ -132,8 +156,10 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackAttributeImport());
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating(false));
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRatingImport());
+            modelBuilder.ApplyConfiguration(new Configuration.ApprenticeFeedbackAttributes());
+            modelBuilder.ApplyConfiguration(new Configuration.ApprenticeFeedbackAttributesImport());
             modelBuilder.ApplyConfiguration(new Shortlist());
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }

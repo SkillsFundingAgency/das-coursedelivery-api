@@ -2,8 +2,21 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using SFA.DAS.CourseDelivery.Data.Configuration;
 using SFA.DAS.CourseDelivery.Domain.Configuration;
+using SFA.DAS.CourseDelivery.Domain.Entities;
+using ImportAudit = SFA.DAS.CourseDelivery.Data.Configuration.ImportAudit;
+using NationalAchievementRate = SFA.DAS.CourseDelivery.Data.Configuration.NationalAchievementRate;
+using NationalAchievementRateOverall = SFA.DAS.CourseDelivery.Data.Configuration.NationalAchievementRateOverall;
+using Provider = SFA.DAS.CourseDelivery.Data.Configuration.Provider;
+using ProviderRegistration = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistration;
+using ProviderRegistrationFeedbackAttribute = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationFeedbackAttribute;
+using ProviderRegistrationFeedbackRating = SFA.DAS.CourseDelivery.Data.Configuration.ProviderRegistrationFeedbackRating;
+using ProviderStandard = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandard;
+using ProviderStandardLocation = SFA.DAS.CourseDelivery.Data.Configuration.ProviderStandardLocation;
+using ProviderWithStandardAndLocation = SFA.DAS.CourseDelivery.Data.Configuration.ProviderWithStandardAndLocation;
+using Shortlist = SFA.DAS.CourseDelivery.Data.Configuration.Shortlist;
+using ShortlistProviderWithStandardAndLocation = SFA.DAS.CourseDelivery.Data.Configuration.ShortlistProviderWithStandardAndLocation;
+using StandardLocation = SFA.DAS.CourseDelivery.Data.Configuration.StandardLocation;
 
 namespace SFA.DAS.CourseDelivery.Data
 {
@@ -25,6 +38,7 @@ namespace SFA.DAS.CourseDelivery.Data
         public DbSet<Domain.Entities.ProviderWithStandardAndLocation> ProviderWithStandardAndLocations { get; set; }
         public DbSet<Domain.Entities.ProviderRegistrationFeedbackRating> ProviderRegistrationFeedbackRatings { get; set; }
         public DbSet<Domain.Entities.Shortlist> Shortlists { get; set; }
+        public DbSet<ApprenticeFeedbackAttributes> ApprenticeFeedbackAttributes { get; set; }
         public DbSet<Domain.Entities.ShortlistProviderWithStandardAndLocation> ShortlistProviderWithStandardAndLocations { get; set; }
         
         private const string AzureResource = "https://database.windows.net/";
@@ -77,7 +91,8 @@ namespace SFA.DAS.CourseDelivery.Data
             modelBuilder.ApplyConfiguration(new ProviderRegistrationFeedbackRating());
             modelBuilder.ApplyConfiguration(new Shortlist());
             modelBuilder.ApplyConfiguration(new ShortlistProviderWithStandardAndLocation());
-            
+            modelBuilder.ApplyConfiguration(new Configuration.ApprenticeFeedbackAttributes());
+
             base.OnModelCreating(modelBuilder);
         }
     }

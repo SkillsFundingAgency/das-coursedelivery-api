@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.CourseDelivery.Domain.Entities;
+using SFA.DAS.CourseDelivery.Domain.ImportTypes;
 using SFA.DAS.CourseDelivery.Domain.Interfaces;
 using ProviderRegistration = SFA.DAS.CourseDelivery.Domain.ImportTypes.ProviderRegistration;
 
@@ -13,8 +14,11 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
     {
         private readonly ILogger<ProviderRegistrationImportService> _logger;
         private readonly IRoatpApiService _roatpApiService;
+        private readonly IApprenticeFeedbackAttributesApiService _apprenticeFeedbackAttributesApiService;
         private readonly IProviderRegistrationImportRepository _providerRegistrationImportRepository;
         private readonly IProviderRegistrationRepository _providerRegistrationRepository;
+        private readonly IApprenticeFeedbackAttributesImportRepository _apprenticeFeedbackAttributesImportRepository;
+        private readonly IApprenticeFeedbackAttributesRepository _apprenticeFeedbackAttributesRepository;
         private readonly IProviderRegistrationFeedbackAttributeRepository _providerRegistrationFeedbackAttributeRepository;
         private readonly IProviderRegistrationFeedbackAttributeImportRepository _providerRegistrationFeedbackAttributeImportRepository;
         private readonly IProviderRegistrationFeedbackRatingRepository _providerRegistrationFeedbackRatingRepository;
@@ -24,8 +28,11 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         public ProviderRegistrationImportService(
             ILogger<ProviderRegistrationImportService> logger,
             IRoatpApiService roatpApiService,
+            IApprenticeFeedbackAttributesApiService apprenticeFeedbackAttributesApiService,
             IProviderRegistrationImportRepository providerRegistrationImportRepository,
             IProviderRegistrationRepository providerRegistrationRepository,
+            IApprenticeFeedbackAttributesImportRepository apprenticeFeedbackAttributesImportRepository,
+            IApprenticeFeedbackAttributesRepository apprenticeFeedbackAttributesRepository,
             IProviderRegistrationFeedbackAttributeRepository providerRegistrationFeedbackAttributeRepository,
             IProviderRegistrationFeedbackAttributeImportRepository providerRegistrationFeedbackAttributeImportRepository,
             IProviderRegistrationFeedbackRatingRepository providerRegistrationFeedbackRatingRepository,
@@ -34,8 +41,11 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         {
             _logger = logger;
             _roatpApiService = roatpApiService;
+            _apprenticeFeedbackAttributesApiService = apprenticeFeedbackAttributesApiService;
             _providerRegistrationImportRepository = providerRegistrationImportRepository;
             _providerRegistrationRepository = providerRegistrationRepository;
+            _apprenticeFeedbackAttributesImportRepository = apprenticeFeedbackAttributesImportRepository;
+            _apprenticeFeedbackAttributesRepository = apprenticeFeedbackAttributesRepository;
             _providerRegistrationFeedbackAttributeRepository = providerRegistrationFeedbackAttributeRepository;
             _providerRegistrationFeedbackAttributeImportRepository = providerRegistrationFeedbackAttributeImportRepository;
             _providerRegistrationFeedbackRatingRepository = providerRegistrationFeedbackRatingRepository;
@@ -47,11 +57,13 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
         {
             var importStartTime = DateTime.UtcNow;
 
-            var providerRegistrationsFromRoatp = (await _roatpApiService.GetProviderRegistrations()).ToList();
+            var providerRegistrationsFromRoatp = (await _roatpApiService.GetProviderRegistrations()).ToList(); //list of providers + feedback
 
-            if (providerRegistrationsFromRoatp.Count == 0)
+            var attributesFromApprenticeFeedback = (await _apprenticeFeedbackAttributesApiService.GetApprenticeFeedbackAttributes()).ToList();
+
+            if (providerRegistrationsFromRoatp.Count == 0 || attributesFromApprenticeFeedback.Count == 0)
             {
-                _logger.LogInformation("No data received from ROATP. Ending import.");
+                _logger.LogInformation("No data received from ROATP or from Apprentice Feedback. Ending import.");
                 return;
             }
 
@@ -59,7 +71,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             ClearImportTables();
             _logger.LogInformation("Populate import table");
             
-            var providerRegistrationImports = await PopulateImportTables(providerRegistrationsFromRoatp);
+            var providerRegistrationImports = await PopulateImportTables(providerRegistrationsFromRoatp, attributesFromApprenticeFeedback);
 
             _logger.LogInformation("Clearing data table");
             ClearMainTables();
@@ -78,6 +90,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             var feedbackRating = _providerRegistrationFeedbackRatingImportRepository.GetAll();
             var feedbackAttributes = _providerRegistrationFeedbackAttributeImportRepository.GetAll();
             var providerRegistrations = _providerRegistrationImportRepository.GetAll();
+            var apprenticeFeedbackAttributes = _apprenticeFeedbackAttributesImportRepository.GetAll();
 
             await Task.WhenAll(feedbackRating, feedbackAttributes, providerRegistrations);
 
@@ -89,15 +102,24 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             var insertProviderAttributeTask =
                 _providerRegistrationFeedbackAttributeRepository.InsertMany(feedbackAttributes.Result
                     .Select(c => (ProviderRegistrationFeedbackAttribute) c).ToList());
+            var insertApprenticeFeedbackAttributesTask =
+                _apprenticeFeedbackAttributesRepository.InsertMany(apprenticeFeedbackAttributes.Result
+                    .Select(c => (ApprenticeFeedbackAttributes)c).ToList());
 
-            await Task.WhenAll(insertProviderTask, insertProviderAttributeTask, insertProviderRatingTask);
+            await Task.WhenAll(insertProviderTask, insertProviderAttributeTask, insertProviderRatingTask, insertApprenticeFeedbackAttributesTask);
         }
 
-        private async Task<List<ProviderRegistrationImport>> PopulateImportTables(IReadOnlyCollection<ProviderRegistration> providerRegistrationsFromRoatp)
+        private async Task<List<ProviderRegistrationImport>> PopulateImportTables(IReadOnlyCollection<ProviderRegistration> providerRegistrationsFromRoatp, 
+            IReadOnlyCollection<ApprenticeFeedbackAttribute> apprenticeFeedbackAttributesFromApprenticeFeedback)
         {
             var providerRegistrationImports = providerRegistrationsFromRoatp
                 .Select(registration => (ProviderRegistrationImport) registration)
                 .ToList();
+
+            var apprenticeFeedbackAttributesImports = apprenticeFeedbackAttributesFromApprenticeFeedback
+                .Select(attribute => (ApprenticeFeedbackAttributesImport)attribute)
+                .ToList();
+
             var feedbackRatings = new List<ProviderRegistrationFeedbackRatingImport>();
             var feedbackAttributes = new List<ProviderRegistrationFeedbackAttributeImport>();
 
@@ -116,11 +138,11 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             }
 
             var providerRegistrationInsertTask = _providerRegistrationImportRepository.InsertMany(providerRegistrationImports);
+            var apprenticeFeedbackAttributesInsertTask = _apprenticeFeedbackAttributesImportRepository.InsertMany(apprenticeFeedbackAttributesImports);
             var feedbackRatingsInsertTask = _providerRegistrationFeedbackRatingImportRepository.InsertMany(feedbackRatings);
-            var feedbackAttributesInsertTask =
-                _providerRegistrationFeedbackAttributeImportRepository.InsertMany(feedbackAttributes);
+            var feedbackAttributesInsertTask = _providerRegistrationFeedbackAttributeImportRepository.InsertMany(feedbackAttributes);
 
-            await Task.WhenAll(providerRegistrationInsertTask, feedbackRatingsInsertTask, feedbackAttributesInsertTask);
+            await Task.WhenAll(providerRegistrationInsertTask, apprenticeFeedbackAttributesInsertTask, feedbackRatingsInsertTask, feedbackAttributesInsertTask);
             return providerRegistrationImports;
         }
 
@@ -129,6 +151,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             _providerRegistrationRepository.DeleteAll();
             _providerRegistrationFeedbackAttributeRepository.DeleteAll();
             _providerRegistrationFeedbackRatingRepository.DeleteAll();
+            _apprenticeFeedbackAttributesRepository.DeleteAll();
         }
 
         private void ClearImportTables()
@@ -136,6 +159,7 @@ namespace SFA.DAS.CourseDelivery.Application.ProviderCourseImport.Services
             _providerRegistrationImportRepository.DeleteAll();
             _providerRegistrationFeedbackAttributeImportRepository.DeleteAll();
             _providerRegistrationFeedbackRatingImportRepository.DeleteAll();
+            _apprenticeFeedbackAttributesImportRepository.DeleteAll();
         }
     }
 }
