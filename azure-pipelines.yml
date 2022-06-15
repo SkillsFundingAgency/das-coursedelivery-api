@@ -2,10 +2,7 @@ trigger:
   batch: true
   branches:
     include:
-      - "*"
-
-pr:
-  - master
+      - "master"
 
 variables:
   - group: 'Prod Management Resources'
@@ -18,7 +15,7 @@ resources:
   - repository: das-platform-building-blocks
     type: github
     name: SkillsFundingAgency/das-platform-building-blocks
-    ref: refs/tags/0.4.34
+    ref: refs/tags/0.4.61
     endpoint: SkillsFundingAgency
 
 jobs:
@@ -35,8 +32,6 @@ jobs:
     parameters:
       SonarCloud: true
       SonarCloudProjectKey: SkillsFundingAgency_das-coursedelivery-api
-
-  - template: azure-pipelines-templates/build/step/dependency-check.yml@das-platform-building-blocks
 
   - task: DotNetCoreCLI@2
     displayName: 'Publish Website'
