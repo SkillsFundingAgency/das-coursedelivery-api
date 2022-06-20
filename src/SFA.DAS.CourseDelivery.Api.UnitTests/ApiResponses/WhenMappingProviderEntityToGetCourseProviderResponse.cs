@@ -70,8 +70,8 @@ namespace SFA.DAS.CourseDelivery.Api.UnitTests.ApiResponses
         {
             var actual = GetProviderDetailResponse.Map(providerLocation);
 
-            actual.FeedbackRatings.Count.Should().Be(providerLocation.FeedbackRating.Count);
-            actual.FeedbackAttributes.Count.Should().Be(providerLocation.FeedbackAttributes.Count);
+            actual.EmployerFeedback.FeedbackRatings.Count.Should().Be(providerLocation.FeedbackRating.Count);
+            actual.EmployerFeedback.FeedbackAttributes.Count.Should().Be(providerLocation.FeedbackAttributes.Count);
         }
     }
 }
