@@ -13,9 +13,8 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
         public GetProviderHeadOfficeAddress ProviderAddress { get; set; }
         public List<GetNationalAchievementRateResponse> AchievementRates { get ; set ; }
         public List<GetDeliveryTypesResponse> DeliveryTypes { get ; set ; }
-        public List<GetFeedbackAttributeResponse> FeedbackAttributes { get; set; }
-        public List<GetFeedbackRatingResponse> FeedbackRatings { get; set; }
-
+        public GetEmployerFeedbackResponse EmployerFeedback { get; set; }
+        
         public static GetProviderDetailResponse Map(ProviderLocation provider, short age = 0)
         {
             var nationalAchievementRates = provider.AchievementRates.AsQueryable();
@@ -39,8 +38,7 @@ namespace SFA.DAS.CourseDelivery.Api.ApiResponses
                 AchievementRates = nationalAchievementRates
                     .Select(c=>(GetNationalAchievementRateResponse)c).ToList(),
                 DeliveryTypes = provider.DeliveryTypes.Select(c=>(GetDeliveryTypesResponse)c).ToList(),
-                FeedbackAttributes = provider.FeedbackAttributes.Select(x=>(GetFeedbackAttributeResponse)x).ToList(),
-                FeedbackRatings = provider.FeedbackRating.Select(x=>(GetFeedbackRatingResponse)x).ToList(),
+                EmployerFeedback = new GetEmployerFeedbackResponse(provider),
                 ShortlistId = provider.ShortlistId
             };
         }
