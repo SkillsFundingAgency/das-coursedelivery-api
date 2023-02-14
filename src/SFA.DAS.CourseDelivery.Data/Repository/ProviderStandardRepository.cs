@@ -62,8 +62,9 @@ namespace SFA.DAS.CourseDelivery.Data.Repository
             var providers = await _readonlyDataContext
                 .ProviderStandards
                 .Include(c=>c.ProviderStandardLocation)
+                .ThenInclude(c=>c.Location)
                 .Where(c => c.StandardId.Equals(standardId))
-                .Where(c=>c.ProviderStandardLocation!=null && c.ProviderStandardLocation.Any())
+                .Where(c=>c.ProviderStandardLocation!=null && c.ProviderStandardLocation.Any(x=>x.Location!=null))
                 .Where(c=>c.Provider.ProviderRegistration.ProviderTypeId == RoatpTypeConstants.ProviderTypeOfMainProvider 
                           && c.Provider.ProviderRegistration.StatusId == RoatpTypeConstants.StatusOfActive)
                 .Select(c => c.Ukprn).Distinct().ToListAsync();
